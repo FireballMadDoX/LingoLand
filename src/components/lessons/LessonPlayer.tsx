@@ -741,8 +741,14 @@ function Step3SayIt({
       recognitionRef.current?.stop?.();
     } catch {}
 
-    const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-    const rec = new SR();
+    let rec: any;
+    try {
+      const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+      rec = new SR();
+    } catch (e) {
+      setErrorMsg("Failed to initialize speech recognition. Your browser might block it.");
+      return;
+    }
     recognitionRef.current = rec;
 
     rec.lang = (item.ttsLang ?? languageToTTS(language)).trim();
@@ -892,6 +898,16 @@ function Step3SayIt({
                     >
                       <Square size={16} />
                       Stop
+                    </button>
+                    <button
+                      onClick={() => {
+                        setStatusById((p) => ({ ...p, [item.id]: "correct" }));
+                        onCorrect(item.id);
+                      }}
+                      className="px-4 py-2 rounded-xl font-extrabold flex items-center gap-2 bg-gray-100 text-gray-600 hover:bg-gray-200"
+                      title="Skip speaking"
+                    >
+                      Skip
                     </button>
                   </>
                 ) : (
@@ -1259,8 +1275,14 @@ function Step5ConversationPronounce({
       recognitionRef.current?.stop?.();
     } catch {}
 
-    const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-    const rec = new SR();
+    let rec: any;
+    try {
+      const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+      rec = new SR();
+    } catch (e) {
+      setErrorMsg("Failed to initialize speech recognition. Your browser might block it.");
+      return;
+    }
     recognitionRef.current = rec;
 
     rec.lang = languageToTTS(language);
@@ -1383,6 +1405,7 @@ function Step5ConversationPronounce({
           onHear={() => speak(learner1, languageToTTS(language))}
           onStart={() => startListening("learner1", learner1)}
           onStop={stopListening}
+          onSkip={() => { setStatusByKey((p) => ({ ...p, ["learner1"]: "correct" })); onCorrect("learner1"); }}
           heardText={heardByKey["learner1"]}
           hint={lineHint(learner1)}
         />
@@ -1406,6 +1429,7 @@ function Step5ConversationPronounce({
           onHear={() => speak(learner2, languageToTTS(language))}
           onStart={() => startListening("learner2", learner2)}
           onStop={stopListening}
+          onSkip={() => { setStatusByKey((p) => ({ ...p, ["learner2"]: "correct" })); onCorrect("learner2"); }}
           heardText={heardByKey["learner2"]}
           hint={lineHint(learner2)}
         />
@@ -1422,6 +1446,7 @@ function Step5ConversationPronounce({
             onHear={() => speak(learner3, languageToTTS(language))}
             onStart={() => startListening("learner3", learner3)}
             onStop={stopListening}
+            onSkip={() => { setStatusByKey((p) => ({ ...p, ["learner3"]: "correct" })); onCorrect("learner3"); }}
             heardText={heardByKey["learner3"]}
             hint={lineHint(learner3)}
           />
@@ -1488,6 +1513,7 @@ function LearnerSpeakBubble({
   onHear,
   onStart,
   onStop,
+  onSkip,
   heardText,
   hint
 }: {
@@ -1501,6 +1527,7 @@ function LearnerSpeakBubble({
   onHear: () => void;
   onStart: () => void;
   onStop: () => void;
+  onSkip: () => void;
   heardText?: string;
   hint: string;
 }) {
@@ -1542,6 +1569,13 @@ function LearnerSpeakBubble({
                   title="Stop"
                 >
                   <Square size={16} />
+                </button>
+                <button
+                  onClick={onSkip}
+                  className="px-3 py-2 rounded-xl font-extrabold flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white"
+                  title="Skip speaking if having mic issues"
+                >
+                  Skip
                 </button>
               </>
             ) : (
