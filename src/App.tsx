@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { PetProvider } from "./context/PetContext";
+import { ProgressProvider } from "./context/ProgressContext";
 import { supabase } from "./lib/supabase";
 import Auth from "./components/pages/Auth";
 import Navbar from "./components/common/Navbar";
@@ -12,6 +13,7 @@ import Adventures from "./components/pages/Adventures";
 import MiniGamesHub from "./components/minigames/MiniGamesHub";
 import LanguagePicker from "./components/lessons/LanguagePicker";
 import LessonPlayer from "./components/lessons/LessonPlayer";
+import LessonListPage from "./components/lessons/LessonListPage";
 
 function App() {
   const [view, setView] = useState<
@@ -22,9 +24,11 @@ function App() {
     | "adventures"
     | "minigames"
     | "languagePicker"
+    | "lessonList"
     | "lessonPlayer"
   >("landing");
   const [selectedLang, setSelectedLang] = useState<"en" | "es" | "zh">("en");
+  const [selectedLessonId, setSelectedLessonId] = useState<string | null>(null);
   const [session, setSession] = useState<any>(null);
 
   useEffect(() => {
@@ -43,15 +47,8 @@ function App() {
         setSession(session);
         if (session) {
           setView((prev) => {
-            // ONLY go to profile if we just clicked login from the auth screen
-            if (event === "SIGNED_IN" && prev === "auth") {
-              return "profile";
-            }
-            // On fresh page load, if session exists, go to dashboard
-            if (prev === "landing") {
-              return "dashboard";
-            }
-            // Otherwise, keep them where they are (lessonPlayer, minigames, etc)
+            if (event === "SIGNED_IN" && prev === "auth") return "profile";
+            if (prev === "landing") return "dashboard";
             return prev;
           });
         }
@@ -64,26 +61,28 @@ function App() {
   }, []);
 
   const handleStart = () => {
-    if (session) {
-      setView("dashboard");
-    } else {
-      setView("auth");
-    }
+    if (session) { setView("dashboard"); } else { setView("auth"); }
     window.scrollTo(0, 0);
   };
 
-  const handleHome = () => {
-    setView("landing");
-    window.scrollTo(0, 0);
-  };
-
-  const handleProfile = () => {
-    setView("profile");
-    window.scrollTo(0, 0);
-  };
+  const handleHome = () => { setView("landing"); window.scrollTo(0, 0); };
 
   const handleAdventures = () => {
+    if (!session) { setView("auth"); window.scrollTo(0, 0); return; }
     setView("adventures");
+    window.scrollTo(0, 0);
+  };
+
+  const handleDashboard = () => {
+    if (!session) { setView("auth"); window.scrollTo(0, 0); return; }
+    setView("dashboard");
+    window.scrollTo(0, 0);
+  };
+
+  const handleAuthView = () => { setView("auth"); window.scrollTo(0, 0); };
+  const handleProfile  = () => {
+    if (!session) { setView("auth"); window.scrollTo(0, 0); return; }
+    setView("profile");
     window.scrollTo(0, 0);
   };
 
@@ -94,62 +93,79 @@ function App() {
     window.scrollTo(0, 0);
   };
 
+  // Navigate to lesson list for a given language
+  const goToLessonList = (lang: "en" | "es" | "zh") => {
+    setSelectedLang(lang);
+    setView("lessonList");
+    window.scrollTo(0, 0);
+  };
+
   return (
-    <PetProvider>
-      <div className="appContainer">
-        {view !== "auth" && (
+    <ProgressProvider>
+      <PetProvider>
+        <div className="appContainer">
           <Navbar
-            onStart={handleStart}
-            onHome={handleHome}
-            onProfile={handleProfile}
-            onAdventures={handleAdventures}
-            onLogout={handleLogout}
+            view={view}
             session={session}
+            onAuth={handleAuthView}
+            onHome={handleHome}
+            onDashboard={handleDashboard}
+            onAdventures={handleAdventures}
+            onProfile={handleProfile}
           />
-        )}
-        <main>
-          {view === "landing" ? (
-            <>
-              <Hero
-                onStart={handleStart}
-                onAdventures={handleAdventures}
-                session={session}
+          <main>
+            {view === "landing" ? (
+              <>
+                <Hero onStart={handleStart} onAdventures={handleAdventures} />
+                <LevelPreview />
+                <Footer />
+              </>
+            ) : view === "auth" ? (
+              <div className="min-h-screen pt-32 flex items-center justify-center bg-gradient-to-b from-blue-50 to-white">
+                <Auth onBack={() => setView("landing")} />
+              </div>
+            ) : view === "profile" ? (
+              <Profile session={session} onLogout={handleLogout} />
+            ) : view === "adventures" ? (
+              <Adventures
+                onSelectLanguage={goToLessonList}
+                onBack={handleDashboard}
               />
-              <LevelPreview />
-              <Footer />
-            </>
-          ) : view === "auth" ? (
-            <div className="min-h-screen pt-32 flex items-center justify-center bg-gradient-to-b from-blue-50 to-white">
-              <Auth onBack={() => setView("landing")} />
-            </div>
-          ) : view === "profile" ? (
-            <Profile session={session} onLogout={handleLogout} />
-          ) : view === "adventures" ? (
-            <Adventures onStart={handleStart} />
-          ) : view === "minigames" ? (
-            <MiniGamesHub onBack={() => setView("dashboard")} />
-          ) : view === "languagePicker" ? (
-            <LanguagePicker
-              onSelect={(lang: "en" | "es" | "zh") => {
-                setSelectedLang(lang);
-                setView("lessonPlayer");
-              }}
-              onBack={() => setView("dashboard")}
-            />
-          ) : view === "lessonPlayer" ? (
-            <LessonPlayer
-              language={selectedLang}
-              onExit={() => setView("dashboard")}
-            />
-          ) : (
-            <Dashboard
-              onMinigames={() => setView("minigames")}
-              onLessons={() => setView("languagePicker")}
-            />
-          )}
-        </main>
-      </div>
-    </PetProvider>
+            ) : view === "minigames" ? (
+              <MiniGamesHub onBack={() => setView("dashboard")} />
+            ) : view === "languagePicker" ? (
+              <LanguagePicker
+                onSelect={(lang: "en" | "es" | "zh") => {
+                  setSelectedLang(lang);
+                  setView("lessonPlayer");
+                }}
+                onBack={() => setView("dashboard")}
+              />
+            ) : view === "lessonList" ? (
+              <LessonListPage
+                language={selectedLang}
+                onSelectLesson={(id) => {
+                  setSelectedLessonId(id);
+                  setView("lessonPlayer");
+                }}
+                onBack={() => setView("adventures")}
+              />
+            ) : view === "lessonPlayer" ? (
+              <LessonPlayer
+                lessonId={selectedLessonId || 'unknown'}
+                language={selectedLang}
+                onExit={() => setView("lessonList")}
+              />
+            ) : (
+              <Dashboard
+                onMinigames={() => setView("minigames")}
+                onLessons={() => setView("languagePicker")}
+              />
+            )}
+          </main>
+        </div>
+      </PetProvider>
+    </ProgressProvider>
   );
 }
 

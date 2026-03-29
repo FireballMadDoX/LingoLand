@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import KidButton from '../common/KidButton';
-import { useProgress } from '../../context/ProgressContext';
+import KidButton from '../components/KidButton';
 
-interface AdventuresProps {
-  onSelectLanguage: (lang: 'en' | 'es' | 'zh') => void;
+interface LanguagePickerProps {
+  onSelect: (lang: 'en' | 'es' | 'zh') => void;
   onBack: () => void;
 }
 
@@ -41,14 +40,13 @@ const languages = [
   },
 ];
 
-export const Adventures: React.FC<AdventuresProps> = ({ onSelectLanguage, onBack }) => {
+export const LanguagePicker: React.FC<LanguagePickerProps> = ({ onSelect, onBack }) => {
   const [hovered, setHovered]   = useState<string | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
-  const { progressByLang } = useProgress();
 
   const handleSelect = (code: 'en' | 'es' | 'zh') => {
     setSelected(code);
-    setTimeout(() => onSelectLanguage(code), 350);
+    setTimeout(() => onSelect(code), 350);
   };
 
   return (
@@ -60,7 +58,7 @@ export const Adventures: React.FC<AdventuresProps> = ({ onSelectLanguage, onBack
       <div className="absolute top-0 left-0 w-96 h-96 rounded-full blur-3xl opacity-30 pointer-events-none" style={{ background: '#DDD6FE' }} />
       <div className="absolute bottom-0 right-0 w-96 h-96 rounded-full blur-3xl opacity-20 pointer-events-none" style={{ background: '#FDE68A' }} />
 
-      <div className="relative z-10 max-w-6xl mx-auto px-6 pt-28 pb-16">
+      <div className="relative z-10 max-w-6xl mx-auto px-6 py-16">
 
         {/* Header */}
         <motion.div
@@ -68,9 +66,19 @@ export const Adventures: React.FC<AdventuresProps> = ({ onSelectLanguage, onBack
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-16 relative"
         >
+          <button
+            onClick={onBack}
+            className="absolute left-0 top-0 flex items-center gap-2 font-body font-bold text-violet-500 hover:text-violet-700 transition-colors"
+          >
+            ← Back
+          </button>
 
-
-
+          <div
+            className="inline-flex items-center gap-3 px-5 py-2 rounded-full font-body font-bold text-sm mb-6"
+            style={{ background: 'rgba(124,58,237,0.1)', color: '#7C3AED', border: '2px solid rgba(124,58,237,0.2)' }}
+          >
+            🌍 Choose Your Language Adventure
+          </div>
 
           <h1 className="font-heading font-bold text-5xl md:text-6xl text-violet-900 mb-4">
             Which Language Will You{' '}
@@ -146,40 +154,13 @@ export const Adventures: React.FC<AdventuresProps> = ({ onSelectLanguage, onBack
 
                 {/* White bottom section */}
                 <div className="bg-white p-6 flex items-center justify-between">
-                  <div className="flex-1">
-                    <div className="font-heading font-bold text-gray-800 text-lg">
-                      {progressByLang[lang.code] > 0 ? "Continue Learning" : "Start Learning"}
-                    </div>
+                  <div>
+                    <div className="font-heading font-bold text-gray-800 text-lg">Start Learning</div>
                     <div className="font-body text-gray-500 text-sm">Lesson 1 • Introductions</div>
                   </div>
-                  
-                  {/* Progress Ring logic inside card header */}
-                  {progressByLang[lang.code] > 0 ? (
-                    <div className="flex items-center gap-3 mr-3">
-                      <div className="relative w-12 h-12 flex items-center justify-center">
-                        <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                          <circle cx="50" cy="50" r="40" className="text-gray-100" strokeWidth="8" stroke="currentColor" fill="transparent" />
-                          <circle
-                            cx="50" cy="50" r="40"
-                            strokeWidth="8"
-                            stroke={lang.shadowColor}
-                            strokeLinecap="round"
-                            fill="transparent"
-                            strokeDasharray="251.2 251.2"
-                            strokeDashoffset={251.2 - (251.2 * progressByLang[lang.code]) / 100}
-                            style={{ transition: 'stroke-dashoffset 0.8s ease' }}
-                          />
-                        </svg>
-                        <div className="absolute inset-0 flex items-center justify-center text-xs font-bold font-heading" style={{ color: lang.shadowColor }}>
-                          {progressByLang[lang.code]}%
-                        </div>
-                      </div>
-                    </div>
-                  ) : null}
-
                   <motion.div
                     animate={{ x: isHovered ? 5 : 0 }}
-                    className="w-10 h-10 rounded-2xl flex items-center justify-center font-bold text-white text-lg flex-shrink-0"
+                    className="w-10 h-10 rounded-2xl flex items-center justify-center font-bold text-white text-lg"
                     style={{ background: lang.gradient }}
                   >
                     →
@@ -222,4 +203,4 @@ export const Adventures: React.FC<AdventuresProps> = ({ onSelectLanguage, onBack
   );
 };
 
-export default Adventures;
+export default LanguagePicker;

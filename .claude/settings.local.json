@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__ide__getDiagnostics",
+      "Bash(cd \"R:/MyProjects/Project-CSC481/claude-ui-experiment\" && npm install 2>&1)",
+      "Bash(cd \"R:/MyProjects/Project-CSC481/claude-ui-experiment\" && npx vite build 2>&1)"
+    ]
+  }
+}

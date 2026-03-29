@@ -3,19 +3,17 @@ import { motion } from 'framer-motion';
 import { RotateCcw, ArrowLeft, Trophy } from 'lucide-react';
 import Lottie from 'lottie-react';
 
-// Import Assets
 import beeData from './assets/Flying Bee.json';
 
 // --- Constants ---
-// --- Constants ---
 const GAME_SPEED = 3;
-const GRAVITY = 0.4; // Very gentle gravity
-const JUMP_STRENGTH = -6; // Gentle jump
-const MAX_FALL_SPEED = 6; // Cap falling speed to match jump speed ("same pace")
+const GRAVITY = 0.4;
+const JUMP_STRENGTH = -6;
+const MAX_FALL_SPEED = 6;
 const PIPE_SPACING = 300;
 const PIPE_WIDTH = 60;
-const BEE_SIZE = 40; // Hitbox size
-const GAP_SIZE = 200; // Even wider gap for kids (Super Easy Mode)
+const BEE_SIZE = 40;
+const GAP_SIZE = 200;
 
 interface Pipe {
     id: number;
@@ -26,40 +24,31 @@ interface Pipe {
 
 interface FlappyBeeProps {
     onExit: () => void;
+    onGameOver?: () => void;
 }
 
-const FlappyBee: React.FC<FlappyBeeProps> = ({ onExit }) => {
-    // Game State
+const FlappyBee: React.FC<FlappyBeeProps> = ({ onExit, onGameOver }) => {
     const [gameState, setGameState] = useState<'start' | 'playing' | 'gameover'>('start');
     const [score, setScore] = useState(0);
     const [highScore, setHighScore] = useState(0);
 
-    // Physics State (Refs for performance)
     const beeY = useRef(250);
     const velocity = useRef(0);
     const pipes = useRef<Pipe[]>([]);
     const requestRef = useRef<number | null>(null);
     const lastTime = useRef<number>(0);
     const containerRef = useRef<HTMLDivElement>(null);
+    const [tick, setTick] = useState(0);
 
-    // --- Game Logic ---
     const spawnPipe = (startX: number) => {
-        const minHeight = 100;
-        const maxHeight = 300;
-        const topHeight = Math.floor(Math.random() * (maxHeight - minHeight + 1)) + minHeight;
-
-        return {
-            id: Date.now() + Math.random(),
-            x: startX,
-            topHeight,
-            passed: false,
-        };
+        const topHeight = Math.floor(Math.random() * (300 - 100 + 1)) + 100;
+        return { id: Date.now() + Math.random(), x: startX, topHeight, passed: false };
     };
 
     const resetGame = () => {
         beeY.current = 250;
         velocity.current = 0;
-        pipes.current = [spawnPipe(500), spawnPipe(800)]; // Start with 2 pipes
+        pipes.current = [spawnPipe(500), spawnPipe(800)];
         setScore(0);
         setGameState('playing');
         lastTime.current = performance.now();
@@ -70,106 +59,38 @@ const FlappyBee: React.FC<FlappyBeeProps> = ({ onExit }) => {
         if (requestRef.current) cancelAnimationFrame(requestRef.current);
         setGameState('gameover');
         if (score > highScore) setHighScore(score);
+        if (onGameOver) onGameOver();
     };
 
     const loop = () => {
         if (gameState !== 'playing') return;
-
-        // 1. Physics
-        velocity.current += GRAVITY;
-        // Clamp falling speed so it doesn't accelerate infinitely ("same pace" feel)
-        if (velocity.current > MAX_FALL_SPEED) velocity.current = MAX_FALL_SPEED;
-
+        velocity.current = Math.min(velocity.current + GRAVITY, MAX_FALL_SPEED);
         beeY.current += velocity.current;
 
-        // 2. Pipes Movement & Spawning
-        pipes.current.forEach(pipe => {
-            pipe.x -= GAME_SPEED;
-        });
-
-        // Remove off-screen pipes
-        if (pipes.current.length > 0 && pipes.current[0].x < -PIPE_WIDTH) {
-            pipes.current.shift();
-        }
-
-        // Add new pipes
+        pipes.current.forEach(p => { p.x -= GAME_SPEED; });
+        if (pipes.current.length > 0 && pipes.current[0].x < -PIPE_WIDTH) pipes.current.shift();
         const lastPipe = pipes.current[pipes.current.length - 1];
-        if (lastPipe && lastPipe.x < 500) { // Spawn when last pipe crosses threshold
-            pipes.current.push(spawnPipe(lastPipe.x + PIPE_SPACING));
-        }
+        if (lastPipe && lastPipe.x < 500) pipes.current.push(spawnPipe(lastPipe.x + PIPE_SPACING));
 
-        // 3. Collision Detection
         const containerHeight = containerRef.current?.clientHeight || 500;
+        if (beeY.current > containerHeight - BEE_SIZE || beeY.current < 0) { gameOver(); return; }
 
-        // Floor/Ceiling
-        if (beeY.current > containerHeight - BEE_SIZE || beeY.current < 0) {
-            gameOver();
-            return;
-        }
-
-        // Pipes
         pipes.current.forEach(pipe => {
-            // Horizontal Hit?
-            // Bee Left < Pipe Right AND Bee Right > Pipe Left
-            const beeLeft = 100; // Fixed horizontal pos
-            const beeRight = 100 + BEE_SIZE;
-            const pipeLeft = pipe.x;
-            const pipeRight = pipe.x + PIPE_WIDTH;
-
-            if (beeRight > pipeLeft && beeLeft < pipeRight) {
-                // Vertical Hit?
-                // Bee Top < Top Pipe Bottom OR Bee Bottom > Bottom Pipe Top
-                const beeTop = beeY.current;
-                const beeBottom = beeY.current + BEE_SIZE;
-
-                const topPipeBottom = pipe.topHeight;
-                const bottomPipeTop = pipe.topHeight + GAP_SIZE;
-
-                if (beeTop < topPipeBottom || beeBottom > bottomPipeTop) {
-                    gameOver();
-                    return;
+            const beeLeft = 100, beeRight = 100 + BEE_SIZE;
+            if (beeRight > pipe.x && beeLeft < pipe.x + PIPE_WIDTH) {
+                if (beeY.current < pipe.topHeight || beeY.current + BEE_SIZE > pipe.topHeight + GAP_SIZE) {
+                    gameOver(); return;
                 }
             }
-
-            // Scoring
-            if (!pipe.passed && pipe.x + PIPE_WIDTH < 100) {
-                pipe.passed = true;
-                setScore(prev => prev + 1);
-            }
+            if (!pipe.passed && pipe.x + PIPE_WIDTH < 100) { pipe.passed = true; setScore(prev => prev + 1); }
         });
 
-        // Loop
         if (gameState === 'playing') {
             requestRef.current = requestAnimationFrame(loop);
-            // Force re-render not needed for every frame if we used canvas, 
-            // but for DOM manipulation we need to rely on ref mutations and just trigger render on key events?
-            // Actually, for React specific, let's force a render or use a simpler state approach for the visual loop
-            // To make it smooth in React without canvas, we keep state separate and use a ref for the loop, 
-            // but we need to update the DOM. 
-            // Let's use a "tick" state to force update if we want exact sync, 
-            // OR better: use refs for everything position-wise and update elements directly if needed, 
-            // BUT for simplicity in this codebase, let's just allow React to re-render on the loop.
-            // It might be slightly heavy but fine for a simple game.
-            // Optimization: Update a dummy state to trigger render.
             setTick(prev => prev + 1);
         }
     };
 
-    const [tick, setTick] = useState(0); // Dummy state to trigger renders
-
-    useEffect(() => {
-        if (gameState === 'playing') {
-            requestRef.current = requestAnimationFrame(loop);
-        }
-        return () => {
-            if (requestRef.current) cancelAnimationFrame(requestRef.current);
-        };
-    }, [gameState, tick]); // Re-run loop when state updates? No, loop calls itself. 
-    // Actually, the loop function creates closure. We need to be careful.
-    // Standard pattern: useRef for the loop callback or just rely on the recursive call.
-    // The recursive `loop` above captures the state properly if defined inside.
-
-    // --- Controls ---
     const flap = () => {
         if (gameState === 'playing') {
             velocity.current = JUMP_STRENGTH;
@@ -179,97 +100,100 @@ const FlappyBee: React.FC<FlappyBeeProps> = ({ onExit }) => {
     };
 
     useEffect(() => {
+        if (gameState === 'playing') requestRef.current = requestAnimationFrame(loop);
+        return () => { if (requestRef.current) cancelAnimationFrame(requestRef.current); };
+    }, [gameState, tick]);
+
+    useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.code === 'Space' || e.code === 'ArrowUp') {
-                e.preventDefault();
-                flap();
-            }
+            if (e.code === 'Space' || e.code === 'ArrowUp') { e.preventDefault(); flap(); }
         };
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [gameState]);
 
-
-    // --- Render ---
+    // ── Render ─────────────────────────────────────────────────────────────────
     return (
-        <div className="flex flex-col items-center justify-center w-full min-h-[90vh] bg-sky-100 rounded-3xl overflow-hidden relative select-none shadow-[inset_0_0_100px_rgba(0,0,0,0.1)]">
+        <div
+            className="flex flex-col items-center justify-center w-full min-h-[90vh] relative select-none py-6 px-4"
+            style={{ background: 'linear-gradient(160deg, #1E1B4B 0%, #2D1B69 50%, #1E1B4B 100%)' }}
+        >
+            {/* Decorative blobs */}
+            <div className="absolute top-0 left-0 w-96 h-96 rounded-full blur-3xl opacity-20 pointer-events-none" style={{ background: '#7C3AED' }} />
+            <div className="absolute bottom-0 right-0 w-80 h-80 rounded-full blur-3xl opacity-15 pointer-events-none" style={{ background: '#4F46E5' }} />
 
             {/* HUD */}
-            <div className="absolute top-8 left-8 right-8 flex justify-between items-start z-[60] pointer-events-none">
+            <div className="relative z-10 w-full max-w-[95%] flex justify-between items-center mb-4">
                 <button
                     onClick={onExit}
-                    className="bg-white/90 backdrop-blur-md p-3 rounded-full shadow-lg hover:bg-white text-gray-700 transition-transform hover:scale-105 active:scale-95 pointer-events-auto"
+                    className="p-2.5 rounded-full text-white transition-all hover:scale-105"
+                    style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)' }}
                 >
-                    <ArrowLeft size={24} />
+                    <ArrowLeft size={22} />
                 </button>
-                <div className="text-6xl font-black text-white font-heading drop-shadow-lg stroke-black">
-                    {score}
+                <div className="flex items-center gap-4">
+                    {highScore > 0 && (
+                        <div className="text-purple-300 font-bold text-sm px-3 py-1 rounded-full" style={{ background: 'rgba(255,255,255,0.08)' }}>
+                            🏆 Best: {highScore}
+                        </div>
+                    )}
+                    <div className="text-4xl font-black text-white font-heading drop-shadow-lg">{score}</div>
                 </div>
-                {highScore > 0 && (
-                    <div className="bg-white/50 px-4 py-2 rounded-full font-bold text-gray-700">
-                        Top: {highScore}
-                    </div>
-                )}
             </div>
 
-            {/* Game Container */}
+            {/* Game Canvas */}
             <div
                 ref={containerRef}
                 onClick={flap}
-                className="relative w-full max-w-[95%] h-[500px] border-b-[12px] border-[#5D4037] bg-cyan-300 shadow-2xl overflow-hidden cursor-pointer rounded-3xl group"
+                className="relative w-full max-w-[95%] h-[460px] overflow-hidden cursor-pointer rounded-3xl"
+                style={{
+                    border: '10px solid #5D4037',
+                    boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
+                }}
             >
-                {/* Background Decor */}
+                {/* Sky backdrop */}
                 <div className="absolute inset-0 bg-gradient-to-b from-cyan-300 to-blue-200">
-                    {/* Clouds */}
                     <Cloud size={100} x="10%" y="10%" speed={20} />
-                    <Cloud size={60} x="60%" y="30%" speed={35} />
+                    <Cloud size={60}  x="60%" y="30%" speed={35} />
                     <Cloud size={120} x="80%" y="15%" speed={25} />
                 </div>
 
-                {/* Pipes */}
+                {/* Pipes — honeycomb amber instead of plain green */}
                 {pipes.current.map(pipe => (
                     <React.Fragment key={pipe.id}>
-                        {/* Top Pipe */}
+                        {/* Top pipe */}
                         <div
-                            className="absolute top-0 bg-green-500 border-x-4 border-b-4 border-green-700 rounded-b-xl"
+                            className="absolute top-0 rounded-b-xl"
                             style={{
-                                left: pipe.x,
-                                width: PIPE_WIDTH,
-                                height: pipe.topHeight,
-                                backgroundImage: 'linear-gradient(90deg, transparent 50%, rgba(0,0,0,0.1) 50%)',
-                                backgroundSize: '20px 100%'
+                                left: pipe.x, width: PIPE_WIDTH, height: pipe.topHeight,
+                                background: 'linear-gradient(135deg, #FBBF24, #D97706)',
+                                borderBottom: '4px solid #92400E',
+                                borderLeft: '2px solid rgba(255,255,255,0.2)',
                             }}
                         >
-                            {/* Cap */}
-                            <div className="absolute bottom-0 left-[-4px] right-[-4px] h-6 bg-green-500 border-4 border-green-700 rounded-sm"></div>
+                            <div className="absolute bottom-0 left-[-4px] right-[-4px] h-6 rounded-sm" style={{ background: '#D97706', border: '3px solid #92400E' }} />
                         </div>
-
-                        {/* Bottom Pipe */}
+                        {/* Bottom pipe */}
                         <div
-                            className="absolute bottom-0 bg-green-500 border-x-4 border-t-4 border-green-700 rounded-t-xl"
+                            className="absolute bottom-0 rounded-t-xl"
                             style={{
-                                left: pipe.x,
-                                width: PIPE_WIDTH,
-                                height: (500 - pipe.topHeight - GAP_SIZE), // Total height - top - gap
-                                backgroundImage: 'linear-gradient(90deg, transparent 50%, rgba(0,0,0,0.1) 50%)',
-                                backgroundSize: '20px 100%'
+                                left: pipe.x, width: PIPE_WIDTH, height: 500 - pipe.topHeight - GAP_SIZE,
+                                background: 'linear-gradient(135deg, #FBBF24, #D97706)',
+                                borderTop: '4px solid #92400E',
+                                borderLeft: '2px solid rgba(255,255,255,0.2)',
                             }}
                         >
-                            {/* Cap */}
-                            <div className="absolute top-0 left-[-4px] right-[-4px] h-6 bg-green-500 border-4 border-green-700 rounded-sm"></div>
+                            <div className="absolute top-0 left-[-4px] right-[-4px] h-6 rounded-sm" style={{ background: '#D97706', border: '3px solid #92400E' }} />
                         </div>
                     </React.Fragment>
                 ))}
 
-                {/* Character (Bee) */}
+                {/* Bee */}
                 <div
                     className="absolute left-[100px] z-20"
                     style={{
-                        top: beeY.current,
-                        width: BEE_SIZE,
-                        height: BEE_SIZE,
-                        // Rotation based on velocity
-                        transform: `rotate(${Math.min(30, Math.max(-30, velocity.current * 3))}deg)`
+                        top: beeY.current, width: BEE_SIZE, height: BEE_SIZE,
+                        transform: `rotate(${Math.min(30, Math.max(-30, velocity.current * 3))}deg)`,
                     }}
                 >
                     <div className="w-[80px] h-[80px] -ml-[20px] -mt-[20px]">
@@ -277,57 +201,67 @@ const FlappyBee: React.FC<FlappyBeeProps> = ({ onExit }) => {
                     </div>
                 </div>
 
-                {/* Ground Strip */}
-                <div className="absolute bottom-0 w-full h-8 bg-[#81C784] border-t-4 border-[#4CAF50] z-30"></div>
+                {/* Ground */}
+                <div className="absolute bottom-0 w-full h-8 border-t-4 z-30" style={{ background: '#81C784', borderColor: '#4CAF50' }} />
 
-                {/* Start Screen */}
+                {/* Start screen */}
                 {gameState === 'start' && (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 backdrop-blur-sm z-40 text-white">
+                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/50 backdrop-blur-sm z-40 text-white">
                         <motion.div
-                            animate={{ y: [0, -10, 0] }}
-                            transition={{ repeat: Infinity, duration: 1.5 }}
-                            className="text-7xl font-heading font-black drop-shadow-xl mb-4"
+                            animate={{ y: [0, -12, 0] }}
+                            transition={{ repeat: Infinity, duration: 1.4 }}
+                            className="text-6xl font-heading font-black drop-shadow-xl mb-3"
                         >
-                            TAP TO FLY!
+                            TAP TO FLY! 🐝
                         </motion.div>
-                        <p className="text-xl font-bold opacity-90">Avoid the pipes!</p>
+                        <p className="text-purple-200 font-bold text-lg">Avoid the honey pipes!</p>
                     </div>
                 )}
 
-                {/* Game Over Screen */}
+                {/* Game over overlay */}
                 {gameState === 'gameover' && (
                     <div className="absolute inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm z-50">
                         <motion.div
                             initial={{ scale: 0.5, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
-                            className="bg-white p-8 rounded-3xl shadow-2xl text-center border-8 border-orange-400"
+                            className="p-10 rounded-3xl text-center max-w-sm w-full mx-4 relative"
+                            style={{
+                                background: 'rgba(30,27,75,0.95)',
+                                border: '1px solid rgba(167,139,250,0.4)',
+                                backdropFilter: 'blur(20px)',
+                                boxShadow: '0 20px 60px rgba(0,0,0,0.6)',
+                            }}
                         >
-                            <Trophy className="mx-auto text-yellow-400 mb-4" size={64} fill="currentColor" />
-                            <h2 className="text-4xl font-black text-gray-800 mb-2 font-heading">Game Over!</h2>
-                            <p className="text-2xl font-bold text-gray-500 mb-6">Score: <span className="text-orange-500">{score}</span></p>
+                            <div className="absolute -top-8 left-1/2 -translate-x-1/2 w-16 h-16 rounded-full flex items-center justify-center"
+                                style={{ background: 'linear-gradient(135deg, #FBBF24, #D97706)' }}>
+                                <Trophy className="text-white" size={32} fill="currentColor" />
+                            </div>
+                            <h2 className="text-4xl font-black text-white mt-6 mb-1 font-heading">Bzzt! 😵</h2>
+                            <p className="text-purple-300 font-bold text-lg mb-6">Score: <span className="text-white text-3xl">{score}</span></p>
                             <button
                                 onClick={resetGame}
-                                className="bg-gradient-to-r from-orange-400 to-orange-600 text-white font-black text-xl py-3 px-8 rounded-xl shadow-lg hover:scale-105 transition-transform flex items-center gap-2 mx-auto"
+                                className="w-full text-white font-heading font-black text-xl py-3 px-6 rounded-2xl flex items-center justify-center gap-2 hover:scale-105 transition-transform"
+                                style={{ background: 'linear-gradient(135deg, #FBBF24, #D97706)', boxShadow: '0 6px 20px rgba(251,191,36,0.4)' }}
                             >
-                                <RotateCcw size={24} /> TRY AGAIN
+                                <RotateCcw size={22} /> Try Again
                             </button>
                         </motion.div>
                     </div>
                 )}
             </div>
 
-            <div className="mt-4 text-center">
-                <p className="text-gray-500 font-bold text-sm">Spacebar or Click to Fly</p>
+            {/* Footer hint */}
+            <div className="relative z-10 w-full max-w-[95%] mt-4 flex justify-center">
+                <p className="text-purple-400 font-body font-bold text-sm">Spacebar or Click to Fly 🐝</p>
             </div>
         </div>
     );
 };
 
-// Helper
-const Cloud = ({ size, x, y, speed }: { size: number, x: string, y: string, speed: number }) => (
+const Cloud = ({ size, x, y, speed }: { size: number; x: string; y: string; speed: number }) => (
     <motion.div
         animate={{ x: [0, -100] }}
-        transition={{ repeat: Infinity, duration: speed, ease: "linear" }}
+        transition={{ repeat: Infinity, duration: speed, ease: 'linear' }}
         className="absolute text-white/60"
         style={{ left: x, top: y }}
     >

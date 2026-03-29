@@ -1,267 +1,352 @@
 import React, { useState } from 'react';
-import { supabase } from '../../lib/supabase';
-import { Mail, Lock, Loader2, AlertCircle, ArrowLeft } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { supabase } from '../../lib/supabase';
+import KidButton from '../common/KidButton';
+import { Mail, Lock, Loader2, AlertCircle } from 'lucide-react';
 
 interface AuthProps {
-    onBack?: () => void;
+  onBack?: () => void;
 }
 
-const Auth: React.FC<AuthProps> = ({ onBack }) => {
-    const [loading, setLoading] = useState(false);
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [language, setLanguage] = useState('');
-    const [showLanguageOptions, setShowLanguageOptions] = useState(false);
-    const [isSignUp, setIsSignUp] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+const languages = [
+    "English", "Spanish", "French", "German", "Chinese", "Japanese",
+    "Korean", "Italian", "Portuguese", "Russian", "Arabic", "Hindi",
+    "Dutch", "Swedish", "Polish", "Turkish", "Vietnamese", "Thai"
+];
 
-    const languages = [
-        "English", "Spanish", "French", "German", "Chinese", "Japanese",
-        "Korean", "Italian", "Portuguese", "Russian", "Arabic", "Hindi",
-        "Dutch", "Swedish", "Polish", "Turkish", "Vietnamese", "Thai"
-    ];
+const floatWords = ['Hola!', '你好!', 'Hello!', '¡Amigo!', '谢谢!', 'Friend!', '¡Gracias!', '学习!'];
 
-    const filteredLanguages = languages.filter(lang =>
-        lang.toLowerCase().includes(language.toLowerCase())
-    );
+export const Auth: React.FC<AuthProps> = ({ onBack }) => {
+  const [mode, setMode] = useState<'login' | 'signup'>('login');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-    const handleAuth = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setLoading(true);
-        setError(null);
+  const [email, setEmail]       = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName]   = useState('');
+  
+  const [language, setLanguage] = useState('');
+  const [showLanguageOptions, setShowLanguageOptions] = useState(false);
 
-        try {
-            if (isSignUp) {
-                if (password !== confirmPassword) {
-                    throw new Error("Passwords do not match");
-                }
-                const { error } = await supabase.auth.signUp({
-                    email,
-                    password,
-                    options: {
-                        emailRedirectTo: `${window.location.origin}${import.meta.env.BASE_URL}`,
-                        data: {
-                            first_name: firstName,
-                            last_name: lastName,
-                            primary_language: language,
-                            avatar_url: `https://api.dicebear.com/9.x/adventurer/svg?seed=${firstName}`, // Dynamic Adventurer Avatar
-                        }
-                    }
-                });
-                if (error) throw error;
-                alert('Sign up successful! Check your email for verification.');
-            } else {
-                const { error } = await supabase.auth.signInWithPassword({
-                    email,
-                    password,
-                });
-                if (error) throw error;
-            }
-        } catch (err: any) {
-            setError(err.message);
-        } finally {
-            setLoading(false);
-        }
-    };
+  const filteredLanguages = languages.filter(lang => lang.toLowerCase().includes(language.toLowerCase()));
 
-    return (
-        <div className="w-full max-w-md mx-auto p-4">
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="bg-white rounded-[2.5rem] p-8 shadow-xl border-4 border-white relative overflow-hidden"
+  const handleAuth = async (e: React.FormEvent) => {
+      e.preventDefault();
+      setLoading(true);
+      setError(null);
+
+      try {
+          if (mode === 'signup') {
+              if (password !== confirmPassword) {
+                  throw new Error("Passwords do not match");
+              }
+              const { error } = await supabase.auth.signUp({
+                  email,
+                  password,
+                  options: {
+                      emailRedirectTo: `${window.location.origin}${import.meta.env.BASE_URL}`,
+                      data: {
+                          first_name: firstName,
+                          last_name: lastName,
+                          primary_language: language,
+                          avatar_url: `https://api.dicebear.com/9.x/adventurer/svg?seed=${firstName}`,
+                      }
+                  }
+              });
+              if (error) throw error;
+              alert('Sign up successful! Check your email for verification.');
+          } else {
+              const { error } = await supabase.auth.signInWithPassword({ email, password });
+              if (error) throw error;
+          }
+      } catch (err: any) {
+          setError(err.message);
+      } finally {
+          setLoading(false);
+      }
+  };
+
+  return (
+    <div className="min-h-screen flex">
+      {/* Left illustration panel */}
+      <div
+        className="hidden lg:flex lg:w-1/2 relative overflow-hidden items-center justify-center"
+        style={{ background: 'linear-gradient(135deg, #1a0533 0%, #2d1065 50%, #1a0f5e 100%)' }}
+      >
+        {/* Stars */}
+        {Array.from({ length: 25 }).map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 bg-white rounded-full"
+            style={{ left: `${Math.random() * 100}%`, top: `${Math.random() * 100}%` }}
+            animate={{ opacity: [0.2, 1, 0.2] }}
+            transition={{ duration: Math.random() * 3 + 2, repeat: Infinity, delay: Math.random() * 3 }}
+          />
+        ))}
+
+        {/* Floating language bubbles */}
+        {floatWords.map((w, i) => (
+          <motion.div
+            key={i}
+            className="absolute font-heading font-bold text-white/80 text-lg pointer-events-none select-none"
+            style={{
+              left: `${8 + (i % 3) * 30}%`,
+              top:  `${10 + Math.floor(i / 3) * 25}%`,
+              background: 'rgba(167,139,250,0.15)',
+              border: '2px solid rgba(167,139,250,0.3)',
+              padding: '6px 14px',
+              borderRadius: 999,
+            }}
+            animate={{ y: [0, -12, 0], rotate: [i % 2 === 0 ? -3 : 3, i % 2 === 0 ? 3 : -3, i % 2 === 0 ? -3 : 3] }}
+            transition={{ duration: 3 + i * 0.4, repeat: Infinity, ease: 'easeInOut', delay: i * 0.3 }}
+          >
+            {w}
+          </motion.div>
+        ))}
+
+        {/* Mascot */}
+        <motion.div
+          animate={{ y: [0, -20, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+          className="relative z-10 text-center"
+        >
+          <div
+            className="w-48 h-48 rounded-full mx-auto mb-6 flex items-center justify-center"
+            style={{ background: 'radial-gradient(circle at 35% 35%, #A78BFA, #7C3AED)', boxShadow: '0 0 60px rgba(124,58,237,0.5)' }}
+          >
+            <span className="text-8xl">🐢</span>
+          </div>
+          <h2 className="font-heading text-3xl font-bold text-white mb-2">Welcome to LingoLand!</h2>
+          <p className="font-body text-purple-300 text-sm max-w-xs mx-auto">
+            Your magical language adventure begins here. Learn Spanish, Mandarin, and English!
+          </p>
+        </motion.div>
+      </div>
+
+      {/* Right form panel */}
+      <div className="flex-1 flex items-center justify-center p-8 overflow-y-auto bg-white/95 backdrop-blur-3xl rounded-l-[3rem] shadow-[-20px_0_60px_rgba(0,0,0,0.1)]">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="w-full max-w-md py-12 min-h-[700px] flex flex-col justify-start"
+        >
+          {/* Back */}
+          {onBack && (
+              <button
+                type="button"
+                onClick={onBack}
+                className="flex items-center gap-2 font-body font-bold text-violet-500 hover:text-violet-700 mb-8 transition-colors"
+              >
+                ← Back to Home
+              </button>
+          )}
+
+          {/* Logo */}
+          <div className="flex items-center gap-3 mb-8">
+            <div
+              className="w-12 h-12 rounded-2xl flex items-center justify-center"
+              style={{ background: 'linear-gradient(135deg, #7C3AED, #A855F7)' }}
             >
-                {/* Decoration */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-purple-100 rounded-full blur-3xl -mr-16 -mt-16 -z-0"></div>
-                <div className="absolute bottom-0 left-0 w-32 h-32 bg-blue-100 rounded-full blur-3xl -ml-16 -mb-16 -z-0"></div>
+              <span className="text-2xl">🐢</span>
+            </div>
+            <span className="font-heading font-bold text-3xl text-violet-900">LingoLand</span>
+          </div>
 
-                <div className="relative z-10 text-center mb-8">
-                    {onBack && (
-                        <button
-                            onClick={onBack}
-                            type="button"
-                            className="absolute -left-2 -top-2 p-2 text-gray-400 hover:text-gray-600 transition-colors"
-                        >
-                            <ArrowLeft size={24} />
-                        </button>
-                    )}
-                    <h2 className="font-heading font-bold text-3xl text-gray-800 mb-2">
-                        {isSignUp ? 'Join the Adventure' : 'Welcome Back!'}
-                    </h2>
-                    <p className="text-gray-500 font-medium">
-                        {isSignUp ? 'Create an account to start playing' : 'Sign in to continue your journey'}
-                    </p>
-                </div>
+          {/* Mode toggle */}
+          <div className="flex bg-white rounded-2xl p-1.5 mb-8 shadow-sm border border-violet-100">
+            {(['signup', 'login'] as const).map((m) => (
+              <button
+                key={m}
+                type="button"
+                onClick={() => { setMode(m); setError(null); }}
+                className="flex-1 py-3 rounded-xl font-heading font-bold text-sm transition-all"
+                style={
+                  mode === m
+                    ? { background: 'linear-gradient(135deg, #7C3AED, #A855F7)', color: 'white' }
+                    : { color: '#9CA3AF' }
+                }
+              >
+                {m === 'signup' ? '✨ Sign Up' : '🔑 Log In'}
+              </button>
+            ))}
+          </div>
 
-                <form onSubmit={handleAuth} className="relative z-10 flex flex-col gap-4">
-                    {/* Error Message */}
-                    <AnimatePresence>
-                        {error && (
-                            <motion.div
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: 'auto', opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
-                                className="bg-red-50 text-red-600 px-4 py-3 rounded-xl flex items-center gap-2 text-sm font-bold overflow-hidden"
-                            >
-                                <AlertCircle size={18} className="shrink-0" />
-                                {error}
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
+          <h1 className="font-heading font-bold text-3xl text-violet-900 mb-2">
+            {mode === 'signup' ? 'Create Your Account' : 'Welcome Back!'}
+          </h1>
+          <p className="font-body text-gray-500 mb-8 text-sm">
+            {mode === 'signup' ? 'Join thousands of young language explorers!' : 'Ready to continue your adventure?'}
+          </p>
 
-                    {/* Sign Up Fields */}
-                    <AnimatePresence>
-                        {isSignUp && (
-                            <motion.div
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: 'auto', opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
-                                className="flex flex-col gap-4 overflow-hidden"
-                            >
-                                <div className="flex gap-4">
-                                    <input
-                                        type="text"
-                                        placeholder="First Name"
-                                        value={firstName}
-                                        onChange={(e) => setFirstName(e.target.value)}
-                                        className="w-full px-4 py-4 rounded-2xl bg-gray-50 border-2 border-gray-100 focus:border-purple-400 focus:bg-white transition-all outline-none font-bold text-gray-700"
-                                        required={isSignUp}
-                                    />
-                                    <input
-                                        type="text"
-                                        placeholder="Last Name"
-                                        value={lastName}
-                                        onChange={(e) => setLastName(e.target.value)}
-                                        className="w-full px-4 py-4 rounded-2xl bg-gray-50 border-2 border-gray-100 focus:border-purple-400 focus:bg-white transition-all outline-none font-bold text-gray-700"
-                                        required={isSignUp}
-                                    />
-                                </div>
+          <form onSubmit={handleAuth}>
+            <AnimatePresence mode="wait">
+              {error && (
+                  <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      className="bg-red-50 text-red-600 px-4 py-3 rounded-xl flex items-center gap-2 text-sm font-bold overflow-hidden mb-6"
+                  >
+                      <AlertCircle size={18} className="shrink-0" />
+                      {error}
+                  </motion.div>
+              )}
+            </AnimatePresence>
 
-                                {/* Searchable Language Input */}
-                                <div className="relative">
-                                    <input
-                                        type="text"
-                                        placeholder="Primary Language"
-                                        value={language}
-                                        onChange={(e) => {
-                                            setLanguage(e.target.value);
-                                            setShowLanguageOptions(true);
-                                        }}
-                                        onFocus={() => setShowLanguageOptions(true)}
-                                        className="w-full px-4 py-4 rounded-2xl bg-gray-50 border-2 border-gray-100 focus:border-purple-400 focus:bg-white transition-all outline-none font-bold text-gray-700"
-                                        required={isSignUp}
-                                    />
-                                    <AnimatePresence>
-                                        {showLanguageOptions && language.length > 0 && (
-                                            <motion.div
-                                                initial={{ opacity: 0, y: -10 }}
-                                                animate={{ opacity: 1, y: 0 }}
-                                                exit={{ opacity: 0, y: -10 }}
-                                                className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-xl border-2 border-gray-100 max-h-48 overflow-y-auto z-50 p-2"
-                                            >
-                                                {filteredLanguages.length > 0 ? (
-                                                    filteredLanguages.map((lang) => (
-                                                        <button
-                                                            key={lang}
-                                                            type="button"
-                                                            onClick={() => {
-                                                                setLanguage(lang);
-                                                                setShowLanguageOptions(false);
-                                                            }}
-                                                            className="w-full text-left px-4 py-2 rounded-lg hover:bg-purple-50 hover:text-purple-600 font-bold text-gray-600 transition-colors"
-                                                        >
-                                                            {lang}
-                                                        </button>
-                                                    ))
-                                                ) : (
-                                                    <div className="px-4 py-2 text-gray-400 font-medium text-sm">No languages found</div>
-                                                )}
-                                            </motion.div>
-                                        )}
-                                    </AnimatePresence>
-                                </div>
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
-
-                    {/* Email Field */}
-                    <div className="relative">
-                        <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={mode}
+                initial={{ opacity: 0, x: 10 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -10 }}
+                className="space-y-4"
+              >
+                {mode === 'signup' && (
+                  <>
+                    <div className="flex gap-4">
+                      <div className="flex-1">
+                        <label className="font-heading font-bold text-sm text-violet-800 block mb-1.5">First Name</label>
                         <input
-                            type="email"
-                            placeholder="Email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            className="w-full pl-12 pr-4 py-4 rounded-2xl bg-gray-50 border-2 border-gray-100 focus:border-purple-400 focus:bg-white transition-all outline-none font-bold text-gray-700 placeholder:font-medium placeholder:text-gray-400"
-                            required
+                          value={firstName}
+                          onChange={(e) => setFirstName(e.target.value)}
+                          placeholder="e.g. Alex"
+                          required={mode === 'signup'}
+                          className="w-full px-4 py-3.5 rounded-2xl border-2 border-violet-100 font-body focus:outline-none focus:border-violet-400 bg-white text-gray-800 placeholder-gray-300 transition-colors"
                         />
+                      </div>
+                      <div className="flex-1">
+                        <label className="font-heading font-bold text-sm text-violet-800 block mb-1.5">Last Name</label>
+                        <input
+                          value={lastName}
+                          onChange={(e) => setLastName(e.target.value)}
+                          placeholder="e.g. Smith"
+                          required={mode === 'signup'}
+                          className="w-full px-4 py-3.5 rounded-2xl border-2 border-violet-100 font-body focus:outline-none focus:border-violet-400 bg-white text-gray-800 placeholder-gray-300 transition-colors"
+                        />
+                      </div>
                     </div>
 
-                    {/* Password Field */}
-                    <div className="relative">
-                        <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-                        <input
-                            type="password"
-                            placeholder="Password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            className="w-full pl-12 pr-4 py-4 rounded-2xl bg-gray-50 border-2 border-gray-100 focus:border-purple-400 focus:bg-white transition-all outline-none font-bold text-gray-700 placeholder:font-medium placeholder:text-gray-400"
-                            required
-                        />
+                    <div className="relative z-20">
+                      <label className="font-heading font-bold text-sm text-violet-800 block mb-1.5">Primary Language</label>
+                      <input
+                          type="text"
+                          placeholder="e.g. English"
+                          value={language}
+                          onChange={(e) => {
+                              setLanguage(e.target.value);
+                              setShowLanguageOptions(true);
+                          }}
+                          onFocus={() => setShowLanguageOptions(true)}
+                          className="w-full px-4 py-3.5 rounded-2xl border-2 border-violet-100 font-body focus:outline-none focus:border-violet-400 bg-white text-gray-800 placeholder-gray-300 transition-colors"
+                          required={mode === 'signup'}
+                      />
+                      <AnimatePresence>
+                          {showLanguageOptions && language.length > 0 && (
+                              <motion.div
+                                  initial={{ opacity: 0, y: -10 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  exit={{ opacity: 0, y: -10 }}
+                                  className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-xl border-2 border-gray-100 max-h-48 overflow-y-auto p-2"
+                              >
+                                  {filteredLanguages.length > 0 ? (
+                                      filteredLanguages.map((lang) => (
+                                          <button
+                                              key={lang}
+                                              type="button"
+                                              onClick={() => {
+                                                  setLanguage(lang);
+                                                  setShowLanguageOptions(false);
+                                              }}
+                                              className="w-full text-left px-4 py-2 rounded-lg hover:bg-violet-50 hover:text-violet-600 font-bold text-gray-600 transition-colors"
+                                          >
+                                              {lang}
+                                          </button>
+                                      ))
+                                  ) : (
+                                      <div className="px-4 py-2 text-gray-400 font-medium text-sm">No languages found</div>
+                                  )}
+                              </motion.div>
+                          )}
+                      </AnimatePresence>
                     </div>
+                  </>
+                )}
 
-                    {/* Confirm Password */}
-                    <AnimatePresence>
-                        {isSignUp && (
-                            <motion.div
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: 'auto', opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
-                                className="relative overflow-hidden"
-                            >
-                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-                                <input
-                                    type="password"
-                                    placeholder="Confirm Password"
-                                    value={confirmPassword}
-                                    onChange={(e) => setConfirmPassword(e.target.value)}
-                                    className="w-full pl-12 pr-4 py-4 rounded-2xl bg-gray-50 border-2 border-gray-100 focus:border-purple-400 focus:bg-white transition-all outline-none font-bold text-gray-700 placeholder:font-medium placeholder:text-gray-400 mt-4"
-                                    required={isSignUp}
-                                />
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
-
-                    <button
-                        type="submit"
-                        disabled={loading}
-                        className="mt-4 bg-primary text-white font-heading font-bold text-lg py-4 rounded-2xl hover:brightness-110 active:scale-[0.98] transition-all disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-purple-200"
-                    >
-                        {loading ? (
-                            <Loader2 className="animate-spin" />
-                        ) : (
-                            isSignUp ? 'Sign Up' : 'Let\'s Go!'
-                        )}
-                    </button>
-                </form>
-
-                <div className="relative z-10 mt-6 text-center">
-                    <button
-                        onClick={() => setIsSignUp(!isSignUp)}
-                        className="text-gray-500 font-bold hover:text-primary transition-colors text-sm"
-                    >
-                        {isSignUp
-                            ? 'Already have an account? Sign in'
-                            : 'Need an account? Sign up here'}
-                    </button>
+                <div>
+                  <label className="font-heading font-bold text-sm text-violet-800 block mb-1.5">Email Address</label>
+                  <div className="relative">
+                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="you@example.com"
+                      required
+                      className="w-full pl-11 pr-4 py-3.5 rounded-2xl border-2 border-violet-100 font-body focus:outline-none focus:border-violet-400 bg-white text-gray-800 placeholder-gray-300 transition-colors"
+                    />
+                  </div>
                 </div>
-            </motion.div>
-        </div>
-    );
+
+                <div>
+                  <label className="font-heading font-bold text-sm text-violet-800 block mb-1.5">Password</label>
+                  <div className="relative">
+                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                    <input
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="••••••••"
+                      required
+                      className="w-full pl-11 pr-4 py-3.5 rounded-2xl border-2 border-violet-100 font-body focus:outline-none focus:border-violet-400 bg-white text-gray-800 placeholder-gray-300 transition-colors"
+                    />
+                  </div>
+                </div>
+
+                {mode === 'signup' && (
+                  <div>
+                    <label className="font-heading font-bold text-sm text-violet-800 block mb-1.5">Confirm Password</label>
+                    <div className="relative">
+                      <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                      <input
+                        type="password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        placeholder="••••••••"
+                        required={mode === 'signup'}
+                        className="w-full pl-11 pr-4 py-3.5 rounded-2xl border-2 border-violet-100 font-body focus:outline-none focus:border-violet-400 bg-white text-gray-800 placeholder-gray-300 transition-colors"
+                      />
+                    </div>
+                  </div>
+                )}
+
+                <div className="pt-2 relative z-0">
+                  <KidButton
+                    variant="grape"
+                    size="lg"
+                    fullWidth
+                    type="submit"
+                    disabled={loading}
+                    icon={loading ? <Loader2 className="animate-spin" /> : <span>{mode === 'signup' ? '🚀' : '✨'}</span>}
+                  >
+                    {loading ? 'Processing...' : (mode === 'signup' ? 'Start My Adventure!' : 'Continue Adventure!')}
+                  </KidButton>
+                </div>
+
+                {mode === 'signup' && (
+                  <p className="font-body text-center text-gray-400 text-xs mt-4">
+                    By signing up you agree to our Terms. Your data is always safe and private.
+                  </p>
+                )}
+              </motion.div>
+            </AnimatePresence>
+          </form>
+
+        </motion.div>
+      </div>
+    </div>
+  );
 };
 
 export default Auth;

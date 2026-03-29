@@ -90,7 +90,7 @@ const Profile: React.FC<ProfileProps> = ({ session, onLogout }) => {
     }
 
     return (
-        <div className="min-h-screen pt-36 pb-20 px-4 bg-[#F0F4F8] relative overflow-hidden font-body">
+        <div className="min-h-screen pt-36 pb-20 px-4 relative overflow-hidden font-body">
 
             {/* Background Atmosphere */}
             <div className="absolute top-0 left-0 w-full h-[600px] bg-gradient-to-b from-purple-50 to-transparent -z-10"></div>

@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import TurtlePet from '../pet/TurtlePet';
-import { usePet } from '../../context/PetContext';
-import { useProgress } from '../../context/ProgressContext';
 
 interface DashboardProps {
-  onLessons?:   () => void;
+  onLessons:   () => void;
   onMinigames: () => void;
 }
 
@@ -14,10 +11,17 @@ const containerVariants = {
   visible: { transition: { staggerChildren: 0.08 } },
 };
 
-const itemVariants: any = {
+const itemVariants = {
   hidden:  { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 200, damping: 20 } },
 };
+
+const quickStats = [
+  { icon: '⭐', value: '1,240', label: 'Stars',       color: '#F59E0B' },
+  { icon: '🔥', value: '12',    label: 'Day Streak',  color: '#F97316' },
+  { icon: '🏆', value: 'Lv 5',  label: 'Level',       color: '#7C3AED' },
+  { icon: '🎯', value: '75%',   label: 'Weekly Goal', color: '#10B981' },
+];
 
 const badges = [
   { emoji: '🌟', name: 'First Word', color: '#FCD34D' },
@@ -28,36 +32,26 @@ const badges = [
   { emoji: '❓', name: 'Soon...',    color: '#E5E7EB', locked: true },
 ];
 
+type PetMood = 'happy' | 'excited' | 'sleepy';
+
 export const Dashboard: React.FC<DashboardProps> = ({ onLessons, onMinigames }) => {
-  const { stars, level, streak, weeklyGoalPercent } = useProgress();
-  const { mood, message, celebrate, encourage, greet, sleep, wake } = usePet();
-  const [pose, setPose] = useState<'front' | 'meditate'>('front');
+  const [petMood, setPetMood] = useState<PetMood>('happy');
+  const [petPose, setPetPose] = useState<'front' | 'meditate'>('front');
 
-  const quickStats = [
-    { icon: '⭐', value: stars.toLocaleString(), label: 'Stars',       color: '#F59E0B' },
-    { icon: '🔥', value: streak.toString(),    label: 'Day Streak',  color: '#F97316' },
-    { icon: '🏆', value: `Lv ${level}`,  label: 'Level',       color: '#7C3AED' },
-    { icon: '🎯', value: `${weeklyGoalPercent}%`,   label: 'Weekly Goal', color: '#10B981' },
-  ];
-
-  const handleFeed = () => celebrate();
-  const handlePlay = () => encourage();
-  const handlePetClick = () => greet();
-
-  const handleRest = () => {
-    if (pose === 'meditate') {
-      setPose('front');
-      wake();
-    } else {
-      setPose('meditate');
-      sleep();
-    }
+  const moodEmojis: Record<PetMood, string> = {
+    happy: '😊', excited: '🤩', sleepy: '😴',
+  };
+  const moodSpeech: Record<PetMood, string> = {
+    happy:   '¡Hola! 👋',
+    excited: '你好! 🎉',
+    sleepy:  'Zzz... 💤',
   };
 
-  const todayName = new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(new Date());
-
   return (
-    <div className="min-h-screen pt-28 pb-12 px-4 relative overflow-hidden">
+    <div
+      className="min-h-screen pt-20 pb-12 px-4 relative overflow-hidden"
+      style={{ background: 'linear-gradient(160deg, #F5F3FF 0%, #FFF7ED 50%, #FDF4FF 100%)' }}
+    >
       {/* Ambient blobs */}
       <div className="absolute top-0 left-0 w-[500px] h-[500px] rounded-full opacity-20 blur-3xl pointer-events-none" style={{ background: '#DDD6FE' }} />
       <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full opacity-15 blur-3xl pointer-events-none" style={{ background: '#FDE68A' }} />
@@ -72,16 +66,16 @@ export const Dashboard: React.FC<DashboardProps> = ({ onLessons, onMinigames }) 
         {/* Greeting */}
         <motion.div variants={itemVariants} className="mb-8 flex items-center justify-between flex-wrap gap-4">
           <div>
-            <h1 className="font-heading font-bold text-4xl text-amber-50">
-              Welcome back, Explorer!
+            <h1 className="font-heading font-bold text-4xl text-violet-900">
+              Welcome back, Explorer! 🗺️
             </h1>
-            <p className="font-body text-purple-200 mt-1">Ready to continue your language adventure?</p>
+            <p className="font-body text-violet-500 mt-1">Ready to continue your language adventure?</p>
           </div>
           <div
             className="hidden md:flex items-center gap-3 px-5 py-3 rounded-2xl font-body font-bold text-sm"
             style={{ background: 'rgba(124,58,237,0.08)', border: '2px solid rgba(124,58,237,0.15)', color: '#7C3AED' }}
           >
-            <span>📅</span> {todayName} — Day {streak} of streak!
+            <span>📅</span> Monday — Day 12 of streak!
           </div>
         </motion.div>
 
@@ -136,7 +130,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onLessons, onMinigames }) 
                   📚
                 </div>
                 <h3 className="font-heading font-bold text-2xl text-white mb-1">Lessons</h3>
-                <p className="font-body text-white/75 text-sm">Explore Language Lessons</p>
+                <p className="font-body text-white/75 text-sm">Lesson 1 • Introductions</p>
               </div>
               <div className="absolute top-0 left-0 right-0 h-1/2 bg-white/5 rounded-t-[2rem]" />
             </motion.button>
@@ -162,7 +156,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onLessons, onMinigames }) 
                   🎮
                 </div>
                 <h3 className="font-heading font-bold text-2xl text-white mb-1">Mini Games</h3>
-                <p className="font-body text-white/75 text-sm">Play and earn XP!</p>
+                <p className="font-body text-white/75 text-sm">12 levels to explore</p>
               </div>
               <div className="absolute top-0 left-0 right-0 h-1/2 bg-white/5 rounded-t-[2rem]" />
             </motion.button>
@@ -198,57 +192,91 @@ export const Dashboard: React.FC<DashboardProps> = ({ onLessons, onMinigames }) 
               {/* Mood badge */}
               <motion.div
                 animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                className="absolute top-8 right-8 bg-white/80 backdrop-blur-md px-4 py-2 rounded-2xl shadow-sm flex items-center gap-2 border border-white"
+                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+                className="absolute top-6 right-6 px-4 py-2 rounded-2xl font-body font-bold text-sm flex items-center gap-2"
+                style={{ background: 'white', boxShadow: '0 4px 20px rgba(0,0,0,0.08)', color: '#7C3AED' }}
               >
-                <span className="text-xl">🐢</span>
-                <span className="font-heading font-bold text-gray-700 text-sm">Feeling {mood}!</span>
+                <span>{moodEmojis[petMood]}</span> Feeling {petMood}!
               </motion.div>
 
-              {/* Character */}
-              <div className="flex-1 flex items-center justify-center mt-12 mb-4">
-                <TurtlePet pose={pose} onPetClick={handlePetClick} />
-              </div>
-
-              {/* Interaction buttons */}
-              <div className="flex gap-3 mb-8">
-                <motion.button onClick={handleFeed} whileHover={{ y: -3 }} whileTap={{ scale: 0.95 }} className="bg-white px-5 py-2.5 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-2 text-sm font-bold font-heading text-emerald-600">
-                  🥬 Feed
-                </motion.button>
-                <motion.button onClick={handlePlay} whileHover={{ y: -3 }} whileTap={{ scale: 0.95 }} className="bg-white px-5 py-2.5 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-2 text-sm font-bold font-heading text-rose-500">
-                  🎾 Play
-                </motion.button>
-                <motion.button onClick={handleRest} whileHover={{ y: -3 }} whileTap={{ scale: 0.95 }} className="bg-white px-5 py-2.5 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-2 text-sm font-bold font-heading text-amber-500">
-                  🌙 {pose === 'meditate' ? 'Wake' : 'Rest'}
-                </motion.button>
-              </div>
-
-              {/* Speech bubble */}
+              {/* Pet */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                key={message}
-                className="absolute bottom-32 left-1/2 -translate-x-1/2 bg-white px-6 py-4 rounded-[2rem] shadow-xl border-2 border-purple-100 text-center min-w-[200px]"
+                animate={{ y: [0, -15, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                className="relative z-10 py-8 mt-12"
               >
-                <p className="font-body text-gray-800 font-bold">{message}</p>
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-full w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-t-[10px] border-t-white" />
+                <div
+                  className="w-52 h-52 rounded-full flex items-center justify-center mx-auto"
+                  style={{
+                    background: 'radial-gradient(circle at 35% 35%, #A78BFA, #7C3AED)',
+                    boxShadow: '0 0 60px rgba(124,58,237,0.3)',
+                  }}
+                >
+                  <span className="text-[100px]">🐢</span>
+                </div>
+
+                {/* Speech bubble */}
+                <motion.div
+                  animate={{ scale: [1, 1.04, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="absolute -top-2 -right-6 bg-white rounded-2xl rounded-bl-sm px-4 py-2 font-heading font-bold text-violet-800 text-sm shadow-lg"
+                >
+                  {moodSpeech[petMood]}
+                </motion.div>
               </motion.div>
+
+              {/* Pet action buttons */}
+              <div className="flex gap-3 pb-6">
+                {[
+                  { label: '🥬 Feed', mood: 'happy' as PetMood },
+                  { label: '🎾 Play', mood: 'excited' as PetMood },
+                ].map((btn, i) => (
+                  <motion.button
+                    key={i}
+                    whileHover={{ y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setPetMood(btn.mood)}
+                    className="px-4 py-2.5 rounded-2xl font-heading font-bold text-sm bg-white text-violet-700 hover:text-violet-900 transition-colors"
+                    style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.08)', border: '2px solid rgba(167,139,250,0.3)' }}
+                  >
+                    {btn.label}
+                  </motion.button>
+                ))}
+                <motion.button
+                  whileHover={{ y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => { setPetMood('sleepy'); setPetPose(p => p === 'meditate' ? 'front' : 'meditate'); }}
+                  className="px-4 py-2.5 rounded-2xl font-heading font-bold text-sm transition-colors"
+                  style={{
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+                    border: '2px solid rgba(167,139,250,0.3)',
+                    background: petPose === 'meditate' ? '#FEF3C7' : 'white',
+                    color: petPose === 'meditate' ? '#B45309' : '#6D28D9',
+                  }}
+                >
+                  {petPose === 'meditate' ? '☀️ Wake' : '🌙 Rest'}
+                </motion.button>
+              </div>
             </div>
           </motion.div>
 
-          {/* Goals island — right */}
-          <motion.div variants={itemVariants} className="lg:col-span-3 flex flex-col gap-6">
-            
-            {/* Weekly Goal */}
+          {/* Progress column — right */}
+          <motion.div variants={itemVariants} className="lg:col-span-3 flex flex-col gap-4">
+
+            {/* Weekly goal */}
             <div className="bg-white rounded-3xl p-6" style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.08)' }}>
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="font-heading font-bold text-gray-800">Weekly Goal</h3>
-                <span className="ml-auto font-heading font-bold text-emerald-600">{weeklyGoalPercent}%</span>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-2xl bg-amber-100 flex items-center justify-center text-xl">🎯</div>
+                <div>
+                  <div className="font-heading font-bold text-gray-800 text-sm">Weekly Goal</div>
+                  <div className="font-body text-gray-400 text-xs">Keep going!</div>
+                </div>
+                <span className="ml-auto font-heading font-bold text-emerald-600">75%</span>
               </div>
               <div className="relative h-4 bg-gray-100 rounded-full overflow-hidden">
                 <motion.div
                   initial={{ width: 0 }}
-                  animate={{ width: `${weeklyGoalPercent}%` }}
+                  animate={{ width: '75%' }}
                   transition={{ duration: 1.2, ease: 'easeOut', delay: 0.5 }}
                   className="h-full rounded-full relative overflow-hidden"
                   style={{ background: 'linear-gradient(90deg, #10B981, #34D399)' }}
@@ -256,7 +284,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onLessons, onMinigames }) 
                   <div className="absolute inset-0 bg-white/20 animate-pulse" />
                 </motion.div>
               </div>
-              <p className="font-body text-gray-400 text-xs mt-2">{Math.round((weeklyGoalPercent / 100) * 5)} of 5 activities this week</p>
+              <p className="font-body text-gray-400 text-xs mt-2">4 of 5 lessons this week</p>
             </div>
 
             {/* Badges */}
@@ -301,7 +329,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onLessons, onMinigames }) 
               <div className="absolute right-0 top-0 text-7xl opacity-20 -mr-3 -mt-2 select-none pointer-events-none">⚡</div>
               <div className="relative z-10">
                 <div className="font-heading font-bold text-white text-lg">Daily Challenge!</div>
-                <div className="font-body text-amber-100 text-sm">Complete to earn 20 ⭐</div>
+                <div className="font-body text-amber-100 text-sm">Complete to earn 50 ⭐</div>
               </div>
             </motion.button>
           </motion.div>

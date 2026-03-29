@@ -1,8 +1,10 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, Volume2, CheckCircle2, Mic, Square } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Volume2, CheckCircle2, Mic, Square } from "lucide-react";
 import lessonData from "./lesson_json/lesson-01.json";
 import { speak } from "../../lib/tts";
+import KidButton from '../common/KidButton';
+import { useProgress } from '../../context/ProgressContext';
 
 type LangCode = "en" | "es" | "zh";
 
@@ -59,11 +61,12 @@ type LessonStep =
     };
 
 interface LessonPlayerProps {
+  lessonId: string;
   language: LangCode;
   onExit: () => void;
 }
 
-type SayStatus = "idle" | "listening" | "correct" | "wrong";
+type SayStatus = "idle" | "listening" | "correct" | "wrong" | "skipped";
 
 /* ---------------- helper functions ---------------- */
 
@@ -192,11 +195,39 @@ function languageFallbackDistractors(language: LangCode): string[] {
 
 /* ---------------- main ---------------- */
 
-const LessonPlayer: React.FC<LessonPlayerProps> = ({ language, onExit }) => {
+const getStepMeta = (type: string) => {
+  switch (type) {
+    case 'listen': return { emoji: '👂', color: '#7C3AED', desc: 'Tap each card to hear the word!' };
+    case 'vocab': return { emoji: '🔗', color: '#0EA5E9', desc: 'Match what you hear to the right word.' };
+    case 'pronounce': return { emoji: '🎤', color: '#F43F5E', desc: 'Use your voice to say each phrase.' };
+    case 'build': return { emoji: '🧩', color: '#F59E0B', desc: 'Arrange tiles to form the sentence.' };
+    case 'conversation': return { emoji: '💬', color: '#10B981', desc: 'Have a chat!' };
+    case 'game': return { emoji: '🎯', color: '#8B5CF6', desc: 'Match words to the correct sentence.' };
+    case 'assessment': return { emoji: '🏆', color: '#F97316', desc: "Show what you've learned!" };
+    default: return { emoji: '✨', color: '#9CA3AF', desc: 'Learn something new!' };
+  }
+};
+
+const getMascotMessage = (type: string) => {
+  switch (type) {
+    case 'listen': return "Listen carefully! Tap each card to hear the word. 🎵";
+    case 'vocab': return "Now match what you hear to the right word! You got this! 💪";
+    case 'pronounce': return "Your turn to speak! Don't be shy — just try! 🎤";
+    case 'build': return "Rearrange the tiles to build the sentence. Think like a puzzle! 🧩";
+    case 'conversation': return "Pretend you're talking to a new friend! 😊";
+    case 'game': return "Almost there! Match the words to fill in the blanks. 🎯";
+    case 'assessment': return "This is your moment to shine! Show me what you learned! 🌟";
+    default: return "You're doing amazing! Keep going! 🌟";
+  }
+};
+
+const LessonPlayer: React.FC<LessonPlayerProps> = ({ lessonId, language, onExit }) => {
   const lesson = lessonData as { id: string; title: string; steps: LessonStep[] };
+  const { updateProgress, markLessonComplete, addStars, incrementActivity } = useProgress();
 
   const [stepIndex, setStepIndex] = useState(0);
   const [name, setName] = useState("Alex");
+  const [sessionStars, setSessionStars] = useState(0);
 
   // Completion screen
   const [showComplete, setShowComplete] = useState(false);
@@ -205,25 +236,36 @@ const LessonPlayer: React.FC<LessonPlayerProps> = ({ language, onExit }) => {
   const [heardIds, setHeardIds] = useState<string[]>([]);
   const [matchedCountStep2, setMatchedCountStep2] = useState(0);
   const [sayItCorrectIds, setSayItCorrectIds] = useState<string[]>([]);
+  const [sayItSkippedIds, setSayItSkippedIds] = useState<string[]>([]);
   const [buildDoneCount, setBuildDoneCount] = useState(0);
   const [buildTotalCount, setBuildTotalCount] = useState(5);
   const [convCorrectKeys, setConvCorrectKeys] = useState<string[]>([]);
+  const [convSkippedKeys, setConvSkippedKeys] = useState<string[]>([]);
   const [matchedCountStep6, setMatchedCountStep6] = useState(0);
 
   const step = lesson.steps[stepIndex];
 
   useEffect(() => {
-    // reset per step / language
+    // reset global progress ONLY when the lesson/language changes
     setHeardIds([]);
     setMatchedCountStep2(0);
     setSayItCorrectIds([]);
+    setSayItSkippedIds([]);
     setBuildDoneCount(0);
     setBuildTotalCount(5);
     setConvCorrectKeys([]);
+    setConvSkippedKeys([]);
     setMatchedCountStep6(0);
+    setSessionStars(0);
+    setStepIndex(0);
     setShowComplete(false);
     stopSpeech();
-  }, [stepIndex, language]);
+  }, [language]);
+
+  useEffect(() => {
+    // Silence any running speech engine when bouncing between steps
+    stopSpeech();
+  }, [stepIndex]);
 
   // Step 1 gating
   const isStep1Listen = stepIndex === 0 && step?.type === "listen";
@@ -238,7 +280,7 @@ const LessonPlayer: React.FC<LessonPlayerProps> = ({ language, onExit }) => {
   // Step 3 gating
   const isStep3SayIt = stepIndex === 2 && step?.type === "pronounce";
   const step3Total = isStep3SayIt ? (step as { itemsByLanguage: Record<LangCode, ListenItem[]> }).itemsByLanguage[language].length : 0;
-  const step3AllCorrect = !isStep3SayIt ? true : sayItCorrectIds.length >= step3Total;
+  const step3CanProceed = !isStep3SayIt ? true : (sayItCorrectIds.length + sayItSkippedIds.length) >= step3Total;
 
   // Step 4 gating
   const isStep4Build = stepIndex === 3 && step?.type === "build";
@@ -256,7 +298,7 @@ const LessonPlayer: React.FC<LessonPlayerProps> = ({ language, onExit }) => {
     return count;
   }, [isStep5Conversation, step, language]);
 
-  const step5AllCorrect = !isStep5Conversation ? true : convCorrectKeys.length >= step5RequiredLearnerLines;
+  const step5CanProceed = !isStep5Conversation ? true : (convCorrectKeys.length + convSkippedKeys.length) >= step5RequiredLearnerLines;
 
   // Step 6 gating
   const isStep6FillBlank = stepIndex === 5 && step?.type === "game";
@@ -270,25 +312,44 @@ const LessonPlayer: React.FC<LessonPlayerProps> = ({ language, onExit }) => {
     canNextBase &&
     step1AllHeard &&
     step2AllMatched &&
-    step3AllCorrect &&
+    step3CanProceed &&
     step4AllCorrect &&
-    step5AllCorrect &&
+    step5CanProceed &&
     step6AllMatched;
 
   const isLastStep = stepIndex === lesson.steps.length - 1;
 
+  // Review & Completion Mechanics
+  const step3Global = lesson.steps.findIndex((s) => s.type === "pronounce");
+  const step3TotalGlobal = step3Global >= 0 ? (lesson.steps[step3Global] as any).itemsByLanguage[language].length : 0;
+  const hasIncompleteStep3 = step3Global >= 0 && sayItCorrectIds.length < step3TotalGlobal;
+
+  const step5Global = lesson.steps.findIndex((s) => s.type === "conversation");
+  const step5RequiredGlobal = step5Global >= 0 ? (() => {
+    const s = (lesson.steps[step5Global] as any).scriptByLanguage[language];
+    let count = 0;
+    if ((s.learner1 ?? "").trim()) count++;
+    if ((s.learner2 ?? "").trim()) count++;
+    if ((s.learner3 ?? "").trim()) count++;
+    return count;
+  })() : 0;
+  const hasIncompleteStep5 = step5Global >= 0 && convCorrectKeys.length < step5RequiredGlobal;
+
   const canComplete =
     isLastStep &&
+    !hasIncompleteStep3 &&
+    !hasIncompleteStep5 &&
     step1AllHeard &&
     step2AllMatched &&
-    step3AllCorrect &&
     step4AllCorrect &&
-    step5AllCorrect &&
     step6AllMatched;
 
   const next = () => {
     if (!canNext) return;
     stopSpeech();
+    addStars(2);
+    incrementActivity();
+    setSessionStars((s) => s + 2);
     setStepIndex((i) => Math.min(i + 1, lesson.steps.length - 1));
     window.scrollTo(0, 0);
   };
@@ -299,15 +360,12 @@ const LessonPlayer: React.FC<LessonPlayerProps> = ({ language, onExit }) => {
     window.scrollTo(0, 0);
   };
 
-  const headerBadge = useMemo(() => {
-    if (language === "en") return "English";
-    if (language === "es") return "Spanish";
-    return "Mandarin";
-  }, [language]);
 
   const markHeard = (id: string) => setHeardIds((prev) => (prev.includes(id) ? prev : [...prev, id]));
   const markSayItCorrect = (id: string) => setSayItCorrectIds((prev) => (prev.includes(id) ? prev : [...prev, id]));
+  const markSayItSkipped = (id: string) => setSayItSkippedIds((prev) => (prev.includes(id) ? prev : [...prev, id]));
   const markConvCorrect = (key: string) => setConvCorrectKeys((prev) => (prev.includes(key) ? prev : [...prev, key]));
+  const markConvSkipped = (key: string) => setConvSkippedKeys((prev) => (prev.includes(key) ? prev : [...prev, key]));
 
   if (!step) {
     return (
@@ -321,168 +379,332 @@ const LessonPlayer: React.FC<LessonPlayerProps> = ({ language, onExit }) => {
 
   if (showComplete) {
     return (
-      <div className="min-h-screen pt-28 pb-16 px-4 bg-[#FFE4EF]">
-        <div className="max-w-4xl mx-auto">
-          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="bg-white rounded-3xl shadow-xl p-10 text-center">
-            <div className="text-4xl font-heading font-black text-gray-800">Great job! 🎉</div>
-            <div className="mt-2 text-gray-600 font-semibold">
-              You completed Lesson 1 in {headerBadge}.
-            </div>
+      <div
+        className="min-h-screen flex items-center justify-center p-8 relative overflow-hidden"
+      >
+        {/* Confetti particles */}
+        {Array.from({ length: 30 }).map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute rounded-full"
+            style={{
+              width:  8 + Math.random() * 8,
+              height: 8 + Math.random() * 8,
+              left:  `${Math.random() * 100}%`,
+              top:   `${Math.random() * 100}%`,
+              background: ['#FCD34D', '#F43F5E', '#34D399', '#60A5FA', '#A78BFA'][Math.floor(Math.random() * 5)],
+            }}
+            animate={{ y: [0, -300], opacity: [1, 0], rotate: [0, 360] }}
+            transition={{ duration: 2 + Math.random() * 2, delay: Math.random(), ease: 'easeOut' }}
+          />
+        ))}
 
-            <div className="mt-8 flex items-center justify-center">
-              <div className="w-20 h-20 rounded-3xl bg-[#F7FAFF] border border-blue-100 flex items-center justify-center text-4xl">
-                🏆
-              </div>
-            </div>
-
-            <div className="mt-8">
-              <div className="text-sm font-extrabold text-gray-600 mb-2">Progress</div>
-              <div className="h-4 w-full rounded-full bg-gray-100 overflow-hidden">
-                <div className="h-full w-full bg-primary rounded-full" />
-              </div>
-              <div className="mt-2 text-xs font-bold text-gray-500">Lesson 1 Complete</div>
-            </div>
-
-            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
-              <button onClick={() => setShowComplete(false)} className="px-5 py-3 rounded-xl bg-gray-100 text-gray-800 font-bold hover:bg-gray-200">
-                Review Lesson
-              </button>
-
-              <button
-                onClick={() => {
-                  stopSpeech();
-                  onExit();
-                }}
-                className="px-5 py-3 rounded-xl bg-primary text-white font-bold hover:bg-primary/90"
-              >
-                Back to Map
-              </button>
-            </div>
+        <motion.div
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ type: 'spring', stiffness: 200 }}
+          className="bg-white rounded-[3rem] p-12 text-center max-w-md w-full relative z-10"
+          style={{ boxShadow: '0 40px 80px rgba(0,0,0,0.3)' }}
+        >
+          <motion.div
+            animate={{ rotate: [0, -10, 10, 0], scale: [1, 1.2, 1] }}
+            transition={{ duration: 1, repeat: Infinity, repeatDelay: 2 }}
+            className="text-8xl mb-6"
+          >
+            🏆
           </motion.div>
-        </div>
+          <h1 className="font-heading font-bold text-4xl text-violet-900 mb-3">Lesson Complete!</h1>
+          <p className="font-body text-gray-500 mb-6">
+            You earned <span className="text-amber-500 font-bold">{sessionStars} Stars</span> and finished Lesson 1!
+          </p>
+
+          <div className="bg-violet-50 rounded-2xl p-4 mb-8 flex items-center justify-around">
+            {[
+              { v: lesson.steps.length.toString(), l: 'Steps Done', e: '✅' },
+              { v: `${sessionStars}`, l: 'Stars Earned', e: '⭐' },
+              { v: 'A+',  l: 'Grade',       e: '🎯' },
+            ].map((s, i) => (
+              <div key={i} className="text-center">
+                <div className="text-xl">{s.e}</div>
+                <div className="font-heading font-bold text-violet-900 text-xl">{s.v}</div>
+                <div className="font-body text-gray-500 text-xs">{s.l}</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex gap-3">
+            <KidButton variant="ghost" size="md" onClick={() => { setShowComplete(false); setStepIndex(0); }} fullWidth>
+              Review
+            </KidButton>
+            <KidButton variant="grape" size="md" onClick={onExit} icon={<span>🗺️</span>} fullWidth>
+              Back to Map
+            </KidButton>
+          </div>
+        </motion.div>
       </div>
     );
   }
 
-  return (
-    <div className="min-h-screen pt-28 pb-16 px-4 bg-[#F0F4F8]">
-      <div className="max-w-4xl mx-auto">
-        <div className="flex items-center justify-between mb-8">
-          <button
-            onClick={() => {
-              stopSpeech();
-              onExit();
-            }}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white shadow-sm font-bold text-gray-700 hover:bg-gray-50"
-          >
-            <ArrowLeft size={18} />
-            Back
-          </button>
+  const langData = {
+    name: language === 'en' ? 'English' : language === 'es' ? 'Spanish' : 'Mandarin',
+    flag: language === 'en' ? '🇺🇸' : language === 'es' ? '🇪🇸' : '🇨🇳',
+    gradient: language === 'en' ? 'linear-gradient(135deg, #1D4ED8, #0EA5E9)' : language === 'es' ? 'linear-gradient(135deg, #DC2626, #F59E0B)' : 'linear-gradient(135deg, #991B1B, #F97316)',
+    color: language === 'en' ? '#0EA5E9' : language === 'es' ? '#F97316' : '#F43F5E'
+  };
 
-          <div className="px-4 py-2 rounded-full bg-white shadow-sm font-extrabold text-primary text-sm uppercase tracking-wide">
-            {headerBadge} • Lesson 1
+  const stepMeta = step ? getStepMeta(step.type) : getStepMeta('');
+  const mascotText = step ? getMascotMessage(step.type) : getMascotMessage('');
+  const progress = ((stepIndex + 1) / lesson.steps.length) * 100;
+
+  useEffect(() => {
+    updateProgress(language, Math.round(progress));
+  }, [progress, language, updateProgress]);
+
+  return (
+    <div className="min-h-screen">
+
+      <div className="max-w-6xl mx-auto px-6 py-8">
+        <div className="grid lg:grid-cols-12 gap-8">
+          {/* Sidebar step list */}
+          <div className="lg:col-span-3 hidden lg:block">
+            <div className="sticky top-28 relative">
+              {/* Exit button — absolute, just left of the card, doesn't steal width */}
+              <button
+                onClick={onExit}
+                className="absolute -left-10 top-1 w-8 h-8 rounded-full bg-white/15 hover:bg-white/25 text-white flex items-center justify-center font-bold text-sm transition-colors shadow-md z-10"
+                title="Exit lesson"
+              >
+                ✕
+              </button>
+              <div className="bg-white rounded-3xl p-5" style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.08)' }}>
+                  <h3 className="font-heading font-bold text-gray-800 mb-4 text-xs uppercase tracking-widest">Lesson Steps</h3>
+                  <div className="space-y-1">
+                    {lesson.steps.map((s, i) => {
+                      const sm = getStepMeta(s.type);
+                      return (
+                        <div
+                          key={i}
+                          className="flex items-center gap-3 p-3 rounded-2xl transition-colors"
+                          style={{
+                            background: i === stepIndex ? `${sm.color}15` : i < stepIndex ? '#F0FDF4' : 'transparent',
+                            border: i === stepIndex ? `2px solid ${sm.color}40` : '2px solid transparent',
+                          }}
+                        >
+                          <div
+                            className="w-8 h-8 rounded-xl flex items-center justify-center text-sm flex-shrink-0"
+                            style={{
+                              background: i < stepIndex ? '#10B981' : i === stepIndex ? sm.color : '#E5E7EB',
+                              color: i <= stepIndex ? 'white' : '#9CA3AF',
+                            }}
+                          >
+                            {i < stepIndex ? '✓' : sm.emoji}
+                          </div>
+                          <span
+                            className="font-body font-bold text-xs leading-tight"
+                            style={{ color: i === stepIndex ? sm.color : i < stepIndex ? '#10B981' : '#9CA3AF' }}
+                          >
+                            {sm.desc}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>{/* end white card */}
+
+              {/* Status Ring & Info */}
+              <div className="bg-white rounded-3xl p-6 mt-6 flex flex-col items-center justify-center gap-6" style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.08)' }}>
+                {/* Ring */}
+                <div className="relative w-32 h-32 flex items-center justify-center">
+                  <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="40" className="text-gray-100" strokeWidth="8" stroke="currentColor" fill="transparent" />
+                    <motion.circle
+                      cx="50" cy="50" r="40"
+                      strokeWidth="8"
+                      stroke={langData.color}
+                      strokeLinecap="round"
+                      fill="transparent"
+                      initial={{ strokeDasharray: "251.2 251.2", strokeDashoffset: 251.2 }}
+                      animate={{ strokeDashoffset: 251.2 - (251.2 * progress) / 100 }}
+                      transition={{ duration: 1, ease: 'easeOut' }}
+                    />
+                  </svg>
+                  <div className="absolute inset-0 flex flex-col items-center justify-center">
+                    <span className="font-heading font-bold text-3xl" style={{ color: langData.color }}>{Math.round(progress)}%</span>
+                  </div>
+                </div>
+
+                {/* Badges */}
+                <div className="flex flex-col gap-3 w-full">
+                  <motion.div
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{ duration: 0.3 }}
+                    key={sessionStars}
+                    className="flex items-center justify-center gap-2 px-4 py-3 rounded-2xl font-heading font-bold text-base"
+                    style={{ background: '#FEF3C7', color: '#B45309', border: '2px solid #FCD34D' }}
+                  >
+                    ⭐ {sessionStars} Stars Earned
+                  </motion.div>
+
+                  <div
+                    className="flex items-center justify-center gap-2 px-4 py-3 rounded-2xl font-heading font-bold text-base text-white shadow-sm"
+                    style={{ background: langData.gradient }}
+                  >
+                    {langData.flag} {langData.name}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Main content */}
+          <div className="lg:col-span-9">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={stepIndex}
+                initial={{ opacity: 0, x: 40 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -40 }}
+                transition={{ duration: 0.25 }}
+              >
+                {/* Step header card */}
+                <div
+                  className="relative overflow-hidden rounded-[2rem] p-8 mb-6 text-white"
+                  style={{ background: `linear-gradient(135deg, ${stepMeta.color}, ${stepMeta.color}99)` }}
+                >
+                  <div className="absolute right-0 top-0 text-[200px] opacity-10 select-none -mr-8 -mt-8 leading-none pointer-events-none">
+                    {stepMeta.emoji}
+                  </div>
+                  <div className="relative z-10 flex items-start justify-between">
+                    <div>
+                      <div className="font-body text-white/70 text-sm mb-1 uppercase tracking-wider">
+                        Step {stepIndex + 1} of {lesson.steps.length}
+                      </div>
+                      <h2 className="font-heading font-bold text-4xl mb-2">{step.title}</h2>
+                      <p className="font-body text-white/80">{stepMeta.desc}</p>
+                    </div>
+                    <div className="text-5xl ml-4 flex-shrink-0">{stepMeta.emoji}</div>
+                  </div>
+                  <div className="absolute top-0 left-0 right-0 h-1/3 bg-white/5 rounded-t-[2rem]" />
+                </div>
+
+                {/* Mascot coach tip */}
+                <div className="flex items-start gap-4 mb-6">
+                  <div
+                    className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0"
+                    style={{ background: 'radial-gradient(circle at 35% 35%, #A78BFA, #7C3AED)' }}
+                  >
+                    🐢
+                  </div>
+                  <div
+                    className="relative flex-1 px-5 py-3 rounded-2xl rounded-tl-sm font-body text-violet-800 text-sm"
+                    style={{ background: 'white', boxShadow: '0 4px 20px rgba(124,58,237,0.1)', border: '2px solid rgba(167,139,250,0.2)' }}
+                  >
+                    {mascotText}
+                    <div
+                      className="absolute -left-2 top-4 w-3 h-3 rotate-45 bg-white"
+                      style={{ border: '2px solid rgba(167,139,250,0.2)', borderRight: 'none', borderBottom: 'none' }}
+                    />
+                  </div>
+                </div>
+
+                {/* Content card */}
+                <div className="bg-white rounded-3xl p-6 mb-6" style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.06)' }}>
+                  {step.type === "listen" && isStep1Listen ? (
+                    <StepListenCards step={step as Extract<LessonStep, { type: "listen" }>} language={language} heardIds={heardIds} onHeard={markHeard} />
+                  ) : step.type === "vocab" && isStep2Match ? (
+                    <Step2AudioMatch step={step as Extract<LessonStep, { type: "vocab" }>} language={language} onProgress={setMatchedCountStep2} />
+                  ) : step.type === "pronounce" && isStep3SayIt ? (
+                    <Step3SayIt step={step as Extract<LessonStep, { type: "pronounce" }>} language={language} correctIds={sayItCorrectIds} skippedIds={sayItSkippedIds} onCorrect={markSayItCorrect} onSkip={markSayItSkipped} />
+                  ) : step.type === "build" && isStep4Build ? (
+                    <Step4BuildMulti
+                      step={step as Extract<LessonStep, { type: "build" }>}
+                      language={language}
+                      name={name}
+                      setName={setName}
+                      onProgress={(done, total) => {
+                        setBuildDoneCount(done);
+                        setBuildTotalCount(total);
+                      }}
+                    />
+                  ) : step.type === "conversation" && isStep5Conversation ? (
+                    <Step5ConversationPronounce step={step as Extract<LessonStep, { type: "conversation" }>} language={language} name={name} correctKeys={convCorrectKeys} skippedKeys={convSkippedKeys} onCorrect={markConvCorrect} onSkip={markConvSkipped} />
+                  ) : step.type === "game" && isStep6FillBlank ? (
+                    <Step6FillBlank step={step as Extract<LessonStep, { type: "game" }>} language={language} onProgress={setMatchedCountStep6} />
+                  ) : step.type === "assessment" ? (
+                    <StepAssessment step={step as Extract<LessonStep, { type: "assessment" }>} language={language} name={name} />
+                  ) : (
+                    <div className="p-4 rounded-2xl bg-yellow-50 border border-yellow-200 text-yellow-900 font-bold">
+                      This step type/index isn’t wired in this file. (stepIndex={stepIndex}, type={step.type})
+                    </div>
+                  )}
+                </div>
+
+                {/* Navigation */}
+                <div className="flex items-center justify-between">
+                  <KidButton variant="ghost" size="lg" onClick={prev} disabled={!canPrev} icon={<span>←</span>}>
+                    Previous
+                  </KidButton>
+
+                  <div className="flex gap-1.5 items-center">
+                    {lesson.steps.map((_, i) => (
+                      <div
+                        key={i}
+                        className="h-2 rounded-full transition-all"
+                        style={{
+                          width:      i === stepIndex ? 24 : 8,
+                          background: i === stepIndex ? stepMeta.color : i < stepIndex ? '#10B981' : '#E5E7EB',
+                        }}
+                      />
+                    ))}
+                  </div>
+
+                  {isLastStep ? (
+                    hasIncompleteStep3 || hasIncompleteStep5 ? (
+                      <KidButton
+                        variant="coral"
+                        size="lg"
+                        onClick={() => {
+                          if (hasIncompleteStep3) setStepIndex(step3Global);
+                          else if (hasIncompleteStep5) setStepIndex(step5Global);
+                          window.scrollTo(0, 0);
+                        }}
+                        icon={<span>⚠️</span>}
+                      >
+                        Review Skipped
+                      </KidButton>
+                    ) : (
+                      <KidButton
+                        variant="coral"
+                        size="lg"
+                        onClick={() => {
+                          if (!canComplete) return;
+                          stopSpeech();
+                          setShowComplete(true);
+                          markLessonComplete(language, lessonId);
+                          window.scrollTo(0, 0);
+                        }}
+                        disabled={!canComplete}
+                        icon={<span>🏆</span>}
+                      >
+                        Complete Lesson!
+                      </KidButton>
+                    )
+                  ) : (
+                    <KidButton
+                      variant="grape"
+                      size="lg"
+                      onClick={next}
+                      disabled={!canNext}
+                      icon={<span>→</span>}
+                    >
+                      Next Step
+                    </KidButton>
+                  )}
+                </div>
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
-
-        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="bg-white rounded-3xl shadow-xl p-8">
-          <div className="flex items-start justify-between gap-4 mb-6">
-            <div>
-              <h1 className="font-heading font-black text-3xl text-gray-800">{lesson.title}</h1>
-              <p className="text-gray-500 font-semibold mt-1">
-                Step {stepIndex + 1} of {lesson.steps.length}: <span className="text-gray-700">{step.title}</span>
-              </p>
-
-              {isStep5Conversation ? (
-                <div className="mt-3 text-sm font-bold text-gray-600">
-                  Completed: <span className="text-gray-900">{convCorrectKeys.length}/{step5RequiredLearnerLines}</span>
-                </div>
-              ) : null}
-
-              {isStep6FillBlank ? (
-                <div className="mt-3 text-sm font-bold text-gray-600">
-                  Matched: <span className="text-gray-900">{matchedCountStep6}/{step6Total}</span>
-                </div>
-              ) : null}
-            </div>
-          </div>
-
-          {/* Step Body */}
-          {step.type === "listen" && isStep1Listen ? (
-            <StepListenCards step={step as Extract<LessonStep, { type: "listen" }>} language={language} heardIds={heardIds} onHeard={markHeard} />
-          ) : step.type === "vocab" && isStep2Match ? (
-            <Step2AudioMatch step={step as Extract<LessonStep, { type: "vocab" }>} language={language} onProgress={setMatchedCountStep2} />
-          ) : step.type === "pronounce" && isStep3SayIt ? (
-            <Step3SayIt step={step as Extract<LessonStep, { type: "pronounce" }>} language={language} correctIds={sayItCorrectIds} onCorrect={markSayItCorrect} />
-          ) : step.type === "build" && isStep4Build ? (
-            <Step4BuildMulti
-              step={step as Extract<LessonStep, { type: "build" }>}
-              language={language}
-              name={name}
-              setName={setName}
-              onProgress={(done, total) => {
-                setBuildDoneCount(done);
-                setBuildTotalCount(total);
-              }}
-            />
-          ) : step.type === "conversation" && isStep5Conversation ? (
-            <Step5ConversationPronounce step={step as Extract<LessonStep, { type: "conversation" }>} language={language} name={name} correctKeys={convCorrectKeys} onCorrect={markConvCorrect} />
-          ) : step.type === "game" && isStep6FillBlank ? (
-            <Step6FillBlank step={step as Extract<LessonStep, { type: "game" }>} language={language} onProgress={setMatchedCountStep6} />
-          ) : step.type === "assessment" ? (
-            <StepAssessment step={step as Extract<LessonStep, { type: "assessment" }>} language={language} name={name} />
-          ) : (
-            <div className="p-4 rounded-2xl bg-yellow-50 border border-yellow-200 text-yellow-900 font-bold">
-              This step type/index isn’t wired in this file. (stepIndex={stepIndex}, type={step.type})
-            </div>
-          )}
-
-          {/* Navigation */}
-          <div className="flex items-center justify-between mt-10">
-            <button
-              onClick={prev}
-              disabled={!canPrev}
-              className={`px-5 py-3 rounded-xl font-bold flex items-center gap-2 ${
-                canPrev ? "bg-gray-100 text-gray-800 hover:bg-gray-200" : "bg-gray-50 text-gray-300 cursor-not-allowed"
-              }`}
-            >
-              <ArrowLeft size={18} />
-              Prev
-            </button>
-
-            {isLastStep ? (
-              <button
-                onClick={() => {
-                  if (!canComplete) return;
-                  stopSpeech();
-                  setShowComplete(true);
-                  window.scrollTo(0, 0);
-                }}
-                disabled={!canComplete}
-                className={`px-5 py-3 rounded-xl font-bold flex items-center gap-2 ${
-                  canComplete
-                    ? "bg-primary text-white hover:bg-primary/90 shadow-[0_4px_0_rgb(109,40,217)] active:shadow-none active:translate-y-1"
-                    : "bg-gray-50 text-gray-300 cursor-not-allowed"
-                }`}
-              >
-                Complete Lesson ✅
-                <CheckCircle2 size={18} />
-              </button>
-            ) : (
-              <button
-                onClick={next}
-                disabled={!canNext}
-                className={`px-5 py-3 rounded-xl font-bold flex items-center gap-2 ${
-                  canNext
-                    ? "bg-primary text-white hover:bg-primary/90 shadow-[0_4px_0_rgb(109,40,217)] active:shadow-none active:translate-y-1"
-                    : "bg-gray-50 text-gray-300 cursor-not-allowed"
-                }`}
-              >
-                Next
-                <ArrowRight size={18} />
-              </button>
-            )}
-          </div>
-        </motion.div>
       </div>
     </div>
   );
@@ -702,15 +924,20 @@ function Step3SayIt({
   step,
   language,
   correctIds,
-  onCorrect
+  skippedIds,
+  onCorrect,
+  onSkip
 }: {
   step: { itemsByLanguage: Record<LangCode, ListenItem[]> };
   language: LangCode;
   correctIds: string[];
+  skippedIds: string[];
   onCorrect: (id: string) => void;
+  onSkip: (id: string) => void;
 }) {
   const items = step.itemsByLanguage[language];
   const correctSet = useMemo(() => new Set(correctIds), [correctIds]);
+  const skippedSet = useMemo(() => new Set(skippedIds), [skippedIds]);
 
   const [statusById, setStatusById] = useState<Record<string, SayStatus>>({});
   const [heardTextById, setHeardTextById] = useState<Record<string, string>>({});
@@ -833,9 +1060,12 @@ function Step3SayIt({
   const cardClass = (id: string) => {
     const st = statusById[id] ?? "idle";
     const isCorrect = correctSet.has(id) || st === "correct";
+    const isSkipped = skippedSet.has(id) || st === "skipped";
+    
     if (isCorrect) return "bg-green-50 border-green-200 hover:bg-green-100";
     if (st === "wrong") return "bg-red-50 border-red-200";
     if (st === "listening") return "bg-purple-50 border-purple-200";
+    if (isSkipped && !isCorrect) return "bg-yellow-50 border-yellow-200";
     return "bg-[#F7FAFF] border-blue-100 hover:bg-[#EEF4FF]";
   };
 
@@ -899,16 +1129,18 @@ function Step3SayIt({
                       <Square size={16} />
                       Stop
                     </button>
-                    <button
-                      onClick={() => {
-                        setStatusById((p) => ({ ...p, [item.id]: "correct" }));
-                        onCorrect(item.id);
-                      }}
-                      className="px-4 py-2 rounded-xl font-extrabold flex items-center gap-2 bg-gray-100 text-gray-600 hover:bg-gray-200"
-                      title="Skip speaking"
-                    >
-                      Skip
-                    </button>
+                    {st !== "skipped" && !skippedSet.has(item.id) && (
+                      <button
+                        onClick={() => {
+                          setStatusById((p) => ({ ...p, [item.id]: "skipped" }));
+                          onSkip(item.id);
+                        }}
+                        className="px-4 py-2 rounded-xl font-extrabold flex items-center gap-2 bg-gray-100 text-gray-600 hover:bg-gray-200"
+                        title="Skip speaking"
+                      >
+                        Skip
+                      </button>
+                    )}
                   </>
                 ) : (
                   <div className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-white border border-green-100 text-green-700 font-extrabold">
@@ -928,6 +1160,13 @@ function Step3SayIt({
                 <div className="mt-3 p-3 rounded-xl bg-white border border-red-100">
                   <div className="text-sm font-extrabold text-red-700">Try again 👇</div>
                   <div className="mt-1 text-sm font-bold text-gray-700">{hint}</div>
+                </div>
+              ) : null}
+
+              {(st === "skipped" || skippedSet.has(item.id)) && !isCorrect ? (
+                <div className="mt-3 p-3 rounded-xl bg-white border border-yellow-100">
+                  <div className="text-sm font-extrabold text-yellow-800">⚠️ Skipped</div>
+                  <div className="mt-1 text-xs font-bold text-gray-600">You must try this again to pass the lesson!</div>
                 </div>
               ) : null}
 
@@ -1191,7 +1430,9 @@ function Step5ConversationPronounce({
   language,
   name,
   correctKeys,
-  onCorrect
+  skippedKeys,
+  onCorrect,
+  onSkip
 }: {
   step: {
     scriptByLanguage: Record<
@@ -1209,7 +1450,9 @@ function Step5ConversationPronounce({
   language: LangCode;
   name: string;
   correctKeys: string[];
+  skippedKeys: string[];
   onCorrect: (key: string) => void;
+  onSkip: (key: string) => void;
 }) {
   const s = step.scriptByLanguage[language];
 
@@ -1244,6 +1487,7 @@ function Step5ConversationPronounce({
   };
 
   const correctSet = useMemo(() => new Set(correctKeys), [correctKeys]);
+  const skippedSet = useMemo(() => new Set(skippedKeys), [skippedKeys]);
 
   const [statusByKey, setStatusByKey] = useState<Record<string, SayStatus>>({});
   const [heardByKey, setHeardByKey] = useState<Record<string, string>>({});
@@ -1363,9 +1607,12 @@ function Step5ConversationPronounce({
     if (who === "app") return "bg-white border border-gray-100";
     const st = key ? statusByKey[key] ?? "idle" : "idle";
     const done = key ? correctSet.has(key) || st === "correct" : false;
+    const skipped = key ? skippedSet.has(key) || st === "skipped" : false;
+    
     if (done) return "bg-green-600 text-white";
     if (st === "wrong") return "bg-red-600 text-white";
     if (st === "listening") return "bg-purple-600 text-white";
+    if (skipped && !done) return "bg-yellow-600 text-white";
     return "bg-primary text-white";
   };
 
@@ -1400,12 +1647,13 @@ function Step5ConversationPronounce({
           subtext={pinyinForLine(learner1)}
           status={statusByKey["learner1"] ?? "idle"}
           isDone={correctSet.has("learner1")}
+          isSkipped={skippedSet.has("learner1")}
           activeKey={activeKey}
           myKey="learner1"
           onHear={() => speak(learner1, languageToTTS(language))}
           onStart={() => startListening("learner1", learner1)}
           onStop={stopListening}
-          onSkip={() => { setStatusByKey((p) => ({ ...p, ["learner1"]: "correct" })); onCorrect("learner1"); }}
+          onSkip={() => { setStatusByKey((p) => ({ ...p, ["learner1"]: "skipped" })); onSkip("learner1"); }}
           heardText={heardByKey["learner1"]}
           hint={lineHint(learner1)}
         />
@@ -1424,12 +1672,13 @@ function Step5ConversationPronounce({
           subtext={pinyinForLine(learner2)}
           status={statusByKey["learner2"] ?? "idle"}
           isDone={correctSet.has("learner2")}
+          isSkipped={skippedSet.has("learner2")}
           activeKey={activeKey}
           myKey="learner2"
           onHear={() => speak(learner2, languageToTTS(language))}
           onStart={() => startListening("learner2", learner2)}
           onStop={stopListening}
-          onSkip={() => { setStatusByKey((p) => ({ ...p, ["learner2"]: "correct" })); onCorrect("learner2"); }}
+          onSkip={() => { setStatusByKey((p) => ({ ...p, ["learner2"]: "skipped" })); onSkip("learner2"); }}
           heardText={heardByKey["learner2"]}
           hint={lineHint(learner2)}
         />
@@ -1441,12 +1690,13 @@ function Step5ConversationPronounce({
             subtext={pinyinForLine(learner3)}
             status={statusByKey["learner3"] ?? "idle"}
             isDone={correctSet.has("learner3")}
+            isSkipped={skippedSet.has("learner3")}
             activeKey={activeKey}
             myKey="learner3"
             onHear={() => speak(learner3, languageToTTS(language))}
             onStart={() => startListening("learner3", learner3)}
             onStop={stopListening}
-            onSkip={() => { setStatusByKey((p) => ({ ...p, ["learner3"]: "correct" })); onCorrect("learner3"); }}
+            onSkip={() => { setStatusByKey((p) => ({ ...p, ["learner3"]: "skipped" })); onSkip("learner3"); }}
             heardText={heardByKey["learner3"]}
             hint={lineHint(learner3)}
           />
@@ -1508,6 +1758,7 @@ function LearnerSpeakBubble({
   subtext,
   status,
   isDone,
+  isSkipped,
   activeKey,
   myKey,
   onHear,
@@ -1522,6 +1773,7 @@ function LearnerSpeakBubble({
   subtext?: string;
   status: SayStatus;
   isDone: boolean;
+  isSkipped?: boolean;
   activeKey: string | null;
   myKey: string;
   onHear: () => void;
@@ -1570,13 +1822,15 @@ function LearnerSpeakBubble({
                 >
                   <Square size={16} />
                 </button>
-                <button
-                  onClick={onSkip}
-                  className="px-3 py-2 rounded-xl font-extrabold flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white"
-                  title="Skip speaking if having mic issues"
-                >
-                  Skip
-                </button>
+                {status !== "skipped" && !isSkipped && (
+                  <button
+                    onClick={onSkip}
+                    className="px-3 py-2 rounded-xl font-extrabold flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white"
+                    title="Skip speaking if having mic issues"
+                  >
+                    Skip
+                  </button>
+                )}
               </>
             ) : (
               <div className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-white/20 font-extrabold">
@@ -1597,6 +1851,13 @@ function LearnerSpeakBubble({
           <div className="mt-2 p-2 rounded-xl bg-white/15">
             <div className="text-xs font-extrabold uppercase tracking-wide text-white/90">Try again</div>
             <div className="text-sm font-bold text-white">{hint}</div>
+          </div>
+        ) : null}
+
+        {(status === "skipped" || isSkipped) && !isDone ? (
+          <div className="mt-2 p-2 rounded-xl bg-white/15 border border-yellow-400">
+            <div className="text-xs font-extrabold uppercase tracking-wide text-yellow-200">⚠️ Skipped</div>
+            <div className="text-xs font-bold text-white">Retry required to advance</div>
           </div>
         ) : null}
       </div>

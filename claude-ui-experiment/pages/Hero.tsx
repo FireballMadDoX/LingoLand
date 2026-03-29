@@ -1,11 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import KidButton from '../common/KidButton';
-import PetDisplay from '../pet/PetDisplay';
+import KidButton from '../components/KidButton';
 
 interface HeroProps {
   onStart: () => void;
-  onAdventures: () => void;
+  onDashboard: () => void;
 }
 
 const floatingWords = [
@@ -29,13 +28,12 @@ const orbitalBadges = [
   { emoji: '🇺🇸', label: 'English',  angle: 240 },
 ];
 
-export const Hero: React.FC<HeroProps> = ({ onStart, onAdventures }) => {
-  const handleSignUp = () => {
-      onStart();
-  };
-
+export const Hero: React.FC<HeroProps> = ({ onStart, onDashboard }) => {
   return (
-    <section className="min-h-screen relative overflow-hidden flex flex-col pt-12">
+    <section
+      className="min-h-screen relative overflow-hidden flex flex-col"
+      style={{ background: 'linear-gradient(135deg, #1a0533 0%, #2d1065 50%, #1a0f5e 100%)' }}
+    >
       {/* Star field */}
       {Array.from({ length: 40 }).map((_, i) => (
         <motion.div
@@ -114,10 +112,10 @@ export const Hero: React.FC<HeroProps> = ({ onStart, onAdventures }) => {
             </p>
 
             <div className="flex flex-wrap gap-4 mb-12">
-              <KidButton variant="lime" size="xl" onClick={handleSignUp} icon={<span>🚀</span>}>
+              <KidButton variant="lime" size="xl" onClick={onStart} icon={<span>🚀</span>}>
                 Start Adventure
               </KidButton>
-              <KidButton variant="ghost" size="xl" onClick={onAdventures} icon={<span>🗺️</span>}>
+              <KidButton variant="ghost" size="xl" onClick={onDashboard} icon={<span>🗺️</span>}>
                 Explore Map
               </KidButton>
             </div>
@@ -161,19 +159,17 @@ export const Hero: React.FC<HeroProps> = ({ onStart, onAdventures }) => {
               style={{ borderColor: '#60A5FA' }}
             />
 
-            {/* Central glowing orb with PetDisplay */}
+            {/* Central glowing orb */}
             <motion.div
               animate={{ y: [0, -20, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
               className="relative w-72 h-72 rounded-full flex items-center justify-center"
               style={{
-                background: 'radial-gradient(circle at 35% 35%, rgba(167,139,250,0.5), rgba(124,58,237,0.3), transparent)',
-                boxShadow: '0 0 80px rgba(124,58,237,0.4), 0 0 160px rgba(124,58,237,0.2)',
+                background: 'radial-gradient(circle at 35% 35%, #A78BFA, #7C3AED, #2d1065)',
+                boxShadow: '0 0 80px rgba(124,58,237,0.6), 0 0 160px rgba(124,58,237,0.3)',
               }}
             >
-              <div className="w-[110%] h-[110%] relative z-10 flex items-center justify-center scale-110 -translate-y-4">
-                <PetDisplay />
-              </div>
+              <span className="text-[120px] drop-shadow-lg select-none">🐢</span>
             </motion.div>
 
             {/* Orbital language badges */}
@@ -210,6 +206,12 @@ export const Hero: React.FC<HeroProps> = ({ onStart, onAdventures }) => {
         </div>
       </div>
 
+      {/* Wave transition to next section */}
+      <div className="relative -mb-1">
+        <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
+          <path d="M0 40 C360 80 1080 0 1440 40 L1440 80 L0 80 Z" fill="#F5F3FF" />
+        </svg>
+      </div>
     </section>
   );
 };

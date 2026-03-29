@@ -11,12 +11,12 @@ const levels = [
 
 const LevelPreview: React.FC = () => {
     return (
-        <section className="py-20 px-4 bg-white relative">
+        <section className="py-20 px-4 relative">
             {/* Decorative path line */}
-            <div className="absolute left-1/2 top-0 bottom-0 w-4 bg-gray-100 -translate-x-1/2 rounded-full hidden md:block border-dashed border-4 border-gray-200" />
+            <div className="absolute left-1/2 top-0 bottom-0 w-4 bg-white/10 -translate-x-1/2 rounded-full hidden md:block border-dashed border-4 border-white/20" />
 
             <div className="max-w-4xl mx-auto">
-                <h2 className="text-center font-heading text-4xl font-bold text-gray-800 mb-16 relative z-10">
+                <h2 className="text-center font-heading text-4xl font-bold text-white mb-16 relative z-10">
                     Your Adventure Map
                 </h2>
 
@@ -35,18 +35,18 @@ const LevelPreview: React.FC = () => {
                                 {index % 2 !== 0 && <div className="hidden md:block flex-1" />}
                                 <motion.div
                                     whileHover={{ scale: 1.1, rotate: 5 }}
-                                    className={`w-32 h-32 rounded-full border-8 border-white shadow-xl flex items-center justify-center cursor-pointer relative ${level.status === 'locked' ? 'bg-gray-200 grayscale' : level.color}`}
+                                    className={`w-32 h-32 rounded-full border-8 border-white/20 shadow-[0_0_30px_rgba(255,255,255,0.1)] flex items-center justify-center cursor-pointer relative ${level.status === 'locked' ? 'bg-white/10 grayscale' : level.color}`}
                                 >
                                     {level.status === 'completed' && <Check size={40} className="text-white bg-green-500 rounded-full p-1 absolute -top-2 -right-2 border-4 border-white" />}
-                                    {level.status === 'locked' && <Lock size={32} className="text-gray-400" />}
+                                    {level.status === 'locked' && <Lock size={32} className="text-white/40" />}
                                     {level.status === 'unlocked' && <Star size={40} className="text-yellow-300 fill-yellow-300 animate-pulse" />}
                                 </motion.div>
                             </div>
 
                             {/* Text */}
                             <div className={`flex-1 text-center ${index % 2 === 0 ? 'md:text-left' : 'md:text-right'}`}>
-                                <h3 className="font-heading text-2xl font-bold text-gray-800">{level.name}</h3>
-                                <p className="font-body text-gray-500 font-bold">World {level.id}</p>
+                                <h3 className="font-heading text-2xl font-bold text-white">{level.name}</h3>
+                                <p className="font-body text-violet-200 font-bold">World {level.id}</p>
                                 {level.status === 'unlocked' && (
                                     <button className="mt-4 bg-primary text-white px-6 py-2 rounded-xl font-bold hover:bg-primary/90 transition-colors shadow-[0_4px_0_rgb(109,40,217)] active:shadow-none active:translate-y-1">
                                         Continue Journey

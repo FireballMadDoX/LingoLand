@@ -5,6 +5,8 @@
 @layer base {
   body {
     @apply font-body bg-background text-gray-800 antialiased overflow-x-hidden;
+    background: linear-gradient(135deg, #1a0533 0%, #2d1065 50%, #1a0f5e 100%) !important;
+    background-attachment: fixed !important;
   }
 
   h1,
