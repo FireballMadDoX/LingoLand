@@ -8,15 +8,17 @@ import dinoData from './assets/Dinosaur Running.json';
 import dogData from './assets/Long Dog.json';
 import camelData from './assets/Baby Camel.json';
 import elephantData from './assets/Walking Elephant.json';
+import turtleData from '../../../assets/lottie/turtle_run_right.json';
 
 // --- Types & Config ---
-type CharacterId = 'dino' | 'dog' | 'camel' | 'elephant';
+type CharacterId = 'dino' | 'dog' | 'camel' | 'elephant' | 'turtle';
 
 const CHARACTERS: CharacterConfig[] = [
     { id: 'dino',     name: 'King Stompy Feet',    data: dinoData,     scale: 1.5, yOffset: -25, width: 100, flip: false },
     { id: 'dog',      name: 'Duke of Zoomies',     data: dogData,      scale: 1.5, yOffset: -15, width: 110, flip: false },
     { id: 'camel',    name: 'Prince Spits-a-Lot',  data: camelData,    scale: 1.4, yOffset: -5,  width: 100, flip: true  },
     { id: 'elephant', name: 'Empress Peanut',      data: elephantData, scale: 1.4, yOffset: -25, width: 110, flip: false },
+    { id: 'turtle',   name: 'Shell Speedster',    data: turtleData,   scale: 1.4, yOffset: -10, width: 110, flip: false },
 ];
 
 interface CharacterConfig {
@@ -124,7 +126,7 @@ const DinoRun: React.FC<DinoRunProps> = ({ onExit, onGameOver }) => {
                 </div>
 
                 {/* Character Cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 w-full max-w-5xl px-4 relative z-10">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 w-full max-w-5xl px-4 relative z-10">
                     {CHARACTERS.map((char, i) => (
                         <motion.div
                             key={char.id}
