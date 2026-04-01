@@ -223,7 +223,7 @@ const getMascotMessage = (type: string) => {
 };
 
 const LessonPlayer: React.FC<LessonPlayerProps> = ({ lessonId, language, onExit }) => {
-  const lesson = getLessonData(lessonId) as { id: string; title: string; steps: LessonStep[] } | null;
+  const lesson = getLessonData(lessonId) as { id: string; number: number; title: string; steps: LessonStep[] } | null;
   const { updateProgress, markLessonComplete, addStars } = useProgress();
 
   const [stepIndex, setStepIndex] = useState(0);
@@ -388,68 +388,104 @@ const LessonPlayer: React.FC<LessonPlayerProps> = ({ lessonId, language, onExit 
     );
   }
 
+  // Auto-navigate back after 4 seconds
+  useEffect(() => {
+    if (showComplete) {
+      const timer = setTimeout(() => {
+        onExit();
+      }, 4000); // 4 seconds
+      return () => clearTimeout(timer);
+    }
+  }, [showComplete, onExit]);
+
   if (showComplete) {
     return (
       <div
         className="min-h-screen flex items-center justify-center p-8 relative overflow-hidden"
+        style={{ background: 'linear-gradient(135deg, #F5F3FF 0%, #FFFFFF 100%)' }}
       >
-        {/* Confetti particles */}
-        {Array.from({ length: 30 }).map((_, i) => (
+        {/* Bursting Confetti */}
+        {Array.from({ length: 60 }).map((_, i) => (
           <motion.div
             key={i}
             className="absolute rounded-full"
             style={{
-              width:  8 + Math.random() * 8,
-              height: 8 + Math.random() * 8,
-              left:  `${Math.random() * 100}%`,
-              top:   `${Math.random() * 100}%`,
+              width:  10 + Math.random() * 10,
+              height: 10 + Math.random() * 10,
+              left:  '50%',
+              top:   '50%',
               background: ['#FCD34D', '#F43F5E', '#34D399', '#60A5FA', '#A78BFA'][Math.floor(Math.random() * 5)],
             }}
-            animate={{ y: [0, -300], opacity: [1, 0], rotate: [0, 360] }}
-            transition={{ duration: 2 + Math.random() * 2, delay: Math.random(), ease: 'easeOut' }}
+            initial={{ scale: 0, x: 0, y: 0 }}
+            animate={{ 
+              scale: [0, 1, 0.5, 0],
+              x: (Math.random() - 0.5) * 1200, 
+              y: (Math.random() - 0.5) * 1200,
+              rotate: [0, 720]
+            }}
+            transition={{ 
+              duration: 2.5 + Math.random() * 1.5, 
+              delay: Math.random() * 0.2,
+              ease: [0.23, 1, 0.32, 1] 
+            }}
           />
         ))}
 
         <motion.div
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ type: 'spring', stiffness: 200 }}
-          className="bg-white rounded-[3rem] p-12 text-center max-w-md w-full relative z-10"
-          style={{ boxShadow: '0 40px 80px rgba(0,0,0,0.3)' }}
+          initial={{ scale: 0.8, opacity: 0, y: 20 }}
+          animate={{ scale: 1, opacity: 1, y: 0 }}
+          transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+          className="bg-white rounded-[4rem] p-12 text-center max-w-lg w-full relative z-10 border-4 border-violet-100"
+          style={{ boxShadow: '0 50px 100px rgba(124,58,237,0.2)' }}
         >
           <motion.div
-            animate={{ rotate: [0, -10, 10, 0], scale: [1, 1.2, 1] }}
-            transition={{ duration: 1, repeat: Infinity, repeatDelay: 2 }}
-            className="text-8xl mb-6"
+            animate={{ 
+              y: [0, -20, 0],
+              rotate: [0, -10, 10, 0],
+              scale: [1, 1.1, 1] 
+            }}
+            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+            className="text-9xl mb-8 relative"
           >
             🏆
+            <motion.span 
+              animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 1, repeat: Infinity }}
+              className="absolute -top-4 -right-4 text-4xl"
+            >
+              ✨
+            </motion.span>
           </motion.div>
-          <h1 className="font-heading font-bold text-4xl text-violet-900 mb-3">Lesson Complete!</h1>
-          <p className="font-body text-gray-500 mb-6">
-            You earned <span className="text-amber-500 font-bold">{sessionStars} Stars</span> and finished Lesson 1!
+
+          <h1 className="font-heading font-bold text-5xl text-violet-900 mb-4 bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-indigo-600">
+            Fantastic Job!
+          </h1>
+          <p className="font-body text-xl text-gray-500 mb-8">
+            You just crushed <span className="text-violet-600 font-bold">Lesson {lesson.number}</span>!<br/>
+            Next stop: Mastering the world! 🌍
           </p>
 
-          <div className="bg-violet-50 rounded-2xl p-4 mb-8 flex items-center justify-around">
+          <div className="bg-violet-50 rounded-3xl p-6 mb-10 grid grid-cols-3 gap-4">
             {[
-              { v: lesson.steps.length.toString(), l: 'Steps Done', e: '✅' },
-              { v: `${sessionStars}`, l: 'Stars Earned', e: '⭐' },
-              { v: 'A+',  l: 'Grade',       e: '🎯' },
+              { v: lesson.steps.length.toString(), l: 'Steps Done', e: '📜' },
+              { v: `+${sessionStars}`, l: 'Stars Won', e: '⭐' },
+              { v: '100',  l: 'Accuracy',       e: '💯' },
             ].map((s, i) => (
-              <div key={i} className="text-center">
-                <div className="text-xl">{s.e}</div>
-                <div className="font-heading font-bold text-violet-900 text-xl">{s.v}</div>
-                <div className="font-body text-gray-500 text-xs">{s.l}</div>
+              <div key={i} className="text-center p-3 rounded-2xl bg-white shadow-sm border border-violet-100">
+                <div className="text-2xl mb-1">{s.e}</div>
+                <div className="font-heading font-bold text-violet-900 text-2xl">{s.v}</div>
+                <div className="font-body text-gray-400 text-[10px] uppercase tracking-tighter">{s.l}</div>
               </div>
             ))}
           </div>
 
-          <div className="flex gap-3">
-            <KidButton variant="ghost" size="md" onClick={() => { setShowComplete(false); setStepIndex(0); }} fullWidth>
-              Review
+          <div className="flex flex-col gap-4">
+            <KidButton variant="grape" size="xl" onClick={onExit} icon={<span>🗺️</span>} fullWidth>
+              Return to Map
             </KidButton>
-            <KidButton variant="grape" size="md" onClick={onExit} icon={<span>🗺️</span>} fullWidth>
-              Back to Map
-            </KidButton>
+            <p className="font-body text-gray-400 text-sm animate-pulse">
+              Navigating back automatically in 4s...
+            </p>
           </div>
         </motion.div>
       </div>
