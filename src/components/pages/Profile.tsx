@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import { motion } from 'framer-motion';
-import { Star, Flame, Languages, Crown } from 'lucide-react';
+import { Star, Flame, Languages, Crown, Trash2 } from 'lucide-react';
+import { useProgress } from '../../context/ProgressContext';
+import { LESSON_CATALOGUE } from '../lessons/lessonRegistry';
 
 interface ProfileProps {
     session: any;
@@ -17,13 +19,9 @@ interface ProfileData {
     created_at: string;
 }
 
-interface UserProgress {
-    level: number;
-    stars: number;
-    current_streak: number;
-}
-
 const Profile: React.FC<ProfileProps> = ({ session, onLogout }) => {
+    const { stars, level, streak, resetAllProgress, completedLessons } = useProgress();
+    
     if (!session) {
         return (
             <div className="min-h-screen pt-36 pb-12 px-4 bg-[#F0F4F8] flex justify-center items-center">
@@ -43,29 +41,19 @@ const Profile: React.FC<ProfileProps> = ({ session, onLogout }) => {
 
     const [loading, setLoading] = useState(true);
     const [profile, setProfile] = useState<ProfileData | null>(null);
-    const [progress, setProgress] = useState<UserProgress | null>(null);
 
     useEffect(() => {
         async function getProfile() {
             setLoading(true);
             const user = session.user;
 
-            // Fetch Profile
             const { data: profileData } = await supabase
                 .from('profiles')
                 .select('username, first_name, last_name, avatar_url, primary_language, created_at')
                 .eq('id', user.id)
                 .single();
 
-            // Fetch Progress
-            const { data: progressData } = await supabase
-                .from('user_progress')
-                .select('level, stars, current_streak')
-                .eq('user_id', user.id)
-                .single();
-
             if (profileData) setProfile(profileData);
-            if (progressData) setProgress(progressData);
             setLoading(false);
         }
 
@@ -126,9 +114,20 @@ const Profile: React.FC<ProfileProps> = ({ session, onLogout }) => {
 
                             <button
                                 onClick={onLogout}
-                                className="mb-6 px-6 py-2 bg-red-50 text-red-500 hover:bg-red-100 rounded-full font-bold text-sm transition-colors border border-red-100"
+                                className="mb-4 px-6 py-2 bg-red-50 text-red-500 hover:bg-red-100 rounded-full font-bold text-sm transition-colors border border-red-100 w-full"
                             >
                                 Log Out
+                            </button>
+
+                            <button
+                                onClick={() => {
+                                    if (window.confirm("Are you sure you want to reset all your progress? This cannot be undone!")) {
+                                        resetAllProgress();
+                                    }
+                                }}
+                                className="px-6 py-2 bg-gray-50 text-gray-500 hover:bg-gray-100 rounded-full font-bold text-sm transition-colors border border-gray-100 w-full flex items-center justify-center gap-2"
+                            >
+                                <Trash2 size={16} /> Reset Progress
                             </button>
 
                             <div className="text-left w-full mt-2">
@@ -174,13 +173,23 @@ const Profile: React.FC<ProfileProps> = ({ session, onLogout }) => {
                                     <h3 className="font-heading font-bold text-xl text-gray-800 mb-1">{profile?.primary_language || 'English'}</h3>
                                     <p className="text-gray-400 text-sm font-bold mb-4">Level 1 • Novice</p>
 
-                                    {/* Progress Bar */}
-                                    <div className="w-full bg-gray-100 h-3 rounded-full overflow-hidden">
-                                        <div className="bg-blue-500 h-full w-[35%] rounded-full relative">
-                                            <div className="absolute inset-0 bg-white/30 animate-pulse"></div>
-                                        </div>
-                                    </div>
-                                    <p className="text-right text-xs font-bold text-gray-400 mt-2">35% to Lvl 2</p>
+                                    {/* Progress Bar logic for primary language */}
+                                    {(() => {
+                                        const langCode = (profile?.primary_language?.toLowerCase() === 'spanish' ? 'es' : profile?.primary_language?.toLowerCase() === 'mandarin' ? 'zh' : 'en') as 'en' | 'es' | 'zh';
+                                        const count = completedLessons[langCode]?.length || 0;
+                                        const pct = Math.round((count / LESSON_CATALOGUE.length) * 100);
+                                        
+                                        return (
+                                            <>
+                                                <div className="w-full bg-gray-100 h-3 rounded-full overflow-hidden">
+                                                    <div className="bg-blue-500 h-full rounded-full relative transition-all duration-1000" style={{ width: `${pct}%` }}>
+                                                        <div className="absolute inset-0 bg-white/30 animate-pulse"></div>
+                                                    </div>
+                                                </div>
+                                                <p className="text-right text-xs font-bold text-gray-400 mt-2">{pct}% Complete</p>
+                                            </>
+                                        );
+                                    })()}
                                 </div>
                             </motion.div>
 
@@ -207,8 +216,10 @@ const Profile: React.FC<ProfileProps> = ({ session, onLogout }) => {
                         >
                             <div className="absolute left-0 top-0 w-2 h-full bg-yellow-400"></div>
                             <div>
-                                <h2 className="font-heading font-black text-3xl text-gray-800">Level {progress?.level || 1}</h2>
-                                <p className="text-gray-500 font-medium">Novice Adventurer</p>
+                                <h2 className="font-heading font-black text-3xl text-gray-800">Level {level}</h2>
+                                <p className="text-gray-500 font-medium">
+                                    {level < 3 ? "Novice Adventurer" : level < 10 ? "Intermediate Explorer" : "Master Polyglot"}
+                                </p>
                             </div>
                             <div className="bg-yellow-100 p-4 rounded-full">
                                 <Crown size={32} className="text-yellow-600 fill-yellow-600" />
@@ -226,7 +237,7 @@ const Profile: React.FC<ProfileProps> = ({ session, onLogout }) => {
                                 <div className="bg-orange-100 w-12 h-12 rounded-2xl flex items-center justify-center text-orange-500 mb-4">
                                     <Flame size={24} className="fill-orange-500" />
                                 </div>
-                                <p className="font-heading font-black text-4xl text-gray-800">{progress?.current_streak || 0}</p>
+                                <p className="font-heading font-black text-4xl text-gray-800">{streak}</p>
                                 <p className="text-gray-400 font-bold text-sm">Day Streak</p>
                             </motion.div>
 
@@ -239,7 +250,7 @@ const Profile: React.FC<ProfileProps> = ({ session, onLogout }) => {
                                 <div className="bg-yellow-100 w-12 h-12 rounded-2xl flex items-center justify-center text-yellow-500 mb-4">
                                     <Star size={24} className="fill-yellow-500" />
                                 </div>
-                                <p className="font-heading font-black text-4xl text-gray-800">{progress?.stars || 0}</p>
+                                <p className="font-heading font-black text-4xl text-gray-800">{stars}</p>
                                 <p className="text-gray-400 font-bold text-sm">Total Stars</p>
                             </motion.div>
                         </div>

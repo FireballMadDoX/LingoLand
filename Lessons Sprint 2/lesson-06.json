@@ -1,0 +1,157 @@
+{
+  "id": "lesson-06",
+  "title": "Animals",
+  "steps": [
+    {
+      "id": "step-1",
+      "type": "listen",
+      "title": "Listen",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-dog", "text": "Dog", "ttsText": "Dog", "ttsLang": "en-US" },
+          { "id": "en-cat", "text": "Cat", "ttsText": "Cat", "ttsLang": "en-US" },
+          { "id": "en-bird", "text": "Bird", "ttsText": "Bird", "ttsLang": "en-US" },
+          { "id": "en-fish", "text": "Fish", "ttsText": "Fish", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-perro", "text": "Perro", "ttsText": "Perro", "ttsLang": "es-ES" },
+          { "id": "es-gato", "text": "Gato", "ttsText": "Gato", "ttsLang": "es-ES" },
+          { "id": "es-pajaro", "text": "Pájaro", "ttsText": "Pájaro", "ttsLang": "es-ES" },
+          { "id": "es-pez", "text": "Pez", "ttsText": "Pez", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-gou", "text": "狗", "ttsText": "狗", "ttsLang": "zh-CN", "pinyin": "Gǒu" },
+          { "id": "zh-mao", "text": "猫", "ttsText": "猫", "ttsLang": "zh-CN", "pinyin": "Māo" },
+          { "id": "zh-niao", "text": "鸟", "ttsText": "鸟", "ttsLang": "zh-CN", "pinyin": "Niǎo" },
+          { "id": "zh-yu", "text": "鱼", "ttsText": "鱼", "ttsLang": "zh-CN", "pinyin": "Yú" }
+        ]
+      }
+    },
+    {
+      "id": "step-2",
+      "type": "vocab",
+      "title": "Learn the Words",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-v-dog", "concept": "Animal", "text": "Dog", "ttsText": "Dog", "ttsLang": "en-US" },
+          { "id": "en-v-cat", "concept": "Animal", "text": "Cat", "ttsText": "Cat", "ttsLang": "en-US" },
+          { "id": "en-v-bird", "concept": "Animal", "text": "Bird", "ttsText": "Bird", "ttsLang": "en-US" },
+          { "id": "en-v-fish", "concept": "Animal", "text": "Fish", "ttsText": "Fish", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-v-perro", "concept": "Animal", "text": "Perro", "ttsText": "Perro", "ttsLang": "es-ES" },
+          { "id": "es-v-gato", "concept": "Animal", "text": "Gato", "ttsText": "Gato", "ttsLang": "es-ES" },
+          { "id": "es-v-pajaro", "concept": "Animal", "text": "Pájaro", "ttsText": "Pájaro", "ttsLang": "es-ES" },
+          { "id": "es-v-pez", "concept": "Animal", "text": "Pez", "ttsText": "Pez", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-v-gou", "concept": "Animal", "text": "狗", "ttsText": "狗", "ttsLang": "zh-CN", "pinyin": "Gǒu" },
+          { "id": "zh-v-mao", "concept": "Animal", "text": "猫", "ttsText": "猫", "ttsLang": "zh-CN", "pinyin": "Māo" },
+          { "id": "zh-v-niao", "concept": "Animal", "text": "鸟", "ttsText": "鸟", "ttsLang": "zh-CN", "pinyin": "Niǎo" },
+          { "id": "zh-v-yu", "concept": "Animal", "text": "鱼", "ttsText": "鱼", "ttsLang": "zh-CN", "pinyin": "Yú" }
+        ]
+      }
+    },
+    {
+      "id": "step-3",
+      "type": "pronounce",
+      "title": "Say It",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-p-dog", "text": "Dog", "ttsText": "Dog", "ttsLang": "en-US" },
+          { "id": "en-p-cat", "text": "Cat", "ttsText": "Cat", "ttsLang": "en-US" },
+          { "id": "en-p-bird", "text": "Bird", "ttsText": "Bird", "ttsLang": "en-US" },
+          { "id": "en-p-fish", "text": "Fish", "ttsText": "Fish", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-p-perro", "text": "Perro", "ttsText": "Perro", "ttsLang": "es-ES" },
+          { "id": "es-p-gato", "text": "Gato", "ttsText": "Gato", "ttsLang": "es-ES" },
+          { "id": "es-p-pajaro", "text": "Pájaro", "ttsText": "Pájaro", "ttsLang": "es-ES" },
+          { "id": "es-p-pez", "text": "Pez", "ttsText": "Pez", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-p-gou", "text": "狗", "ttsText": "狗", "ttsLang": "zh-CN", "pinyin": "Gǒu" },
+          { "id": "zh-p-mao", "text": "猫", "ttsText": "猫", "ttsLang": "zh-CN", "pinyin": "Māo" },
+          { "id": "zh-p-niao", "text": "鸟", "ttsText": "鸟", "ttsLang": "zh-CN", "pinyin": "Niǎo" },
+          { "id": "zh-p-yu", "text": "鱼", "ttsText": "鱼", "ttsLang": "zh-CN", "pinyin": "Yú" }
+        ]
+      }
+    },
+    {
+      "id": "step-4",
+      "type": "build",
+      "title": "Build the Sentence",
+      "templateByLanguage": {
+        "en": { "template": "It is a dog.", "ttsLang": "en-US" },
+        "es": { "template": "Es un perro.", "ttsLang": "es-ES" },
+        "zh": { "template": "它是一只狗。", "ttsLang": "zh-CN" }
+      },
+      "names": ["dog", "cat", "bird", "fish", "perro"]
+    },
+    {
+      "id": "step-5",
+      "type": "conversation",
+      "title": "Mini Conversation",
+      "scriptByLanguage": {
+        "en": {
+          "app1": "What is it?",
+          "learner1": "It is a dog.",
+          "app2": "What is it?",
+          "learner2": "It is a cat.",
+          "app3": "Great!"
+        },
+        "es": {
+          "app1": "¿Qué es?",
+          "learner1": "Es un perro.",
+          "app2": "¿Qué es?",
+          "learner2": "Es un gato.",
+          "app3": "¡Muy bien!"
+        },
+        "zh": {
+          "app1": "它是什么？",
+          "learner1": "它是一只狗。",
+          "app2": "它是什么？",
+          "learner2": "它是一只猫。",
+          "app3": "太好了！"
+        }
+      }
+    },
+    {
+      "id": "step-6",
+      "type": "game",
+      "title": "Connect the Word",
+      "pairsByLanguage": {
+        "en": [
+          { "left": "dog", "right": "It is a ____." },
+          { "left": "cat", "right": "It is a ____." },
+          { "left": "bird", "right": "It is a ____." },
+          { "left": "fish", "right": "It is a ____." },
+          { "left": "It", "right": "____ is a dog." },
+          { "left": "is", "right": "It ____ a cat." },
+          { "left": "a", "right": "It is ____ bird." },
+          { "left": "a", "right": "It is ____ fish." }
+        ],
+        "es": [
+          { "left": "perro", "right": "Es un ____." },
+          { "left": "gato", "right": "Es un ____." },
+          { "left": "pájaro", "right": "Es un ____." },
+          { "left": "pez", "right": "Es un ____." },
+          { "left": "Es", "right": "____ un perro." },
+          { "left": "un", "right": "Es ____ gato." },
+          { "left": "un", "right": "Es ____ pájaro." },
+          { "left": "un", "right": "Es ____ pez." }
+        ],
+        "zh": [
+          { "left": "狗", "right": "它是一只____。" },
+          { "left": "猫", "right": "它是一只____。" },
+          { "left": "鸟", "right": "它是一只____。" },
+          { "left": "鱼", "right": "它是一只____。" },
+          { "left": "它", "right": "____是一只狗。" },
+          { "left": "是", "right": "它____一只猫。" },
+          { "left": "一只", "right": "它是____鸟。" },
+          { "left": "一只", "right": "它是____鱼。" }
+        ]
+      }
+    }
+  ]
+}

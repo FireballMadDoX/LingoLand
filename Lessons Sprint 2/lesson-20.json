@@ -1,0 +1,157 @@
+{
+  "id": "lesson-20",
+  "title": "Feelings 3",
+  "steps": [
+    {
+      "id": "step-1",
+      "type": "listen",
+      "title": "Listen",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-scared", "text": "I feel scared.", "ttsText": "I feel scared.", "ttsLang": "en-US" },
+          { "id": "en-proud", "text": "I feel proud.", "ttsText": "I feel proud.", "ttsLang": "en-US" },
+          { "id": "en-sleepy", "text": "I feel sleepy.", "ttsText": "I feel sleepy.", "ttsLang": "en-US" },
+          { "id": "en-surprised", "text": "I feel surprised.", "ttsText": "I feel surprised.", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-asustado", "text": "Me siento asustado.", "ttsText": "Me siento asustado.", "ttsLang": "es-ES" },
+          { "id": "es-orgulloso", "text": "Me siento orgulloso.", "ttsText": "Me siento orgulloso.", "ttsLang": "es-ES" },
+          { "id": "es-cansado", "text": "Tengo sueño.", "ttsText": "Tengo sueño.", "ttsLang": "es-ES" },
+          { "id": "es-sorprendido", "text": "Estoy sorprendido.", "ttsText": "Estoy sorprendido.", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-haipa", "text": "我觉得害怕。", "ttsText": "我觉得害怕", "ttsLang": "zh-CN", "pinyin": "Wǒ juéde hàipà." },
+          { "id": "zh-zihao", "text": "我觉得自豪。", "ttsText": "我觉得自豪", "ttsLang": "zh-CN", "pinyin": "Wǒ juéde zìháo." },
+          { "id": "zh-kun", "text": "我觉得困。", "ttsText": "我觉得困", "ttsLang": "zh-CN", "pinyin": "Wǒ juéde kùn." },
+          { "id": "zh-jingya", "text": "我觉得惊讶。", "ttsText": "我觉得惊讶", "ttsLang": "zh-CN", "pinyin": "Wǒ juéde jīngyà." }
+        ]
+      }
+    },
+    {
+      "id": "step-2",
+      "type": "vocab",
+      "title": "Learn the Words",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-v-scared", "concept": "Feeling", "text": "I feel scared.", "ttsText": "I feel scared.", "ttsLang": "en-US" },
+          { "id": "en-v-proud", "concept": "Feeling", "text": "I feel proud.", "ttsText": "I feel proud.", "ttsLang": "en-US" },
+          { "id": "en-v-sleepy", "concept": "Feeling", "text": "I feel sleepy.", "ttsText": "I feel sleepy.", "ttsLang": "en-US" },
+          { "id": "en-v-surprised", "concept": "Feeling", "text": "I feel surprised.", "ttsText": "I feel surprised.", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-v-asustado", "concept": "Feeling", "text": "Me siento asustado.", "ttsText": "Me siento asustado.", "ttsLang": "es-ES" },
+          { "id": "es-v-orgulloso", "concept": "Feeling", "text": "Me siento orgulloso.", "ttsText": "Me siento orgulloso.", "ttsLang": "es-ES" },
+          { "id": "es-v-cansado", "concept": "Feeling", "text": "Tengo sueño.", "ttsText": "Tengo sueño.", "ttsLang": "es-ES" },
+          { "id": "es-v-sorprendido", "concept": "Feeling", "text": "Estoy sorprendido.", "ttsText": "Estoy sorprendido.", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-v-haipa", "concept": "Feeling", "text": "我觉得害怕。", "ttsText": "我觉得害怕", "ttsLang": "zh-CN", "pinyin": "Wǒ juéde hàipà." },
+          { "id": "zh-v-zihao", "concept": "Feeling", "text": "我觉得自豪。", "ttsText": "我觉得自豪", "ttsLang": "zh-CN", "pinyin": "Wǒ juéde zìháo." },
+          { "id": "zh-v-kun", "concept": "Feeling", "text": "我觉得困。", "ttsText": "我觉得困", "ttsLang": "zh-CN", "pinyin": "Wǒ juéde kùn." },
+          { "id": "zh-v-jingya", "concept": "Feeling", "text": "我觉得惊讶。", "ttsText": "我觉得惊讶", "ttsLang": "zh-CN", "pinyin": "Wǒ juéde jīngyà." }
+        ]
+      }
+    },
+    {
+      "id": "step-3",
+      "type": "pronounce",
+      "title": "Say It",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-p-scared", "text": "I feel scared.", "ttsText": "I feel scared.", "ttsLang": "en-US" },
+          { "id": "en-p-proud", "text": "I feel proud.", "ttsText": "I feel proud.", "ttsLang": "en-US" },
+          { "id": "en-p-sleepy", "text": "I feel sleepy.", "ttsText": "I feel sleepy.", "ttsLang": "en-US" },
+          { "id": "en-p-surprised", "text": "I feel surprised.", "ttsText": "I feel surprised.", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-p-asustado", "text": "Me siento asustado.", "ttsText": "Me siento asustado.", "ttsLang": "es-ES" },
+          { "id": "es-p-orgulloso", "text": "Me siento orgulloso.", "ttsText": "Me siento orgulloso.", "ttsLang": "es-ES" },
+          { "id": "es-p-cansado", "text": "Tengo sueño.", "ttsText": "Tengo sueño.", "ttsLang": "es-ES" },
+          { "id": "es-p-sorprendido", "text": "Estoy sorprendido.", "ttsText": "Estoy sorprendido.", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-p-haipa", "text": "我觉得害怕。", "ttsText": "我觉得害怕", "ttsLang": "zh-CN", "pinyin": "Wǒ juéde hàipà." },
+          { "id": "zh-p-zihao", "text": "我觉得自豪。", "ttsText": "我觉得自豪", "ttsLang": "zh-CN", "pinyin": "Wǒ juéde zìháo." },
+          { "id": "zh-p-kun", "text": "我觉得困。", "ttsText": "我觉得困", "ttsLang": "zh-CN", "pinyin": "Wǒ juéde kùn." },
+          { "id": "zh-p-jingya", "text": "我觉得惊讶。", "ttsText": "我觉得惊讶", "ttsLang": "zh-CN", "pinyin": "Wǒ juéde jīngyà." }
+        ]
+      }
+    },
+    {
+      "id": "step-4",
+      "type": "build",
+      "title": "Build the Sentence",
+      "templateByLanguage": {
+        "en": { "template": "I feel scared.", "ttsLang": "en-US" },
+        "es": { "template": "Me siento asustado.", "ttsLang": "es-ES" },
+        "zh": { "template": "我觉得害怕。", "ttsLang": "zh-CN" }
+      },
+      "names": ["scared", "proud", "sleepy", "surprised", "asustado"]
+    },
+    {
+      "id": "step-5",
+      "type": "conversation",
+      "title": "Mini Conversation",
+      "scriptByLanguage": {
+        "en": {
+          "app1": "How do you feel?",
+          "learner1": "I feel scared.",
+          "app2": "How do you feel now?",
+          "learner2": "I feel proud.",
+          "app3": "Very nice."
+        },
+        "es": {
+          "app1": "¿Cómo te sientes?",
+          "learner1": "Me siento asustado.",
+          "app2": "¿Cómo te sientes ahora?",
+          "learner2": "Me siento orgulloso.",
+          "app3": "Muy bien."
+        },
+        "zh": {
+          "app1": "你觉得怎么样？",
+          "learner1": "我觉得害怕。",
+          "app2": "你现在觉得怎么样？",
+          "learner2": "我觉得自豪。",
+          "app3": "太好了！"
+        }
+      }
+    },
+    {
+      "id": "step-6",
+      "type": "game",
+      "title": "Connect the Word",
+      "pairsByLanguage": {
+        "en": [
+          { "left": "scared", "right": "I feel ____." },
+          { "left": "proud", "right": "I feel ____." },
+          { "left": "sleepy", "right": "I feel ____." },
+          { "left": "surprised", "right": "I feel ____." },
+          { "left": "I", "right": "____ feel scared." },
+          { "left": "feel", "right": "I ____ proud." },
+          { "left": "I", "right": "____ feel sleepy." },
+          { "left": "feel", "right": "I ____ surprised." }
+        ],
+        "es": [
+          { "left": "asustado", "right": "Me siento ____." },
+          { "left": "orgulloso", "right": "Me siento ____." },
+          { "left": "sueño", "right": "Tengo ____." },
+          { "left": "sorprendido", "right": "Estoy ____." },
+          { "left": "Me", "right": "____ siento asustado." },
+          { "left": "siento", "right": "Me ____ orgulloso." },
+          { "left": "Tengo", "right": "____ sueño." },
+          { "left": "Estoy", "right": "____ sorprendido." }
+        ],
+        "zh": [
+          { "left": "害怕", "right": "我觉得____。" },
+          { "left": "自豪", "right": "我觉得____。" },
+          { "left": "困", "right": "我觉得____。" },
+          { "left": "惊讶", "right": "我觉得____。" },
+          { "left": "我", "right": "____觉得害怕。" },
+          { "left": "觉得", "right": "我____自豪。" },
+          { "left": "我", "right": "____觉得困。" },
+          { "left": "觉得", "right": "我____惊讶。" }
+        ]
+      }
+    }
+  ]
+}

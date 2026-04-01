@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 import { useProgress } from '../../context/ProgressContext';
+import { LESSON_CATALOGUE } from './lessonRegistry';
 
 type LangCode = 'en' | 'es' | 'zh';
 
@@ -17,17 +18,7 @@ const LANG_META: Record<LangCode, { name: string; flag: string; gradient: string
   zh: { name: 'Mandarin', flag: '🇨🇳', gradient: 'linear-gradient(135deg, #991B1B, #F97316)', color: '#991B1B' },
 };
 
-// Lesson catalogue — only showing the actual lesson available
-const LESSON_CATALOGUE = [
-  {
-    id: 'lesson-01',
-    number: 1,
-    title: 'Introductions',
-    subtitle: 'Greetings & basic phrases',
-    emoji: '👋',
-    steps: 6,
-  }
-];
+
 
 // Small SVG ring used for per-lesson progress
 const ProgressRing = ({ percent, color, size = 48 }: { percent: number; color: string; size?: number }) => {
@@ -55,10 +46,15 @@ const ProgressRing = ({ percent, color, size = 48 }: { percent: number; color: s
 };
 
 const LessonListPage: React.FC<LessonListPageProps> = ({ language, onSelectLesson, onBack }) => {
-  const { progressByLang, completedLessons } = useProgress();
+  const { getLessonProgress, completedLessons } = useProgress();
   const meta = LANG_META[language];
-  const overallPercent = Math.round(progressByLang[language] || 0);
   const completed = completedLessons[language] || [];
+  
+  // Dynamic Average Calculation: Sum of all lesson percentages / total lessons
+  const totalSum = LESSON_CATALOGUE.reduce((acc, lesson) => {
+    return acc + getLessonProgress(language, lesson.id);
+  }, 0);
+  const overallPercent = Math.round(totalSum / LESSON_CATALOGUE.length);
 
   return (
     <div
@@ -109,7 +105,7 @@ const LessonListPage: React.FC<LessonListPageProps> = ({ language, onSelectLesso
           {LESSON_CATALOGUE.map((lesson, index) => {
             const isDone = completed.includes(lesson.id);
             const isAvailable = true;
-            const lessonPercent = isDone ? 100 : (index === 0 && overallPercent > 0 && overallPercent < 100) ? overallPercent : 0;
+            const lessonPercent = getLessonProgress(language, lesson.id);
 
             return (
               <motion.div

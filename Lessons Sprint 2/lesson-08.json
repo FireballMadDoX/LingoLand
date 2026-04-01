@@ -1,0 +1,157 @@
+{
+  "id": "lesson-08",
+  "title": "School",
+  "steps": [
+    {
+      "id": "step-1",
+      "type": "listen",
+      "title": "Listen",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-book", "text": "Book", "ttsText": "Book", "ttsLang": "en-US" },
+          { "id": "en-pen", "text": "Pen", "ttsText": "Pen", "ttsLang": "en-US" },
+          { "id": "en-desk", "text": "Desk", "ttsText": "Desk", "ttsLang": "en-US" },
+          { "id": "en-bag", "text": "Bag", "ttsText": "Bag", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-libro", "text": "Libro", "ttsText": "Libro", "ttsLang": "es-ES" },
+          { "id": "es-boligrafo", "text": "Bolígrafo", "ttsText": "Bolígrafo", "ttsLang": "es-ES" },
+          { "id": "es-escritorio", "text": "Escritorio", "ttsText": "Escritorio", "ttsLang": "es-ES" },
+          { "id": "es-bolsa", "text": "Bolsa", "ttsText": "Bolsa", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-shu", "text": "书", "ttsText": "书", "ttsLang": "zh-CN", "pinyin": "Shū" },
+          { "id": "zh-bi", "text": "笔", "ttsText": "笔", "ttsLang": "zh-CN", "pinyin": "Bǐ" },
+          { "id": "zh-zhuozi", "text": "桌子", "ttsText": "桌子", "ttsLang": "zh-CN", "pinyin": "Zhuōzi" },
+          { "id": "zh-baobao", "text": "包", "ttsText": "包", "ttsLang": "zh-CN", "pinyin": "Bāo" }
+        ]
+      }
+    },
+    {
+      "id": "step-2",
+      "type": "vocab",
+      "title": "Learn the Words",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-v-book", "concept": "School item", "text": "Book", "ttsText": "Book", "ttsLang": "en-US" },
+          { "id": "en-v-pen", "concept": "School item", "text": "Pen", "ttsText": "Pen", "ttsLang": "en-US" },
+          { "id": "en-v-desk", "concept": "School item", "text": "Desk", "ttsText": "Desk", "ttsLang": "en-US" },
+          { "id": "en-v-bag", "concept": "School item", "text": "Bag", "ttsText": "Bag", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-v-libro", "concept": "School item", "text": "Libro", "ttsText": "Libro", "ttsLang": "es-ES" },
+          { "id": "es-v-boligrafo", "concept": "School item", "text": "Bolígrafo", "ttsText": "Bolígrafo", "ttsLang": "es-ES" },
+          { "id": "es-v-escritorio", "concept": "School item", "text": "Escritorio", "ttsText": "Escritorio", "ttsLang": "es-ES" },
+          { "id": "es-v-bolsa", "concept": "School item", "text": "Bolsa", "ttsText": "Bolsa", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-v-shu", "concept": "School item", "text": "书", "ttsText": "书", "ttsLang": "zh-CN", "pinyin": "Shū" },
+          { "id": "zh-v-bi", "concept": "School item", "text": "笔", "ttsText": "笔", "ttsLang": "zh-CN", "pinyin": "Bǐ" },
+          { "id": "zh-v-zhuozi", "concept": "School item", "text": "桌子", "ttsText": "桌子", "ttsLang": "zh-CN", "pinyin": "Zhuōzi" },
+          { "id": "zh-v-baobao", "concept": "School item", "text": "包", "ttsText": "包", "ttsLang": "zh-CN", "pinyin": "Bāo" }
+        ]
+      }
+    },
+    {
+      "id": "step-3",
+      "type": "pronounce",
+      "title": "Say It",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-p-book", "text": "Book", "ttsText": "Book", "ttsLang": "en-US" },
+          { "id": "en-p-pen", "text": "Pen", "ttsText": "Pen", "ttsLang": "en-US" },
+          { "id": "en-p-desk", "text": "Desk", "ttsText": "Desk", "ttsLang": "en-US" },
+          { "id": "en-p-bag", "text": "Bag", "ttsText": "Bag", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-p-libro", "text": "Libro", "ttsText": "Libro", "ttsLang": "es-ES" },
+          { "id": "es-p-boligrafo", "text": "Bolígrafo", "ttsText": "Bolígrafo", "ttsLang": "es-ES" },
+          { "id": "es-p-escritorio", "text": "Escritorio", "ttsText": "Escritorio", "ttsLang": "es-ES" },
+          { "id": "es-p-bolsa", "text": "Bolsa", "ttsText": "Bolsa", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-p-shu", "text": "书", "ttsText": "书", "ttsLang": "zh-CN", "pinyin": "Shū" },
+          { "id": "zh-p-bi", "text": "笔", "ttsText": "笔", "ttsLang": "zh-CN", "pinyin": "Bǐ" },
+          { "id": "zh-p-zhuozi", "text": "桌子", "ttsText": "桌子", "ttsLang": "zh-CN", "pinyin": "Zhuōzi" },
+          { "id": "zh-p-baobao", "text": "包", "ttsText": "包", "ttsLang": "zh-CN", "pinyin": "Bāo" }
+        ]
+      }
+    },
+    {
+      "id": "step-4",
+      "type": "build",
+      "title": "Build the Sentence",
+      "templateByLanguage": {
+        "en": { "template": "This is a book.", "ttsLang": "en-US" },
+        "es": { "template": "Esto es un libro.", "ttsLang": "es-ES" },
+        "zh": { "template": "这是一本书。", "ttsLang": "zh-CN" }
+      },
+      "names": ["book", "pen", "desk", "bag", "libro"]
+    },
+    {
+      "id": "step-5",
+      "type": "conversation",
+      "title": "Mini Conversation",
+      "scriptByLanguage": {
+        "en": {
+          "app1": "What is this?",
+          "learner1": "This is a book.",
+          "app2": "What is this?",
+          "learner2": "This is a pen.",
+          "app3": "Great job!"
+        },
+        "es": {
+          "app1": "¿Qué es esto?",
+          "learner1": "Esto es un libro.",
+          "app2": "¿Qué es esto?",
+          "learner2": "Esto es un bolígrafo.",
+          "app3": "¡Muy bien!"
+        },
+        "zh": {
+          "app1": "这是什么？",
+          "learner1": "这是一本书。",
+          "app2": "这是什么？",
+          "learner2": "这是一支笔。",
+          "app3": "太好了！"
+        }
+      }
+    },
+    {
+      "id": "step-6",
+      "type": "game",
+      "title": "Connect the Word",
+      "pairsByLanguage": {
+        "en": [
+          { "left": "book", "right": "This is a ____." },
+          { "left": "pen", "right": "This is a ____." },
+          { "left": "desk", "right": "This is a ____." },
+          { "left": "bag", "right": "This is a ____." },
+          { "left": "This", "right": "____ is a book." },
+          { "left": "is", "right": "This ____ a pen." },
+          { "left": "a", "right": "This is ____ desk." },
+          { "left": "a", "right": "This is ____ bag." }
+        ],
+        "es": [
+          { "left": "libro", "right": "Esto es un ____." },
+          { "left": "bolígrafo", "right": "Esto es un ____." },
+          { "left": "escritorio", "right": "Esto es un ____." },
+          { "left": "bolsa", "right": "Esto es un ____." },
+          { "left": "Esto", "right": "____ es un libro." },
+          { "left": "es", "right": "Esto ____ un bolígrafo." },
+          { "left": "un", "right": "Esto es ____ escritorio." },
+          { "left": "un", "right": "Esto es ____ bolsa." }
+        ],
+        "zh": [
+          { "left": "书", "right": "这是一本____。" },
+          { "left": "笔", "right": "这是一支____。" },
+          { "left": "桌子", "right": "这是一张____。" },
+          { "left": "包", "right": "这是一个____。" },
+          { "left": "这", "right": "____是一本书。" },
+          { "left": "是", "right": "这____一支笔。" },
+          { "left": "一本", "right": "这是____书。" },
+          { "left": "一支", "right": "这是____笔。" }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,157 @@
+{
+  "id": "lesson-13",
+  "title": "Colors 2",
+  "steps": [
+    {
+      "id": "step-1",
+      "type": "listen",
+      "title": "Listen",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-black", "text": "Black", "ttsText": "Black", "ttsLang": "en-US" },
+          { "id": "en-white", "text": "White", "ttsText": "White", "ttsLang": "en-US" },
+          { "id": "en-orange", "text": "Orange", "ttsText": "Orange", "ttsLang": "en-US" },
+          { "id": "en-purple", "text": "Purple", "ttsText": "Purple", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-negro", "text": "Negro", "ttsText": "Negro", "ttsLang": "es-ES" },
+          { "id": "es-blanco", "text": "Blanco", "ttsText": "Blanco", "ttsLang": "es-ES" },
+          { "id": "es-naranja", "text": "Naranja", "ttsText": "Naranja", "ttsLang": "es-ES" },
+          { "id": "es-morado", "text": "Morado", "ttsText": "Morado", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-heise", "text": "黑色", "ttsText": "黑色", "ttsLang": "zh-CN", "pinyin": "Hēisè" },
+          { "id": "zh-baise", "text": "白色", "ttsText": "白色", "ttsLang": "zh-CN", "pinyin": "Báisè" },
+          { "id": "zh-chengse", "text": "橙色", "ttsText": "橙色", "ttsLang": "zh-CN", "pinyin": "Chéngsè" },
+          { "id": "zh-zise", "text": "紫色", "ttsText": "紫色", "ttsLang": "zh-CN", "pinyin": "Zǐsè" }
+        ]
+      }
+    },
+    {
+      "id": "step-2",
+      "type": "vocab",
+      "title": "Learn the Words",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-v-black", "concept": "Color", "text": "Black", "ttsText": "Black", "ttsLang": "en-US" },
+          { "id": "en-v-white", "concept": "Color", "text": "White", "ttsText": "White", "ttsLang": "en-US" },
+          { "id": "en-v-orange", "concept": "Color", "text": "Orange", "ttsText": "Orange", "ttsLang": "en-US" },
+          { "id": "en-v-purple", "concept": "Color", "text": "Purple", "ttsText": "Purple", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-v-negro", "concept": "Color", "text": "Negro", "ttsText": "Negro", "ttsLang": "es-ES" },
+          { "id": "es-v-blanco", "concept": "Color", "text": "Blanco", "ttsText": "Blanco", "ttsLang": "es-ES" },
+          { "id": "es-v-naranja", "concept": "Color", "text": "Naranja", "ttsText": "Naranja", "ttsLang": "es-ES" },
+          { "id": "es-v-morado", "concept": "Color", "text": "Morado", "ttsText": "Morado", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-v-heise", "concept": "Color", "text": "黑色", "ttsText": "黑色", "ttsLang": "zh-CN", "pinyin": "Hēisè" },
+          { "id": "zh-v-baise", "concept": "Color", "text": "白色", "ttsText": "白色", "ttsLang": "zh-CN", "pinyin": "Báisè" },
+          { "id": "zh-v-chengse", "concept": "Color", "text": "橙色", "ttsText": "橙色", "ttsLang": "zh-CN", "pinyin": "Chéngsè" },
+          { "id": "zh-v-zise", "concept": "Color", "text": "紫色", "ttsText": "紫色", "ttsLang": "zh-CN", "pinyin": "Zǐsè" }
+        ]
+      }
+    },
+    {
+      "id": "step-3",
+      "type": "pronounce",
+      "title": "Say It",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-p-black", "text": "Black", "ttsText": "Black", "ttsLang": "en-US" },
+          { "id": "en-p-white", "text": "White", "ttsText": "White", "ttsLang": "en-US" },
+          { "id": "en-p-orange", "text": "Orange", "ttsText": "Orange", "ttsLang": "en-US" },
+          { "id": "en-p-purple", "text": "Purple", "ttsText": "Purple", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-p-negro", "text": "Negro", "ttsText": "Negro", "ttsLang": "es-ES" },
+          { "id": "es-p-blanco", "text": "Blanco", "ttsText": "Blanco", "ttsLang": "es-ES" },
+          { "id": "es-p-naranja", "text": "Naranja", "ttsText": "Naranja", "ttsLang": "es-ES" },
+          { "id": "es-p-morado", "text": "Morado", "ttsText": "Morado", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-p-heise", "text": "黑色", "ttsText": "黑色", "ttsLang": "zh-CN", "pinyin": "Hēisè" },
+          { "id": "zh-p-baise", "text": "白色", "ttsText": "白色", "ttsLang": "zh-CN", "pinyin": "Báisè" },
+          { "id": "zh-p-chengse", "text": "橙色", "ttsText": "橙色", "ttsLang": "zh-CN", "pinyin": "Chéngsè" },
+          { "id": "zh-p-zise", "text": "紫色", "ttsText": "紫色", "ttsLang": "zh-CN", "pinyin": "Zǐsè" }
+        ]
+      }
+    },
+    {
+      "id": "step-4",
+      "type": "build",
+      "title": "Build the Sentence",
+      "templateByLanguage": {
+        "en": { "template": "It is black.", "ttsLang": "en-US" },
+        "es": { "template": "Es negro.", "ttsLang": "es-ES" },
+        "zh": { "template": "它是黑色。", "ttsLang": "zh-CN" }
+      },
+      "names": ["black", "white", "orange", "purple", "negro"]
+    },
+    {
+      "id": "step-5",
+      "type": "conversation",
+      "title": "Mini Conversation",
+      "scriptByLanguage": {
+        "en": {
+          "app1": "What color is it?",
+          "learner1": "It is black.",
+          "app2": "What color is it?",
+          "learner2": "It is purple.",
+          "app3": "Great job!"
+        },
+        "es": {
+          "app1": "¿Qué color es?",
+          "learner1": "Es negro.",
+          "app2": "¿Qué color es?",
+          "learner2": "Es morado.",
+          "app3": "¡Muy bien!"
+        },
+        "zh": {
+          "app1": "它是什么颜色？",
+          "learner1": "它是黑色。",
+          "app2": "它是什么颜色？",
+          "learner2": "它是紫色。",
+          "app3": "太好了！"
+        }
+      }
+    },
+    {
+      "id": "step-6",
+      "type": "game",
+      "title": "Connect the Word",
+      "pairsByLanguage": {
+        "en": [
+          { "left": "black", "right": "It is ____." },
+          { "left": "white", "right": "It is ____." },
+          { "left": "orange", "right": "It is ____." },
+          { "left": "purple", "right": "It is ____." },
+          { "left": "It", "right": "____ is black." },
+          { "left": "is", "right": "It ____ white." },
+          { "left": "It", "right": "____ is orange." },
+          { "left": "is", "right": "It ____ purple." }
+        ],
+        "es": [
+          { "left": "negro", "right": "Es ____." },
+          { "left": "blanco", "right": "Es ____." },
+          { "left": "naranja", "right": "Es ____." },
+          { "left": "morado", "right": "Es ____." },
+          { "left": "Es", "right": "____ negro." },
+          { "left": "Es", "right": "____ blanco." },
+          { "left": "Es", "right": "____ naranja." },
+          { "left": "Es", "right": "____ morado." }
+        ],
+        "zh": [
+          { "left": "黑色", "right": "它是____。" },
+          { "left": "白色", "right": "它是____。" },
+          { "left": "橙色", "right": "它是____。" },
+          { "left": "紫色", "right": "它是____。" },
+          { "left": "它", "right": "____是黑色。" },
+          { "left": "是", "right": "它____白色。" },
+          { "left": "它", "right": "____是橙色。" },
+          { "left": "是", "right": "它____紫色。" }
+        ]
+      }
+    }
+  ]
+}

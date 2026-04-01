@@ -1,0 +1,157 @@
+{
+  "id": "lesson-15",
+  "title": "Food 2",
+  "steps": [
+    {
+      "id": "step-1",
+      "type": "listen",
+      "title": "Listen",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-milk", "text": "Milk", "ttsText": "Milk", "ttsLang": "en-US" },
+          { "id": "en-juice", "text": "Juice", "ttsText": "Juice", "ttsLang": "en-US" },
+          { "id": "en-banana", "text": "Banana", "ttsText": "Banana", "ttsLang": "en-US" },
+          { "id": "en-noodles", "text": "Noodles", "ttsText": "Noodles", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-leche", "text": "Leche", "ttsText": "Leche", "ttsLang": "es-ES" },
+          { "id": "es-jugo", "text": "Jugo", "ttsText": "Jugo", "ttsLang": "es-ES" },
+          { "id": "es-banana", "text": "Banana", "ttsText": "Banana", "ttsLang": "es-ES" },
+          { "id": "es-fideos", "text": "Fideos", "ttsText": "Fideos", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-niunai", "text": "牛奶", "ttsText": "牛奶", "ttsLang": "zh-CN", "pinyin": "Niúnǎi" },
+          { "id": "zh-guozhi", "text": "果汁", "ttsText": "果汁", "ttsLang": "zh-CN", "pinyin": "Guǒzhī" },
+          { "id": "zh-xiangjiao", "text": "香蕉", "ttsText": "香蕉", "ttsLang": "zh-CN", "pinyin": "Xiāngjiāo" },
+          { "id": "zh-miantiao", "text": "面条", "ttsText": "面条", "ttsLang": "zh-CN", "pinyin": "Miàntiáo" }
+        ]
+      }
+    },
+    {
+      "id": "step-2",
+      "type": "vocab",
+      "title": "Learn the Words",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-v-milk", "concept": "Food", "text": "Milk", "ttsText": "Milk", "ttsLang": "en-US" },
+          { "id": "en-v-juice", "concept": "Food", "text": "Juice", "ttsText": "Juice", "ttsLang": "en-US" },
+          { "id": "en-v-banana", "concept": "Food", "text": "Banana", "ttsText": "Banana", "ttsLang": "en-US" },
+          { "id": "en-v-noodles", "concept": "Food", "text": "Noodles", "ttsText": "Noodles", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-v-leche", "concept": "Food", "text": "Leche", "ttsText": "Leche", "ttsLang": "es-ES" },
+          { "id": "es-v-jugo", "concept": "Food", "text": "Jugo", "ttsText": "Jugo", "ttsLang": "es-ES" },
+          { "id": "es-v-banana", "concept": "Food", "text": "Banana", "ttsText": "Banana", "ttsLang": "es-ES" },
+          { "id": "es-v-fideos", "concept": "Food", "text": "Fideos", "ttsText": "Fideos", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-v-niunai", "concept": "Food", "text": "牛奶", "ttsText": "牛奶", "ttsLang": "zh-CN", "pinyin": "Niúnǎi" },
+          { "id": "zh-v-guozhi", "concept": "Food", "text": "果汁", "ttsText": "果汁", "ttsLang": "zh-CN", "pinyin": "Guǒzhī" },
+          { "id": "zh-v-xiangjiao", "concept": "Food", "text": "香蕉", "ttsText": "香蕉", "ttsLang": "zh-CN", "pinyin": "Xiāngjiāo" },
+          { "id": "zh-v-miantiao", "concept": "Food", "text": "面条", "ttsText": "面条", "ttsLang": "zh-CN", "pinyin": "Miàntiáo" }
+        ]
+      }
+    },
+    {
+      "id": "step-3",
+      "type": "pronounce",
+      "title": "Say It",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-p-milk", "text": "Milk", "ttsText": "Milk", "ttsLang": "en-US" },
+          { "id": "en-p-juice", "text": "Juice", "ttsText": "Juice", "ttsLang": "en-US" },
+          { "id": "en-p-banana", "text": "Banana", "ttsText": "Banana", "ttsLang": "en-US" },
+          { "id": "en-p-noodles", "text": "Noodles", "ttsText": "Noodles", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-p-leche", "text": "Leche", "ttsText": "Leche", "ttsLang": "es-ES" },
+          { "id": "es-p-jugo", "text": "Jugo", "ttsText": "Jugo", "ttsLang": "es-ES" },
+          { "id": "es-p-banana", "text": "Banana", "ttsText": "Banana", "ttsLang": "es-ES" },
+          { "id": "es-p-fideos", "text": "Fideos", "ttsText": "Fideos", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-p-niunai", "text": "牛奶", "ttsText": "牛奶", "ttsLang": "zh-CN", "pinyin": "Niúnǎi" },
+          { "id": "zh-p-guozhi", "text": "果汁", "ttsText": "果汁", "ttsLang": "zh-CN", "pinyin": "Guǒzhī" },
+          { "id": "zh-p-xiangjiao", "text": "香蕉", "ttsText": "香蕉", "ttsLang": "zh-CN", "pinyin": "Xiāngjiāo" },
+          { "id": "zh-p-miantiao", "text": "面条", "ttsText": "面条", "ttsLang": "zh-CN", "pinyin": "Miàntiáo" }
+        ]
+      }
+    },
+    {
+      "id": "step-4",
+      "type": "build",
+      "title": "Build the Sentence",
+      "templateByLanguage": {
+        "en": { "template": "I drink milk.", "ttsLang": "en-US" },
+        "es": { "template": "Yo tomo leche.", "ttsLang": "es-ES" },
+        "zh": { "template": "我喝牛奶。", "ttsLang": "zh-CN" }
+      },
+      "names": ["milk", "juice", "banana", "noodles", "leche"]
+    },
+    {
+      "id": "step-5",
+      "type": "conversation",
+      "title": "Mini Conversation",
+      "scriptByLanguage": {
+        "en": {
+          "app1": "What do you drink?",
+          "learner1": "I drink milk.",
+          "app2": "What do you eat?",
+          "learner2": "I eat noodles.",
+          "app3": "Yum!"
+        },
+        "es": {
+          "app1": "¿Qué tomas?",
+          "learner1": "Yo tomo leche.",
+          "app2": "¿Qué comes?",
+          "learner2": "Yo como fideos.",
+          "app3": "¡Qué rico!"
+        },
+        "zh": {
+          "app1": "你喝什么？",
+          "learner1": "我喝牛奶。",
+          "app2": "你吃什么？",
+          "learner2": "我吃面条。",
+          "app3": "太好了！"
+        }
+      }
+    },
+    {
+      "id": "step-6",
+      "type": "game",
+      "title": "Connect the Word",
+      "pairsByLanguage": {
+        "en": [
+          { "left": "milk", "right": "I drink ____." },
+          { "left": "juice", "right": "I drink ____." },
+          { "left": "banana", "right": "I eat ____." },
+          { "left": "noodles", "right": "I eat ____." },
+          { "left": "I", "right": "____ drink milk." },
+          { "left": "drink", "right": "I ____ juice." },
+          { "left": "I", "right": "____ eat banana." },
+          { "left": "eat", "right": "I ____ noodles." }
+        ],
+        "es": [
+          { "left": "leche", "right": "Yo tomo ____." },
+          { "left": "jugo", "right": "Yo tomo ____." },
+          { "left": "banana", "right": "Yo como ____." },
+          { "left": "fideos", "right": "Yo como ____." },
+          { "left": "Yo", "right": "____ tomo leche." },
+          { "left": "tomo", "right": "Yo ____ jugo." },
+          { "left": "Yo", "right": "____ como banana." },
+          { "left": "como", "right": "Yo ____ fideos." }
+        ],
+        "zh": [
+          { "left": "牛奶", "right": "我喝____。" },
+          { "left": "果汁", "right": "我喝____。" },
+          { "left": "香蕉", "right": "我吃____。" },
+          { "left": "面条", "right": "我吃____。" },
+          { "left": "我", "right": "____喝牛奶。" },
+          { "left": "喝", "right": "我____果汁。" },
+          { "left": "我", "right": "____吃香蕉。" },
+          { "left": "吃", "right": "我____面条。" }
+        ]
+      }
+    }
+  ]
+}

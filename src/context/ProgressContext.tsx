@@ -11,9 +11,9 @@ interface UserStats {
 
 interface ProgressContextType {
   // Lesson progress
-  progressByLang: Record<LangCode, number>;
+  progressByLang: Record<LangCode, Record<string, number>>;
   completedLessons: Record<LangCode, string[]>;
-  updateProgress: (lang: LangCode, percent: number) => void;
+  updateProgress: (lang: LangCode, lessonId: string, percent: number) => void;
   markLessonComplete: (lang: LangCode, lessonId: string) => void;
   getLessonProgress: (lang: LangCode, lessonId: string) => number;
 
@@ -24,16 +24,17 @@ interface ProgressContextType {
   weeklyGoalPercent: number;
   addStars: (amount: number) => void;
   incrementActivity: () => void;
+  resetAllProgress: () => void;
 }
 
 const ProgressContext = createContext<ProgressContextType | undefined>(undefined);
 
-const DEFAULT_PROGRESS: Record<LangCode, number> = { en: 0, es: 0, zh: 0 };
+const DEFAULT_PROGRESS: Record<LangCode, Record<string, number>> = { en: {}, es: {}, zh: {} };
 const DEFAULT_COMPLETED: Record<LangCode, string[]> = { en: [], es: [], zh: [] };
 const WEEKLY_GOAL_TARGET = 5; // 5 activities per week
 
 export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [progressByLang, setProgressByLang] = useState<Record<LangCode, number>>(DEFAULT_PROGRESS);
+  const [progressByLang, setProgressByLang] = useState<Record<LangCode, Record<string, number>>>(DEFAULT_PROGRESS);
   const [completedLessons, setCompletedLessons] = useState<Record<LangCode, string[]>>(DEFAULT_COMPLETED);
   const [stats, setStats] = useState<UserStats>({
     stars: 0,
@@ -52,13 +53,27 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       if (savedLessons) setCompletedLessons(JSON.parse(savedLessons));
 
       const savedStats = localStorage.getItem('lingoUserStats');
-      if (savedStats) {
-        setStats(JSON.parse(savedStats));
-      }
+      if (savedStats) setStats(JSON.parse(savedStats));
     } catch (e) {
       console.error('Failed to load user data', e);
     }
   }, []);
+
+  // Full data reset triggered by specific env var or manual call
+  // For the "Fresh Start" requested: 
+  const resetAllProgress = () => {
+    localStorage.removeItem('lingoProgress');
+    localStorage.removeItem('lingoCompletedLessons');
+    localStorage.removeItem('lingoUserStats');
+    setProgressByLang(DEFAULT_PROGRESS);
+    setCompletedLessons(DEFAULT_COMPLETED);
+    setStats({
+      stars: 0,
+      streak: 0,
+      lastActiveDate: null,
+      weeklyActivityCount: 0,
+    });
+  };
 
   // Background Streak Checker: Reset streak if user hasn't active for more than 1 day
   useEffect(() => {
@@ -69,7 +84,6 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     yesterday.setDate(yesterday.getDate() - 1);
     const yesterdayStr = yesterday.toDateString();
 
-    // If last active was neither today nor yesterday, streak is broken
     if (stats.lastActiveDate !== todayStr && stats.lastActiveDate !== yesterdayStr) {
       if (stats.streak > 0) {
         setStats(prev => {
@@ -81,9 +95,11 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
   }, [stats.lastActiveDate, stats.streak]);
 
-  const updateProgress = (lang: LangCode, percent: number) => {
+  const updateProgress = (lang: LangCode, lessonId: string, percent: number) => {
     setProgressByLang((prev) => {
-      const next = { ...prev, [lang]: Math.max(prev[lang] || 0, percent) };
+      const currentLang = prev[lang] || {};
+      const nextLang = { ...currentLang, [lessonId]: Math.max(currentLang[lessonId] || 0, percent) };
+      const next = { ...prev, [lang]: nextLang };
       try { localStorage.setItem('lingoProgress', JSON.stringify(next)); } catch {}
       return next;
     });
@@ -100,15 +116,18 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       return next;
     });
 
+    // Ensure it shows as 100% in progress
+    updateProgress(lang, lessonId, 100);
+
     if (!alreadyComplete) {
-      addStars(10); // Completion bonus (plus stars earned during steps)
+      addStars(10);
       incrementActivity();
     }
   };
 
   const getLessonProgress = (lang: LangCode, lessonId: string): number => {
     if ((completedLessons[lang] || []).includes(lessonId)) return 100;
-    return 0;
+    return (progressByLang[lang] || {})[lessonId] || 0;
   };
 
   const addStars = (amount: number) => {
@@ -127,7 +146,6 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
     setStats(prev => {
       if (prev.lastActiveDate === todayStr) {
-        // Already incremented today, just bump activity count if needed or just return
         const next = { ...prev, weeklyActivityCount: prev.weeklyActivityCount + 1 };
         try { localStorage.setItem('lingoUserStats', JSON.stringify(next)); } catch {}
         return next;
@@ -137,7 +155,7 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       if (prev.lastActiveDate === yesterdayStr) {
         newStreak += 1;
       } else {
-        newStreak = 1; // New or broken
+        newStreak = 1;
       }
 
       const next = {
@@ -167,6 +185,7 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       weeklyGoalPercent,
       addStars,
       incrementActivity,
+      resetAllProgress,
     }}>
       {children}
     </ProgressContext.Provider>

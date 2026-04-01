@@ -1,12 +1,13 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Volume2, CheckCircle2, Mic, Square } from "lucide-react";
-import lessonData from "./lesson_json/lesson-01.json";
+import { getLessonData } from './lessonRegistry';
 import { speak } from "../../lib/tts";
 import KidButton from '../common/KidButton';
+import { getBuildSentences } from "./lessonBuildData";
 import { useProgress } from '../../context/ProgressContext';
 
-type LangCode = "en" | "es" | "zh";
+export type LangCode = "en" | "es" | "zh";
 
 type ListenItem = {
   id: string;
@@ -222,8 +223,8 @@ const getMascotMessage = (type: string) => {
 };
 
 const LessonPlayer: React.FC<LessonPlayerProps> = ({ lessonId, language, onExit }) => {
-  const lesson = lessonData as { id: string; title: string; steps: LessonStep[] };
-  const { updateProgress, markLessonComplete, addStars, incrementActivity } = useProgress();
+  const lesson = getLessonData(lessonId) as { id: string; title: string; steps: LessonStep[] } | null;
+  const { updateProgress, markLessonComplete, addStars } = useProgress();
 
   const [stepIndex, setStepIndex] = useState(0);
   const [name, setName] = useState("Alex");
@@ -242,6 +243,17 @@ const LessonPlayer: React.FC<LessonPlayerProps> = ({ lessonId, language, onExit 
   const [convCorrectKeys, setConvCorrectKeys] = useState<string[]>([]);
   const [convSkippedKeys, setConvSkippedKeys] = useState<string[]>([]);
   const [matchedCountStep6, setMatchedCountStep6] = useState(0);
+
+  // Handle case where lesson is not found
+  if (!lesson) {
+    return (
+      <div className="min-h-screen pt-28 px-4 bg-[#F0F4F8]">
+        <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl p-8">
+          <div className="font-bold text-red-600">Error: Lesson "{lessonId}" not found.</div>
+        </div>
+      </div>
+    );
+  }
 
   const step = lesson.steps[stepIndex];
 
@@ -348,7 +360,6 @@ const LessonPlayer: React.FC<LessonPlayerProps> = ({ lessonId, language, onExit 
     if (!canNext) return;
     stopSpeech();
     addStars(2);
-    incrementActivity();
     setSessionStars((s) => s + 2);
     setStepIndex((i) => Math.min(i + 1, lesson.steps.length - 1));
     window.scrollTo(0, 0);
@@ -454,11 +465,11 @@ const LessonPlayer: React.FC<LessonPlayerProps> = ({ lessonId, language, onExit 
 
   const stepMeta = step ? getStepMeta(step.type) : getStepMeta('');
   const mascotText = step ? getMascotMessage(step.type) : getMascotMessage('');
-  const progress = ((stepIndex + 1) / lesson.steps.length) * 100;
+  const progress = (stepIndex / lesson.steps.length) * 100;
 
   useEffect(() => {
-    updateProgress(language, Math.round(progress));
-  }, [progress, language, updateProgress]);
+    updateProgress(language, lessonId, Math.round(progress));
+  }, [progress, language, lessonId, updateProgress]);
 
   return (
     <div className="min-h-screen">
@@ -617,6 +628,7 @@ const LessonPlayer: React.FC<LessonPlayerProps> = ({ lessonId, language, onExit 
                     <Step3SayIt step={step as Extract<LessonStep, { type: "pronounce" }>} language={language} correctIds={sayItCorrectIds} skippedIds={sayItSkippedIds} onCorrect={markSayItCorrect} onSkip={markSayItSkipped} />
                   ) : step.type === "build" && isStep4Build ? (
                     <Step4BuildMulti
+                      lessonId={lessonId}
                       step={step as Extract<LessonStep, { type: "build" }>}
                       language={language}
                       name={name}
@@ -1181,21 +1193,16 @@ function Step3SayIt({
 
 /* ---------------- Step 4: Build (hear only) ---------------- */
 
-type BuildSentence = {
-  key: string;
-  tts: string;
-  ttsLang: string;
-  tilesCorrect: string[];
-  distractors?: string[];
-};
 
 function Step4BuildMulti({
+  lessonId,
   step,
   language,
   name,
   setName,
   onProgress
 }: {
+  lessonId: string;
   step: {
     templateByLanguage: Record<LangCode, { template: string; ttsLang: string }>;
     names: string[];
@@ -1222,35 +1229,10 @@ function Step4BuildMulti({
     "你。": "nǐ."
   };
 
-  const sentences: BuildSentence[] = useMemo(() => {
-    if (language === "en") {
-      return [
-        { key: "en-1", tts: `My name is ${name}.`, ttsLang, tilesCorrect: ["My", "name", "is", `${name}.`], distractors: ["Hello!", "Hi!", "your", "What's", "meet", "you."] },
-        { key: "en-2", tts: "Hello!", ttsLang, tilesCorrect: ["Hello!"], distractors: ["Hi!", "name", "is", "My", "your", "What's", "Hello", "you."] },
-        { key: "en-3", tts: "Hi!", ttsLang, tilesCorrect: ["Hi!"], distractors: ["Hello!", "My", "name", "is", "your", "What's", "Hi", "meet"] },
-        { key: "en-4", tts: "What's your name?", ttsLang, tilesCorrect: ["What's", "your", "name?"], distractors: ["My", "name", "is", "Hello!", "Hi!", "meet", "you."] },
-        { key: "en-5", tts: "Nice to meet you.", ttsLang, tilesCorrect: ["Nice", "to", "meet", "you."], distractors: ["Hello!", "Hi!", "What's", "your", "name?", "My", "is"] }
-      ];
-    }
-
-    if (language === "es") {
-      return [
-        { key: "es-1", tts: `Me llamo ${name}.`, ttsLang, tilesCorrect: ["Me", "llamo", `${name}.`], distractors: ["Hola", "Hi", "¿Cómo", "te", "llamas?", "gusto."] },
-        { key: "es-2", tts: "¡Hola!", ttsLang, tilesCorrect: ["¡Hola!"], distractors: ["Hola", "Hi", "Me", "llamo", "¿Cómo", "te", "gusto", "llamas?"] },
-        { key: "es-3", tts: "Hi", ttsLang, tilesCorrect: ["Hi"], distractors: ["¡Hola!", "Hola", "Me", "llamo", "¿Cómo", "te", "llamas?", "gusto."] },
-        { key: "es-4", tts: "¿Cómo te llamas?", ttsLang, tilesCorrect: ["¿Cómo", "te", "llamas?"], distractors: ["Me", "llamo", "¡Hola!", "Hola", "gusto.", "Hi", `${name}.`] },
-        { key: "es-5", tts: "Mucho gusto.", ttsLang, tilesCorrect: ["Mucho", "gusto."], distractors: ["Me", "llamo", "¡Hola!", "Hola", "¿Cómo", "te", "llamas?", "Hi"] }
-      ];
-    }
-
-    return [
-      { key: "zh-1", tts: `我叫 ${name}。`, ttsLang, tilesCorrect: ["我叫", `${name}。`], distractors: ["你好！", "嗨！", "你", "叫什么", "名字？", "很高兴", "认识"] },
-      { key: "zh-2", tts: "你好！", ttsLang, tilesCorrect: ["你好！"], distractors: ["嗨！", "我叫", "你", "名字？", "叫什么", "很高兴", "认识", "你。"] },
-      { key: "zh-3", tts: "嗨！", ttsLang, tilesCorrect: ["嗨！"], distractors: ["你好！", "我叫", "你", "叫什么", "名字？", "很高兴", "认识", "你。"] },
-      { key: "zh-4", tts: "你叫什么名字？", ttsLang, tilesCorrect: ["你", "叫什么", "名字？"], distractors: ["你好！", "嗨！", "我叫", `${name}。`, "很高兴", "认识", "你。"] },
-      { key: "zh-5", tts: "很高兴认识你。", ttsLang, tilesCorrect: ["很高兴", "认识", "你。"], distractors: ["你好！", "嗨！", "你", "叫什么", "名字？", "我叫", `${name}。`] }
-    ];
-  }, [language, name, ttsLang]);
+  const sentences = useMemo(
+    () => getBuildSentences(lessonId, language, name, ttsLang),
+    [lessonId, language, name, ttsLang]
+  );
 
   const [builtByKey, setBuiltByKey] = useState<Record<string, string[]>>({});
   const [doneKeys, setDoneKeys] = useState<string[]>([]);
@@ -1872,7 +1854,7 @@ function Step6FillBlank({
   language,
   onProgress
 }: {
-  step: { pairsByLanguage: Record<LangCode, { left: string; right: string }[]> };
+  step: { pairsByLanguage: Record<LangCode, { left: string; right: string }[]>; };
   language: LangCode;
   onProgress: (count: number) => void;
 }) {
@@ -1889,7 +1871,12 @@ function Step6FillBlank({
     "叫什么": "jiào shénme",
     "名字": "míngzì",
     "很高兴": "Hěn gāoxìng",
-    "认识": "rènshi"
+    "认识": "rènshi",
+    "我": "Wǒ",
+    "很好": "hěn hǎo",
+    "很开心": "hěn kāixīn",
+    "很累": "hěn lèi",
+    "好吗": "hǎo ma"
   };
 
   const pinyinForWord = (w: string) => {

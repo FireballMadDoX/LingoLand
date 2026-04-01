@@ -1,0 +1,157 @@
+{
+  "id": "lesson-19",
+  "title": "Weather 2",
+  "steps": [
+    {
+      "id": "step-1",
+      "type": "listen",
+      "title": "Listen",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-snowy", "text": "Snowy", "ttsText": "Snowy", "ttsLang": "en-US" },
+          { "id": "en-hot", "text": "Hot", "ttsText": "Hot", "ttsLang": "en-US" },
+          { "id": "en-cold", "text": "Cold", "ttsText": "Cold", "ttsLang": "en-US" },
+          { "id": "en-stormy", "text": "Stormy", "ttsText": "Stormy", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-nevado", "text": "Nevado", "ttsText": "Nevado", "ttsLang": "es-ES" },
+          { "id": "es-caliente", "text": "Caliente", "ttsText": "Caliente", "ttsLang": "es-ES" },
+          { "id": "es-frio", "text": "Frío", "ttsText": "Frío", "ttsLang": "es-ES" },
+          { "id": "es-tormentoso", "text": "Tormentoso", "ttsText": "Tormentoso", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-xiaxue", "text": "下雪", "ttsText": "下雪", "ttsLang": "zh-CN", "pinyin": "Xiàxuě" },
+          { "id": "zh-re", "text": "热", "ttsText": "热", "ttsLang": "zh-CN", "pinyin": "Rè" },
+          { "id": "zh-leng", "text": "冷", "ttsText": "冷", "ttsLang": "zh-CN", "pinyin": "Lěng" },
+          { "id": "zh-baofengyu", "text": "暴风雨", "ttsText": "暴风雨", "ttsLang": "zh-CN", "pinyin": "Bàofēngyǔ" }
+        ]
+      }
+    },
+    {
+      "id": "step-2",
+      "type": "vocab",
+      "title": "Learn the Words",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-v-snowy", "concept": "Weather", "text": "Snowy", "ttsText": "Snowy", "ttsLang": "en-US" },
+          { "id": "en-v-hot", "concept": "Weather", "text": "Hot", "ttsText": "Hot", "ttsLang": "en-US" },
+          { "id": "en-v-cold", "concept": "Weather", "text": "Cold", "ttsText": "Cold", "ttsLang": "en-US" },
+          { "id": "en-v-stormy", "concept": "Weather", "text": "Stormy", "ttsText": "Stormy", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-v-nevado", "concept": "Weather", "text": "Nevado", "ttsText": "Nevado", "ttsLang": "es-ES" },
+          { "id": "es-v-caliente", "concept": "Weather", "text": "Caliente", "ttsText": "Caliente", "ttsLang": "es-ES" },
+          { "id": "es-v-frio", "concept": "Weather", "text": "Frío", "ttsText": "Frío", "ttsLang": "es-ES" },
+          { "id": "es-v-tormentoso", "concept": "Weather", "text": "Tormentoso", "ttsText": "Tormentoso", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-v-xiaxue", "concept": "Weather", "text": "下雪", "ttsText": "下雪", "ttsLang": "zh-CN", "pinyin": "Xiàxuě" },
+          { "id": "zh-v-re", "concept": "Weather", "text": "热", "ttsText": "热", "ttsLang": "zh-CN", "pinyin": "Rè" },
+          { "id": "zh-v-leng", "concept": "Weather", "text": "冷", "ttsText": "冷", "ttsLang": "zh-CN", "pinyin": "Lěng" },
+          { "id": "zh-v-baofengyu", "concept": "Weather", "text": "暴风雨", "ttsText": "暴风雨", "ttsLang": "zh-CN", "pinyin": "Bàofēngyǔ" }
+        ]
+      }
+    },
+    {
+      "id": "step-3",
+      "type": "pronounce",
+      "title": "Say It",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-p-snowy", "text": "Snowy", "ttsText": "Snowy", "ttsLang": "en-US" },
+          { "id": "en-p-hot", "text": "Hot", "ttsText": "Hot", "ttsLang": "en-US" },
+          { "id": "en-p-cold", "text": "Cold", "ttsText": "Cold", "ttsLang": "en-US" },
+          { "id": "en-p-stormy", "text": "Stormy", "ttsText": "Stormy", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-p-nevado", "text": "Nevado", "ttsText": "Nevado", "ttsLang": "es-ES" },
+          { "id": "es-p-caliente", "text": "Caliente", "ttsText": "Caliente", "ttsLang": "es-ES" },
+          { "id": "es-p-frio", "text": "Frío", "ttsText": "Frío", "ttsLang": "es-ES" },
+          { "id": "es-p-tormentoso", "text": "Tormentoso", "ttsText": "Tormentoso", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-p-xiaxue", "text": "下雪", "ttsText": "下雪", "ttsLang": "zh-CN", "pinyin": "Xiàxuě" },
+          { "id": "zh-p-re", "text": "热", "ttsText": "热", "ttsLang": "zh-CN", "pinyin": "Rè" },
+          { "id": "zh-p-leng", "text": "冷", "ttsText": "冷", "ttsLang": "zh-CN", "pinyin": "Lěng" },
+          { "id": "zh-p-baofengyu", "text": "暴风雨", "ttsText": "暴风雨", "ttsLang": "zh-CN", "pinyin": "Bàofēngyǔ" }
+        ]
+      }
+    },
+    {
+      "id": "step-4",
+      "type": "build",
+      "title": "Build the Sentence",
+      "templateByLanguage": {
+        "en": { "template": "It is cold.", "ttsLang": "en-US" },
+        "es": { "template": "Hace frío.", "ttsLang": "es-ES" },
+        "zh": { "template": "今天很冷。", "ttsLang": "zh-CN" }
+      },
+      "names": ["snowy", "hot", "cold", "stormy", "frío"]
+    },
+    {
+      "id": "step-5",
+      "type": "conversation",
+      "title": "Mini Conversation",
+      "scriptByLanguage": {
+        "en": {
+          "app1": "How is the weather?",
+          "learner1": "It is cold.",
+          "app2": "How is the weather now?",
+          "learner2": "It is hot.",
+          "app3": "Okay!"
+        },
+        "es": {
+          "app1": "¿Cómo está el clima?",
+          "learner1": "Hace frío.",
+          "app2": "¿Cómo está el clima ahora?",
+          "learner2": "Hace calor.",
+          "app3": "Muy bien."
+        },
+        "zh": {
+          "app1": "天气怎么样？",
+          "learner1": "今天很冷。",
+          "app2": "现在天气怎么样？",
+          "learner2": "今天很热。",
+          "app3": "太好了！"
+        }
+      }
+    },
+    {
+      "id": "step-6",
+      "type": "game",
+      "title": "Connect the Word",
+      "pairsByLanguage": {
+        "en": [
+          { "left": "snowy", "right": "It is ____." },
+          { "left": "hot", "right": "It is ____." },
+          { "left": "cold", "right": "It is ____." },
+          { "left": "stormy", "right": "It is ____." },
+          { "left": "It", "right": "____ is snowy." },
+          { "left": "is", "right": "It ____ hot." },
+          { "left": "It", "right": "____ is cold." },
+          { "left": "is", "right": "It ____ stormy." }
+        ],
+        "es": [
+          { "left": "nevado", "right": "Está ____." },
+          { "left": "caliente", "right": "Hace ____." },
+          { "left": "frío", "right": "Hace ____." },
+          { "left": "tormentoso", "right": "Está ____." },
+          { "left": "Está", "right": "____ nevado." },
+          { "left": "Hace", "right": "____ calor." },
+          { "left": "Hace", "right": "____ frío." },
+          { "left": "Está", "right": "____ tormentoso." }
+        ],
+        "zh": [
+          { "left": "下雪", "right": "今天____。" },
+          { "left": "热", "right": "今天很____。" },
+          { "left": "冷", "right": "今天很____。" },
+          { "left": "暴风雨", "right": "今天有____。" },
+          { "left": "今天", "right": "____下雪。" },
+          { "left": "很", "right": "今天____热。" },
+          { "left": "今天", "right": "____很冷。" },
+          { "left": "有", "right": "今天____暴风雨。" }
+        ]
+      }
+    }
+  ]
+}

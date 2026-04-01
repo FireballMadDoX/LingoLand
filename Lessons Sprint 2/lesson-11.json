@@ -1,0 +1,157 @@
+{
+  "id": "lesson-11",
+  "title": "Greetings 2",
+  "steps": [
+    {
+      "id": "step-1",
+      "type": "listen",
+      "title": "Listen",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-gm", "text": "Good morning", "ttsText": "Good morning", "ttsLang": "en-US" },
+          { "id": "en-ga", "text": "Good afternoon", "ttsText": "Good afternoon", "ttsLang": "en-US" },
+          { "id": "en-nice", "text": "Nice to meet you", "ttsText": "Nice to meet you", "ttsLang": "en-US" },
+          { "id": "en-bye", "text": "See you later", "ttsText": "See you later", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-bd", "text": "Buenos días", "ttsText": "Buenos días", "ttsLang": "es-ES" },
+          { "id": "es-bt", "text": "Buenas tardes", "ttsText": "Buenas tardes", "ttsLang": "es-ES" },
+          { "id": "es-gusto", "text": "Mucho gusto", "ttsText": "Mucho gusto", "ttsLang": "es-ES" },
+          { "id": "es-luego", "text": "Hasta luego", "ttsText": "Hasta luego", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-zaoshang", "text": "早上好", "ttsText": "早上好", "ttsLang": "zh-CN", "pinyin": "Zǎoshang hǎo" },
+          { "id": "zh-xiawu", "text": "下午好", "ttsText": "下午好", "ttsLang": "zh-CN", "pinyin": "Xiàwǔ hǎo" },
+          { "id": "zh-renshini", "text": "很高兴认识你", "ttsText": "很高兴认识你", "ttsLang": "zh-CN", "pinyin": "Hěn gāoxìng rènshi nǐ" },
+          { "id": "zh-huitou", "text": "回头见", "ttsText": "回头见", "ttsLang": "zh-CN", "pinyin": "Huítóu jiàn" }
+        ]
+      }
+    },
+    {
+      "id": "step-2",
+      "type": "vocab",
+      "title": "Learn the Words",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-v-gm", "concept": "Greeting", "text": "Good morning", "ttsText": "Good morning", "ttsLang": "en-US" },
+          { "id": "en-v-ga", "concept": "Greeting", "text": "Good afternoon", "ttsText": "Good afternoon", "ttsLang": "en-US" },
+          { "id": "en-v-nice", "concept": "Greeting", "text": "Nice to meet you", "ttsText": "Nice to meet you", "ttsLang": "en-US" },
+          { "id": "en-v-bye", "concept": "Goodbye", "text": "See you later", "ttsText": "See you later", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-v-bd", "concept": "Greeting", "text": "Buenos días", "ttsText": "Buenos días", "ttsLang": "es-ES" },
+          { "id": "es-v-bt", "concept": "Greeting", "text": "Buenas tardes", "ttsText": "Buenas tardes", "ttsLang": "es-ES" },
+          { "id": "es-v-gusto", "concept": "Greeting", "text": "Mucho gusto", "ttsText": "Mucho gusto", "ttsLang": "es-ES" },
+          { "id": "es-v-luego", "concept": "Goodbye", "text": "Hasta luego", "ttsText": "Hasta luego", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-v-zaoshang", "concept": "Greeting", "text": "早上好", "ttsText": "早上好", "ttsLang": "zh-CN", "pinyin": "Zǎoshang hǎo" },
+          { "id": "zh-v-xiawu", "concept": "Greeting", "text": "下午好", "ttsText": "下午好", "ttsLang": "zh-CN", "pinyin": "Xiàwǔ hǎo" },
+          { "id": "zh-v-renshini", "concept": "Greeting", "text": "很高兴认识你", "ttsText": "很高兴认识你", "ttsLang": "zh-CN", "pinyin": "Hěn gāoxìng rènshi nǐ" },
+          { "id": "zh-v-huitou", "concept": "Goodbye", "text": "回头见", "ttsText": "回头见", "ttsLang": "zh-CN", "pinyin": "Huítóu jiàn" }
+        ]
+      }
+    },
+    {
+      "id": "step-3",
+      "type": "pronounce",
+      "title": "Say It",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-p-gm", "text": "Good morning", "ttsText": "Good morning", "ttsLang": "en-US" },
+          { "id": "en-p-ga", "text": "Good afternoon", "ttsText": "Good afternoon", "ttsLang": "en-US" },
+          { "id": "en-p-nice", "text": "Nice to meet you", "ttsText": "Nice to meet you", "ttsLang": "en-US" },
+          { "id": "en-p-bye", "text": "See you later", "ttsText": "See you later", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-p-bd", "text": "Buenos días", "ttsText": "Buenos días", "ttsLang": "es-ES" },
+          { "id": "es-p-bt", "text": "Buenas tardes", "ttsText": "Buenas tardes", "ttsLang": "es-ES" },
+          { "id": "es-p-gusto", "text": "Mucho gusto", "ttsText": "Mucho gusto", "ttsLang": "es-ES" },
+          { "id": "es-p-luego", "text": "Hasta luego", "ttsText": "Hasta luego", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-p-zaoshang", "text": "早上好", "ttsText": "早上好", "ttsLang": "zh-CN", "pinyin": "Zǎoshang hǎo" },
+          { "id": "zh-p-xiawu", "text": "下午好", "ttsText": "下午好", "ttsLang": "zh-CN", "pinyin": "Xiàwǔ hǎo" },
+          { "id": "zh-p-renshini", "text": "很高兴认识你", "ttsText": "很高兴认识你", "ttsLang": "zh-CN", "pinyin": "Hěn gāoxìng rènshi nǐ" },
+          { "id": "zh-p-huitou", "text": "回头见", "ttsText": "回头见", "ttsLang": "zh-CN", "pinyin": "Huítóu jiàn" }
+        ]
+      }
+    },
+    {
+      "id": "step-4",
+      "type": "build",
+      "title": "Build the Sentence",
+      "templateByLanguage": {
+        "en": { "template": "Good morning.", "ttsLang": "en-US" },
+        "es": { "template": "Buenos días.", "ttsLang": "es-ES" },
+        "zh": { "template": "早上好。", "ttsLang": "zh-CN" }
+      },
+      "names": ["morning", "afternoon", "later", "meet", "días"]
+    },
+    {
+      "id": "step-5",
+      "type": "conversation",
+      "title": "Mini Conversation",
+      "scriptByLanguage": {
+        "en": {
+          "app1": "Good morning!",
+          "learner1": "Good morning!",
+          "app2": "Nice to meet you.",
+          "learner2": "Nice to meet you too.",
+          "app3": "See you later!"
+        },
+        "es": {
+          "app1": "¡Buenos días!",
+          "learner1": "¡Buenos días!",
+          "app2": "Mucho gusto.",
+          "learner2": "Mucho gusto también.",
+          "app3": "¡Hasta luego!"
+        },
+        "zh": {
+          "app1": "早上好！",
+          "learner1": "早上好！",
+          "app2": "很高兴认识你。",
+          "learner2": "我也很高兴认识你。",
+          "app3": "回头见！"
+        }
+      }
+    },
+    {
+      "id": "step-6",
+      "type": "game",
+      "title": "Connect the Word",
+      "pairsByLanguage": {
+        "en": [
+          { "left": "Good", "right": "____ morning." },
+          { "left": "morning", "right": "Good ____." },
+          { "left": "Nice", "right": "____ to meet you." },
+          { "left": "later", "right": "See you ____." },
+          { "left": "meet", "right": "Nice to ____ you." },
+          { "left": "Good", "right": "____ afternoon." },
+          { "left": "afternoon", "right": "Good ____." },
+          { "left": "See", "right": "____ you later." }
+        ],
+        "es": [
+          { "left": "Buenos", "right": "____ días." },
+          { "left": "días", "right": "Buenos ____." },
+          { "left": "Buenas", "right": "____ tardes." },
+          { "left": "tardes", "right": "Buenas ____." },
+          { "left": "Mucho", "right": "____ gusto." },
+          { "left": "gusto", "right": "Mucho ____." },
+          { "left": "Hasta", "right": "____ luego." },
+          { "left": "luego", "right": "Hasta ____." }
+        ],
+        "zh": [
+          { "left": "早上", "right": "____好。" },
+          { "left": "下午", "right": "____好。" },
+          { "left": "很高兴", "right": "____认识你。" },
+          { "left": "认识", "right": "很高兴____你。" },
+          { "left": "回头", "right": "____见。" },
+          { "left": "见", "right": "回头____。" },
+          { "left": "你", "right": "很高兴认识____。" },
+          { "left": "好", "right": "早上____。" }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,157 @@
+{
+  "id": "lesson-05",
+  "title": "Food",
+  "steps": [
+    {
+      "id": "step-1",
+      "type": "listen",
+      "title": "Listen",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-apple", "text": "Apple", "ttsText": "Apple", "ttsLang": "en-US" },
+          { "id": "en-bread", "text": "Bread", "ttsText": "Bread", "ttsLang": "en-US" },
+          { "id": "en-water", "text": "Water", "ttsText": "Water", "ttsLang": "en-US" },
+          { "id": "en-rice", "text": "Rice", "ttsText": "Rice", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-manzana", "text": "Manzana", "ttsText": "Manzana", "ttsLang": "es-ES" },
+          { "id": "es-pan", "text": "Pan", "ttsText": "Pan", "ttsLang": "es-ES" },
+          { "id": "es-agua", "text": "Agua", "ttsText": "Agua", "ttsLang": "es-ES" },
+          { "id": "es-arroz", "text": "Arroz", "ttsText": "Arroz", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-pingguo", "text": "苹果", "ttsText": "苹果", "ttsLang": "zh-CN", "pinyin": "Píngguǒ" },
+          { "id": "zh-mianbao", "text": "面包", "ttsText": "面包", "ttsLang": "zh-CN", "pinyin": "Miànbāo" },
+          { "id": "zh-shui", "text": "水", "ttsText": "水", "ttsLang": "zh-CN", "pinyin": "Shuǐ" },
+          { "id": "zh-mifan", "text": "米饭", "ttsText": "米饭", "ttsLang": "zh-CN", "pinyin": "Mǐfàn" }
+        ]
+      }
+    },
+    {
+      "id": "step-2",
+      "type": "vocab",
+      "title": "Learn the Words",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-v-apple", "concept": "Food", "text": "Apple", "ttsText": "Apple", "ttsLang": "en-US" },
+          { "id": "en-v-bread", "concept": "Food", "text": "Bread", "ttsText": "Bread", "ttsLang": "en-US" },
+          { "id": "en-v-water", "concept": "Drink", "text": "Water", "ttsText": "Water", "ttsLang": "en-US" },
+          { "id": "en-v-rice", "concept": "Food", "text": "Rice", "ttsText": "Rice", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-v-manzana", "concept": "Food", "text": "Manzana", "ttsText": "Manzana", "ttsLang": "es-ES" },
+          { "id": "es-v-pan", "concept": "Food", "text": "Pan", "ttsText": "Pan", "ttsLang": "es-ES" },
+          { "id": "es-v-agua", "concept": "Drink", "text": "Agua", "ttsText": "Agua", "ttsLang": "es-ES" },
+          { "id": "es-v-arroz", "concept": "Food", "text": "Arroz", "ttsText": "Arroz", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-v-pingguo", "concept": "Food", "text": "苹果", "ttsText": "苹果", "ttsLang": "zh-CN", "pinyin": "Píngguǒ" },
+          { "id": "zh-v-mianbao", "concept": "Food", "text": "面包", "ttsText": "面包", "ttsLang": "zh-CN", "pinyin": "Miànbāo" },
+          { "id": "zh-v-shui", "concept": "Drink", "text": "水", "ttsText": "水", "ttsLang": "zh-CN", "pinyin": "Shuǐ" },
+          { "id": "zh-v-mifan", "concept": "Food", "text": "米饭", "ttsText": "米饭", "ttsLang": "zh-CN", "pinyin": "Mǐfàn" }
+        ]
+      }
+    },
+    {
+      "id": "step-3",
+      "type": "pronounce",
+      "title": "Say It",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-p-apple", "text": "Apple", "ttsText": "Apple", "ttsLang": "en-US" },
+          { "id": "en-p-bread", "text": "Bread", "ttsText": "Bread", "ttsLang": "en-US" },
+          { "id": "en-p-water", "text": "Water", "ttsText": "Water", "ttsLang": "en-US" },
+          { "id": "en-p-rice", "text": "Rice", "ttsText": "Rice", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-p-manzana", "text": "Manzana", "ttsText": "Manzana", "ttsLang": "es-ES" },
+          { "id": "es-p-pan", "text": "Pan", "ttsText": "Pan", "ttsLang": "es-ES" },
+          { "id": "es-p-agua", "text": "Agua", "ttsText": "Agua", "ttsLang": "es-ES" },
+          { "id": "es-p-arroz", "text": "Arroz", "ttsText": "Arroz", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-p-pingguo", "text": "苹果", "ttsText": "苹果", "ttsLang": "zh-CN", "pinyin": "Píngguǒ" },
+          { "id": "zh-p-mianbao", "text": "面包", "ttsText": "面包", "ttsLang": "zh-CN", "pinyin": "Miànbāo" },
+          { "id": "zh-p-shui", "text": "水", "ttsText": "水", "ttsLang": "zh-CN", "pinyin": "Shuǐ" },
+          { "id": "zh-p-mifan", "text": "米饭", "ttsText": "米饭", "ttsLang": "zh-CN", "pinyin": "Mǐfàn" }
+        ]
+      }
+    },
+    {
+      "id": "step-4",
+      "type": "build",
+      "title": "Build the Sentence",
+      "templateByLanguage": {
+        "en": { "template": "I like apples.", "ttsLang": "en-US" },
+        "es": { "template": "Me gusta la manzana.", "ttsLang": "es-ES" },
+        "zh": { "template": "我喜欢苹果。", "ttsLang": "zh-CN" }
+      },
+      "names": ["apple", "bread", "water", "rice", "manzana"]
+    },
+    {
+      "id": "step-5",
+      "type": "conversation",
+      "title": "Mini Conversation",
+      "scriptByLanguage": {
+        "en": {
+          "app1": "What do you like?",
+          "learner1": "I like apples.",
+          "app2": "What do you drink?",
+          "learner2": "I drink water.",
+          "app3": "Awesome!"
+        },
+        "es": {
+          "app1": "¿Qué te gusta?",
+          "learner1": "Me gusta la manzana.",
+          "app2": "¿Qué bebes?",
+          "learner2": "Bebo agua.",
+          "app3": "¡Genial!"
+        },
+        "zh": {
+          "app1": "你喜欢什么？",
+          "learner1": "我喜欢苹果。",
+          "app2": "你喝什么？",
+          "learner2": "我喝水。",
+          "app3": "太好了！"
+        }
+      }
+    },
+    {
+      "id": "step-6",
+      "type": "game",
+      "title": "Connect the Word",
+      "pairsByLanguage": {
+        "en": [
+          { "left": "apple", "right": "I like ____." },
+          { "left": "bread", "right": "I eat ____." },
+          { "left": "water", "right": "I drink ____." },
+          { "left": "rice", "right": "I eat ____." },
+          { "left": "I", "right": "____ like apples." },
+          { "left": "like", "right": "I ____ rice." },
+          { "left": "drink", "right": "I ____ water." },
+          { "left": "eat", "right": "I ____ bread." }
+        ],
+        "es": [
+          { "left": "manzana", "right": "Me gusta la ____." },
+          { "left": "pan", "right": "Yo como ____." },
+          { "left": "agua", "right": "Yo bebo ____." },
+          { "left": "arroz", "right": "Yo como ____." },
+          { "left": "Me", "right": "____ gusta la manzana." },
+          { "left": "gusta", "right": "Me ____ la manzana." },
+          { "left": "bebo", "right": "Yo ____ agua." },
+          { "left": "como", "right": "Yo ____ pan." }
+        ],
+        "zh": [
+          { "left": "苹果", "right": "我喜欢____。" },
+          { "left": "面包", "right": "我吃____。" },
+          { "left": "水", "right": "我喝____。" },
+          { "left": "米饭", "right": "我吃____。" },
+          { "left": "我", "right": "____喜欢苹果。" },
+          { "left": "喜欢", "right": "我____苹果。" },
+          { "left": "喝", "right": "我____水。" },
+          { "left": "吃", "right": "我____面包。" }
+        ]
+      }
+    }
+  ]
+}
