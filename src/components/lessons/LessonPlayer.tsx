@@ -334,7 +334,7 @@ const LessonPlayer: React.FC<LessonPlayerProps> = ({ lessonId, language, onExit 
   // Review & Completion Mechanics
   const step3Global = lesson.steps.findIndex((s) => s.type === "pronounce");
   const step3TotalGlobal = step3Global >= 0 ? (lesson.steps[step3Global] as any).itemsByLanguage[language].length : 0;
-  const hasIncompleteStep3 = step3Global >= 0 && sayItCorrectIds.length < step3TotalGlobal;
+  const hasIncompleteStep3 = step3Global >= 0 && (sayItCorrectIds.length + sayItSkippedIds.length) < step3TotalGlobal;
 
   const step5Global = lesson.steps.findIndex((s) => s.type === "conversation");
   const step5RequiredGlobal = step5Global >= 0 ? (() => {
@@ -345,7 +345,7 @@ const LessonPlayer: React.FC<LessonPlayerProps> = ({ lessonId, language, onExit 
     if ((s.learner3 ?? "").trim()) count++;
     return count;
   })() : 0;
-  const hasIncompleteStep5 = step5Global >= 0 && convCorrectKeys.length < step5RequiredGlobal;
+  const hasIncompleteStep5 = step5Global >= 0 && (convCorrectKeys.length + convSkippedKeys.length) < step5RequiredGlobal;
 
   const canComplete =
     isLastStep &&
@@ -401,7 +401,7 @@ const LessonPlayer: React.FC<LessonPlayerProps> = ({ lessonId, language, onExit 
   if (showComplete) {
     return (
       <div
-        className="min-h-screen flex items-center justify-center p-8 relative overflow-hidden"
+        className="fixed inset-0 z-50 flex items-center justify-center p-8 overflow-hidden"
         style={{ background: 'linear-gradient(135deg, #F5F3FF 0%, #FFFFFF 100%)' }}
       >
         {/* Bursting Confetti */}
@@ -418,15 +418,15 @@ const LessonPlayer: React.FC<LessonPlayerProps> = ({ lessonId, language, onExit 
             }}
             initial={{ scale: 0, x: 0, y: 0 }}
             animate={{ 
-              scale: [0, 1, 0.5, 0],
-              x: (Math.random() - 0.5) * 1200, 
-              y: (Math.random() - 0.5) * 1200,
-              rotate: [0, 720]
+              scale: [0, 1, 0.7, 0],
+              x: (Math.random() - 0.5) * 1500, 
+              y: (Math.random() - 0.5) * 1500,
+              rotate: [0, 1080]
             }}
             transition={{ 
-              duration: 2.5 + Math.random() * 1.5, 
-              delay: Math.random() * 0.2,
-              ease: [0.23, 1, 0.32, 1] 
+              duration: 3 + Math.random() * 2, 
+              delay: Math.random() * 0.3,
+              ease: [0.16, 1, 0.3, 1] 
             }}
           />
         ))}
@@ -707,20 +707,22 @@ const LessonPlayer: React.FC<LessonPlayerProps> = ({ lessonId, language, onExit 
                   </div>
 
                   {isLastStep ? (
-                    hasIncompleteStep3 || hasIncompleteStep5 ? (
-                      <KidButton
-                        variant="coral"
-                        size="lg"
-                        onClick={() => {
-                          if (hasIncompleteStep3) setStepIndex(step3Global);
-                          else if (hasIncompleteStep5) setStepIndex(step5Global);
-                          window.scrollTo(0, 0);
-                        }}
-                        icon={<span>⚠️</span>}
-                      >
-                        Review Skipped
-                      </KidButton>
-                    ) : (
+                    <div className="flex gap-3">
+                      {(sayItSkippedIds.length > 0 || convSkippedKeys.length > 0) && (
+                        <KidButton
+                          variant="ghost"
+                          size="lg"
+                          onClick={() => {
+                            if (sayItSkippedIds.length > 0) setStepIndex(step3Global);
+                            else if (convSkippedKeys.length > 0) setStepIndex(step5Global);
+                            window.scrollTo(0, 0);
+                          }}
+                          icon={<span>🔄</span>}
+                        >
+                          Retry Skipped
+                        </KidButton>
+                      )}
+                      
                       <KidButton
                         variant="coral"
                         size="lg"
@@ -736,7 +738,7 @@ const LessonPlayer: React.FC<LessonPlayerProps> = ({ lessonId, language, onExit 
                       >
                         Complete Lesson!
                       </KidButton>
-                    )
+                    </div>
                   ) : (
                     <KidButton
                       variant="grape"
