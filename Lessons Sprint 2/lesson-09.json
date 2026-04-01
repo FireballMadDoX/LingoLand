@@ -1,0 +1,157 @@
+{
+  "id": "lesson-09",
+  "title": "Weather",
+  "steps": [
+    {
+      "id": "step-1",
+      "type": "listen",
+      "title": "Listen",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-sunny", "text": "Sunny", "ttsText": "Sunny", "ttsLang": "en-US" },
+          { "id": "en-rainy", "text": "Rainy", "ttsText": "Rainy", "ttsLang": "en-US" },
+          { "id": "en-cloudy", "text": "Cloudy", "ttsText": "Cloudy", "ttsLang": "en-US" },
+          { "id": "en-windy", "text": "Windy", "ttsText": "Windy", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-soleado", "text": "Soleado", "ttsText": "Soleado", "ttsLang": "es-ES" },
+          { "id": "es-lluvioso", "text": "Lluvioso", "ttsText": "Lluvioso", "ttsLang": "es-ES" },
+          { "id": "es-nublado", "text": "Nublado", "ttsText": "Nublado", "ttsLang": "es-ES" },
+          { "id": "es-ventoso", "text": "Ventoso", "ttsText": "Ventoso", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-qingtian", "text": "晴天", "ttsText": "晴天", "ttsLang": "zh-CN", "pinyin": "Qíngtiān" },
+          { "id": "zh-xiayu", "text": "下雨", "ttsText": "下雨", "ttsLang": "zh-CN", "pinyin": "Xiàyǔ" },
+          { "id": "zh-duoyun", "text": "多云", "ttsText": "多云", "ttsLang": "zh-CN", "pinyin": "Duōyún" },
+          { "id": "zh-guafeng", "text": "刮风", "ttsText": "刮风", "ttsLang": "zh-CN", "pinyin": "Guāfēng" }
+        ]
+      }
+    },
+    {
+      "id": "step-2",
+      "type": "vocab",
+      "title": "Learn the Words",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-v-sunny", "concept": "Weather", "text": "Sunny", "ttsText": "Sunny", "ttsLang": "en-US" },
+          { "id": "en-v-rainy", "concept": "Weather", "text": "Rainy", "ttsText": "Rainy", "ttsLang": "en-US" },
+          { "id": "en-v-cloudy", "concept": "Weather", "text": "Cloudy", "ttsText": "Cloudy", "ttsLang": "en-US" },
+          { "id": "en-v-windy", "concept": "Weather", "text": "Windy", "ttsText": "Windy", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-v-soleado", "concept": "Weather", "text": "Soleado", "ttsText": "Soleado", "ttsLang": "es-ES" },
+          { "id": "es-v-lluvioso", "concept": "Weather", "text": "Lluvioso", "ttsText": "Lluvioso", "ttsLang": "es-ES" },
+          { "id": "es-v-nublado", "concept": "Weather", "text": "Nublado", "ttsText": "Nublado", "ttsLang": "es-ES" },
+          { "id": "es-v-ventoso", "concept": "Weather", "text": "Ventoso", "ttsText": "Ventoso", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-v-qingtian", "concept": "Weather", "text": "晴天", "ttsText": "晴天", "ttsLang": "zh-CN", "pinyin": "Qíngtiān" },
+          { "id": "zh-v-xiayu", "concept": "Weather", "text": "下雨", "ttsText": "下雨", "ttsLang": "zh-CN", "pinyin": "Xiàyǔ" },
+          { "id": "zh-v-duoyun", "concept": "Weather", "text": "多云", "ttsText": "多云", "ttsLang": "zh-CN", "pinyin": "Duōyún" },
+          { "id": "zh-v-guafeng", "concept": "Weather", "text": "刮风", "ttsText": "刮风", "ttsLang": "zh-CN", "pinyin": "Guāfēng" }
+        ]
+      }
+    },
+    {
+      "id": "step-3",
+      "type": "pronounce",
+      "title": "Say It",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-p-sunny", "text": "Sunny", "ttsText": "Sunny", "ttsLang": "en-US" },
+          { "id": "en-p-rainy", "text": "Rainy", "ttsText": "Rainy", "ttsLang": "en-US" },
+          { "id": "en-p-cloudy", "text": "Cloudy", "ttsText": "Cloudy", "ttsLang": "en-US" },
+          { "id": "en-p-windy", "text": "Windy", "ttsText": "Windy", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-p-soleado", "text": "Soleado", "ttsText": "Soleado", "ttsLang": "es-ES" },
+          { "id": "es-p-lluvioso", "text": "Lluvioso", "ttsText": "Lluvioso", "ttsLang": "es-ES" },
+          { "id": "es-p-nublado", "text": "Nublado", "ttsText": "Nublado", "ttsLang": "es-ES" },
+          { "id": "es-p-ventoso", "text": "Ventoso", "ttsText": "Ventoso", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-p-qingtian", "text": "晴天", "ttsText": "晴天", "ttsLang": "zh-CN", "pinyin": "Qíngtiān" },
+          { "id": "zh-p-xiayu", "text": "下雨", "ttsText": "下雨", "ttsLang": "zh-CN", "pinyin": "Xiàyǔ" },
+          { "id": "zh-p-duoyun", "text": "多云", "ttsText": "多云", "ttsLang": "zh-CN", "pinyin": "Duōyún" },
+          { "id": "zh-p-guafeng", "text": "刮风", "ttsText": "刮风", "ttsLang": "zh-CN", "pinyin": "Guāfēng" }
+        ]
+      }
+    },
+    {
+      "id": "step-4",
+      "type": "build",
+      "title": "Build the Sentence",
+      "templateByLanguage": {
+        "en": { "template": "It is sunny.", "ttsLang": "en-US" },
+        "es": { "template": "Está soleado.", "ttsLang": "es-ES" },
+        "zh": { "template": "今天是晴天。", "ttsLang": "zh-CN" }
+      },
+      "names": ["sunny", "rainy", "cloudy", "windy", "soleado"]
+    },
+    {
+      "id": "step-5",
+      "type": "conversation",
+      "title": "Mini Conversation",
+      "scriptByLanguage": {
+        "en": {
+          "app1": "How is the weather?",
+          "learner1": "It is sunny.",
+          "app2": "How is the weather today?",
+          "learner2": "It is rainy.",
+          "app3": "Great!"
+        },
+        "es": {
+          "app1": "¿Cómo está el clima?",
+          "learner1": "Está soleado.",
+          "app2": "¿Cómo está el clima hoy?",
+          "learner2": "Está lluvioso.",
+          "app3": "¡Muy bien!"
+        },
+        "zh": {
+          "app1": "天气怎么样？",
+          "learner1": "今天是晴天。",
+          "app2": "今天天气怎么样？",
+          "learner2": "今天下雨。",
+          "app3": "太好了！"
+        }
+      }
+    },
+    {
+      "id": "step-6",
+      "type": "game",
+      "title": "Connect the Word",
+      "pairsByLanguage": {
+        "en": [
+          { "left": "sunny", "right": "It is ____." },
+          { "left": "rainy", "right": "It is ____." },
+          { "left": "cloudy", "right": "It is ____." },
+          { "left": "windy", "right": "It is ____." },
+          { "left": "It", "right": "____ is sunny." },
+          { "left": "is", "right": "It ____ rainy." },
+          { "left": "It", "right": "____ is cloudy." },
+          { "left": "is", "right": "It ____ windy." }
+        ],
+        "es": [
+          { "left": "soleado", "right": "Está ____." },
+          { "left": "lluvioso", "right": "Está ____." },
+          { "left": "nublado", "right": "Está ____." },
+          { "left": "ventoso", "right": "Está ____." },
+          { "left": "Está", "right": "____ soleado." },
+          { "left": "Está", "right": "____ lluvioso." },
+          { "left": "Está", "right": "____ nublado." },
+          { "left": "Está", "right": "____ ventoso." }
+        ],
+        "zh": [
+          { "left": "晴天", "right": "今天是____。" },
+          { "left": "下雨", "right": "今天____。" },
+          { "left": "多云", "right": "今天是____。" },
+          { "left": "刮风", "right": "今天____。" },
+          { "left": "今天", "right": "____是晴天。" },
+          { "left": "是", "right": "今天____多云。" },
+          { "left": "今天", "right": "____下雨。" },
+          { "left": "今天", "right": "____刮风。" }
+        ]
+      }
+    }
+  ]
+}

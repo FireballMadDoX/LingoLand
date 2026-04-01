@@ -1,0 +1,157 @@
+{
+  "id": "lesson-03",
+  "title": "Colors",
+  "steps": [
+    {
+      "id": "step-1",
+      "type": "listen",
+      "title": "Listen",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-red", "text": "Red", "ttsText": "Red", "ttsLang": "en-US" },
+          { "id": "en-blue", "text": "Blue", "ttsText": "Blue", "ttsLang": "en-US" },
+          { "id": "en-yellow", "text": "Yellow", "ttsText": "Yellow", "ttsLang": "en-US" },
+          { "id": "en-green", "text": "Green", "ttsText": "Green", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-rojo", "text": "Rojo", "ttsText": "Rojo", "ttsLang": "es-ES" },
+          { "id": "es-azul", "text": "Azul", "ttsText": "Azul", "ttsLang": "es-ES" },
+          { "id": "es-amarillo", "text": "Amarillo", "ttsText": "Amarillo", "ttsLang": "es-ES" },
+          { "id": "es-verde", "text": "Verde", "ttsText": "Verde", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-hongse", "text": "红色", "ttsText": "红色", "ttsLang": "zh-CN", "pinyin": "Hóngsè" },
+          { "id": "zh-lanse", "text": "蓝色", "ttsText": "蓝色", "ttsLang": "zh-CN", "pinyin": "Lánsè" },
+          { "id": "zh-huangse", "text": "黄色", "ttsText": "黄色", "ttsLang": "zh-CN", "pinyin": "Huángsè" },
+          { "id": "zh-lvse", "text": "绿色", "ttsText": "绿色", "ttsLang": "zh-CN", "pinyin": "Lǜsè" }
+        ]
+      }
+    },
+    {
+      "id": "step-2",
+      "type": "vocab",
+      "title": "Learn the Words",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-v-red", "concept": "Color", "text": "Red", "ttsText": "Red", "ttsLang": "en-US" },
+          { "id": "en-v-blue", "concept": "Color", "text": "Blue", "ttsText": "Blue", "ttsLang": "en-US" },
+          { "id": "en-v-yellow", "concept": "Color", "text": "Yellow", "ttsText": "Yellow", "ttsLang": "en-US" },
+          { "id": "en-v-green", "concept": "Color", "text": "Green", "ttsText": "Green", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-v-rojo", "concept": "Color", "text": "Rojo", "ttsText": "Rojo", "ttsLang": "es-ES" },
+          { "id": "es-v-azul", "concept": "Color", "text": "Azul", "ttsText": "Azul", "ttsLang": "es-ES" },
+          { "id": "es-v-amarillo", "concept": "Color", "text": "Amarillo", "ttsText": "Amarillo", "ttsLang": "es-ES" },
+          { "id": "es-v-verde", "concept": "Color", "text": "Verde", "ttsText": "Verde", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-v-hongse", "concept": "Color", "text": "红色", "ttsText": "红色", "ttsLang": "zh-CN", "pinyin": "Hóngsè" },
+          { "id": "zh-v-lanse", "concept": "Color", "text": "蓝色", "ttsText": "蓝色", "ttsLang": "zh-CN", "pinyin": "Lánsè" },
+          { "id": "zh-v-huangse", "concept": "Color", "text": "黄色", "ttsText": "黄色", "ttsLang": "zh-CN", "pinyin": "Huángsè" },
+          { "id": "zh-v-lvse", "concept": "Color", "text": "绿色", "ttsText": "绿色", "ttsLang": "zh-CN", "pinyin": "Lǜsè" }
+        ]
+      }
+    },
+    {
+      "id": "step-3",
+      "type": "pronounce",
+      "title": "Say It",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-p-red", "text": "Red", "ttsText": "Red", "ttsLang": "en-US" },
+          { "id": "en-p-blue", "text": "Blue", "ttsText": "Blue", "ttsLang": "en-US" },
+          { "id": "en-p-yellow", "text": "Yellow", "ttsText": "Yellow", "ttsLang": "en-US" },
+          { "id": "en-p-green", "text": "Green", "ttsText": "Green", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-p-rojo", "text": "Rojo", "ttsText": "Rojo", "ttsLang": "es-ES" },
+          { "id": "es-p-azul", "text": "Azul", "ttsText": "Azul", "ttsLang": "es-ES" },
+          { "id": "es-p-amarillo", "text": "Amarillo", "ttsText": "Amarillo", "ttsLang": "es-ES" },
+          { "id": "es-p-verde", "text": "Verde", "ttsText": "Verde", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-p-hongse", "text": "红色", "ttsText": "红色", "ttsLang": "zh-CN", "pinyin": "Hóngsè" },
+          { "id": "zh-p-lanse", "text": "蓝色", "ttsText": "蓝色", "ttsLang": "zh-CN", "pinyin": "Lánsè" },
+          { "id": "zh-p-huangse", "text": "黄色", "ttsText": "黄色", "ttsLang": "zh-CN", "pinyin": "Huángsè" },
+          { "id": "zh-p-lvse", "text": "绿色", "ttsText": "绿色", "ttsLang": "zh-CN", "pinyin": "Lǜsè" }
+        ]
+      }
+    },
+    {
+      "id": "step-4",
+      "type": "build",
+      "title": "Build the Sentence",
+      "templateByLanguage": {
+        "en": { "template": "It is red.", "ttsLang": "en-US" },
+        "es": { "template": "Es rojo.", "ttsLang": "es-ES" },
+        "zh": { "template": "它是红色。", "ttsLang": "zh-CN" }
+      },
+      "names": ["red", "blue", "yellow", "green", "rojo"]
+    },
+    {
+      "id": "step-5",
+      "type": "conversation",
+      "title": "Mini Conversation",
+      "scriptByLanguage": {
+        "en": {
+          "app1": "What color is it?",
+          "learner1": "It is red.",
+          "app2": "What color is the sky?",
+          "learner2": "It is blue.",
+          "app3": "Great job!"
+        },
+        "es": {
+          "app1": "¿Qué color es?",
+          "learner1": "Es rojo.",
+          "app2": "¿Qué color es el cielo?",
+          "learner2": "Es azul.",
+          "app3": "¡Muy bien!"
+        },
+        "zh": {
+          "app1": "它是什么颜色？",
+          "learner1": "它是红色。",
+          "app2": "天空是什么颜色？",
+          "learner2": "它是蓝色。",
+          "app3": "太好了！"
+        }
+      }
+    },
+    {
+      "id": "step-6",
+      "type": "game",
+      "title": "Connect the Word",
+      "pairsByLanguage": {
+        "en": [
+          { "left": "red", "right": "It is ____." },
+          { "left": "blue", "right": "The sky is ____." },
+          { "left": "yellow", "right": "The sun is ____." },
+          { "left": "green", "right": "The grass is ____." },
+          { "left": "It", "right": "____ is red." },
+          { "left": "is", "right": "It ____ blue." },
+          { "left": "The", "right": "____ sky is blue." },
+          { "left": "sky", "right": "The ____ is blue." }
+        ],
+        "es": [
+          { "left": "rojo", "right": "Es ____." },
+          { "left": "azul", "right": "El cielo es ____." },
+          { "left": "amarillo", "right": "El sol es ____." },
+          { "left": "verde", "right": "El césped es ____." },
+          { "left": "Es", "right": "____ rojo." },
+          { "left": "El", "right": "____ cielo es azul." },
+          { "left": "cielo", "right": "El ____ es azul." },
+          { "left": "sol", "right": "El ____ es amarillo." }
+        ],
+        "zh": [
+          { "left": "红色", "right": "它是____。" },
+          { "left": "蓝色", "right": "天空是____。" },
+          { "left": "黄色", "right": "太阳是____。" },
+          { "left": "绿色", "right": "草是____。" },
+          { "left": "它", "right": "____是红色。" },
+          { "left": "是", "right": "它____蓝色。" },
+          { "left": "天空", "right": "____是蓝色。" },
+          { "left": "太阳", "right": "____是黄色。" }
+        ]
+      }
+    }
+  ]
+}

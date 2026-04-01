@@ -1,0 +1,157 @@
+{
+  "id": "lesson-04",
+  "title": "Family",
+  "steps": [
+    {
+      "id": "step-1",
+      "type": "listen",
+      "title": "Listen",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-mom", "text": "Mom", "ttsText": "Mom", "ttsLang": "en-US" },
+          { "id": "en-dad", "text": "Dad", "ttsText": "Dad", "ttsLang": "en-US" },
+          { "id": "en-brother", "text": "Brother", "ttsText": "Brother", "ttsLang": "en-US" },
+          { "id": "en-sister", "text": "Sister", "ttsText": "Sister", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-mama", "text": "Mamá", "ttsText": "Mamá", "ttsLang": "es-ES" },
+          { "id": "es-papa", "text": "Papá", "ttsText": "Papá", "ttsLang": "es-ES" },
+          { "id": "es-hermano", "text": "Hermano", "ttsText": "Hermano", "ttsLang": "es-ES" },
+          { "id": "es-hermana", "text": "Hermana", "ttsText": "Hermana", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-mama", "text": "妈妈", "ttsText": "妈妈", "ttsLang": "zh-CN", "pinyin": "Māma" },
+          { "id": "zh-baba", "text": "爸爸", "ttsText": "爸爸", "ttsLang": "zh-CN", "pinyin": "Bàba" },
+          { "id": "zh-gege", "text": "哥哥", "ttsText": "哥哥", "ttsLang": "zh-CN", "pinyin": "Gēge" },
+          { "id": "zh-jiejie", "text": "姐姐", "ttsText": "姐姐", "ttsLang": "zh-CN", "pinyin": "Jiějie" }
+        ]
+      }
+    },
+    {
+      "id": "step-2",
+      "type": "vocab",
+      "title": "Learn the Words",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-v-mom", "concept": "Family", "text": "Mom", "ttsText": "Mom", "ttsLang": "en-US" },
+          { "id": "en-v-dad", "concept": "Family", "text": "Dad", "ttsText": "Dad", "ttsLang": "en-US" },
+          { "id": "en-v-brother", "concept": "Family", "text": "Brother", "ttsText": "Brother", "ttsLang": "en-US" },
+          { "id": "en-v-sister", "concept": "Family", "text": "Sister", "ttsText": "Sister", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-v-mama", "concept": "Family", "text": "Mamá", "ttsText": "Mamá", "ttsLang": "es-ES" },
+          { "id": "es-v-papa", "concept": "Family", "text": "Papá", "ttsText": "Papá", "ttsLang": "es-ES" },
+          { "id": "es-v-hermano", "concept": "Family", "text": "Hermano", "ttsText": "Hermano", "ttsLang": "es-ES" },
+          { "id": "es-v-hermana", "concept": "Family", "text": "Hermana", "ttsText": "Hermana", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-v-mama", "concept": "Family", "text": "妈妈", "ttsText": "妈妈", "ttsLang": "zh-CN", "pinyin": "Māma" },
+          { "id": "zh-v-baba", "concept": "Family", "text": "爸爸", "ttsText": "爸爸", "ttsLang": "zh-CN", "pinyin": "Bàba" },
+          { "id": "zh-v-gege", "concept": "Family", "text": "哥哥", "ttsText": "哥哥", "ttsLang": "zh-CN", "pinyin": "Gēge" },
+          { "id": "zh-v-jiejie", "concept": "Family", "text": "姐姐", "ttsText": "姐姐", "ttsLang": "zh-CN", "pinyin": "Jiějie" }
+        ]
+      }
+    },
+    {
+      "id": "step-3",
+      "type": "pronounce",
+      "title": "Say It",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-p-mom", "text": "Mom", "ttsText": "Mom", "ttsLang": "en-US" },
+          { "id": "en-p-dad", "text": "Dad", "ttsText": "Dad", "ttsLang": "en-US" },
+          { "id": "en-p-brother", "text": "Brother", "ttsText": "Brother", "ttsLang": "en-US" },
+          { "id": "en-p-sister", "text": "Sister", "ttsText": "Sister", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-p-mama", "text": "Mamá", "ttsText": "Mamá", "ttsLang": "es-ES" },
+          { "id": "es-p-papa", "text": "Papá", "ttsText": "Papá", "ttsLang": "es-ES" },
+          { "id": "es-p-hermano", "text": "Hermano", "ttsText": "Hermano", "ttsLang": "es-ES" },
+          { "id": "es-p-hermana", "text": "Hermana", "ttsText": "Hermana", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-p-mama", "text": "妈妈", "ttsText": "妈妈", "ttsLang": "zh-CN", "pinyin": "Māma" },
+          { "id": "zh-p-baba", "text": "爸爸", "ttsText": "爸爸", "ttsLang": "zh-CN", "pinyin": "Bàba" },
+          { "id": "zh-p-gege", "text": "哥哥", "ttsText": "哥哥", "ttsLang": "zh-CN", "pinyin": "Gēge" },
+          { "id": "zh-p-jiejie", "text": "姐姐", "ttsText": "姐姐", "ttsLang": "zh-CN", "pinyin": "Jiějie" }
+        ]
+      }
+    },
+    {
+      "id": "step-4",
+      "type": "build",
+      "title": "Build the Sentence",
+      "templateByLanguage": {
+        "en": { "template": "This is my mom.", "ttsLang": "en-US" },
+        "es": { "template": "Esta es mi mamá.", "ttsLang": "es-ES" },
+        "zh": { "template": "这是我妈妈。", "ttsLang": "zh-CN" }
+      },
+      "names": ["mom", "dad", "brother", "sister", "mamá"]
+    },
+    {
+      "id": "step-5",
+      "type": "conversation",
+      "title": "Mini Conversation",
+      "scriptByLanguage": {
+        "en": {
+          "app1": "Who is she?",
+          "learner1": "This is my mom.",
+          "app2": "Who is he?",
+          "learner2": "This is my dad.",
+          "app3": "Nice!"
+        },
+        "es": {
+          "app1": "¿Quién es ella?",
+          "learner1": "Esta es mi mamá.",
+          "app2": "¿Quién es él?",
+          "learner2": "Este es mi papá.",
+          "app3": "¡Muy bien!"
+        },
+        "zh": {
+          "app1": "她是谁？",
+          "learner1": "这是我妈妈。",
+          "app2": "他是谁？",
+          "learner2": "这是我爸爸。",
+          "app3": "太好了！"
+        }
+      }
+    },
+    {
+      "id": "step-6",
+      "type": "game",
+      "title": "Connect the Word",
+      "pairsByLanguage": {
+        "en": [
+          { "left": "mom", "right": "This is my ____." },
+          { "left": "dad", "right": "This is my ____." },
+          { "left": "brother", "right": "My ____ is here." },
+          { "left": "sister", "right": "My ____ is here." },
+          { "left": "This", "right": "____ is my mom." },
+          { "left": "my", "right": "This is ____ dad." },
+          { "left": "is", "right": "This ____ my sister." },
+          { "left": "my", "right": "This is ____ brother." }
+        ],
+        "es": [
+          { "left": "mamá", "right": "Esta es mi ____." },
+          { "left": "papá", "right": "Este es mi ____." },
+          { "left": "hermano", "right": "Mi ____ está aquí." },
+          { "left": "hermana", "right": "Mi ____ está aquí." },
+          { "left": "Esta", "right": "____ es mi mamá." },
+          { "left": "Este", "right": "____ es mi papá." },
+          { "left": "mi", "right": "Esta es ____ mamá." },
+          { "left": "mi", "right": "Este es ____ papá." }
+        ],
+        "zh": [
+          { "left": "妈妈", "right": "这是我____。" },
+          { "left": "爸爸", "right": "这是我____。" },
+          { "left": "哥哥", "right": "这是我____。" },
+          { "left": "姐姐", "right": "这是我____。" },
+          { "left": "这", "right": "____是我妈妈。" },
+          { "left": "是", "right": "这____我爸爸。" },
+          { "left": "我", "right": "这是____妈妈。" },
+          { "left": "我", "right": "这是____爸爸。" }
+        ]
+      }
+    }
+  ]
+}

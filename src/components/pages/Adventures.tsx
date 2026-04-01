@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import KidButton from '../common/KidButton';
 import { useProgress } from '../../context/ProgressContext';
+import { LESSON_CATALOGUE } from '../lessons/lessonRegistry';
 
 interface AdventuresProps {
   onSelectLanguage: (lang: 'en' | 'es' | 'zh') => void;
@@ -44,7 +45,7 @@ const languages = [
 export const Adventures: React.FC<AdventuresProps> = ({ onSelectLanguage, onBack }) => {
   const [hovered, setHovered]   = useState<string | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
-  const { progressByLang } = useProgress();
+  const { completedLessons } = useProgress();
 
   const handleSelect = (code: 'en' | 'es' | 'zh') => {
     setSelected(code);
@@ -148,34 +149,44 @@ export const Adventures: React.FC<AdventuresProps> = ({ onSelectLanguage, onBack
                 <div className="bg-white p-6 flex items-center justify-between">
                   <div className="flex-1">
                     <div className="font-heading font-bold text-gray-800 text-lg">
-                      {progressByLang[lang.code] > 0 ? "Continue Learning" : "Start Learning"}
+                      {completedLessons[lang.code]?.length > 0 ? "Continue Learning" : "Start Learning"}
                     </div>
-                    <div className="font-body text-gray-500 text-sm">Lesson 1 • Introductions</div>
+                    <div className="font-body text-gray-500 text-sm">{LESSON_CATALOGUE.length} Lessons Available</div>
                   </div>
                   
                   {/* Progress Ring logic inside card header */}
-                  {progressByLang[lang.code] > 0 ? (
-                    <div className="flex items-center gap-3 mr-3">
-                      <div className="relative w-12 h-12 flex items-center justify-center">
-                        <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                          <circle cx="50" cy="50" r="40" className="text-gray-100" strokeWidth="8" stroke="currentColor" fill="transparent" />
-                          <circle
-                            cx="50" cy="50" r="40"
-                            strokeWidth="8"
-                            stroke={lang.shadowColor}
-                            strokeLinecap="round"
-                            fill="transparent"
-                            strokeDasharray="251.2 251.2"
-                            strokeDashoffset={251.2 - (251.2 * progressByLang[lang.code]) / 100}
-                            style={{ transition: 'stroke-dashoffset 0.8s ease' }}
-                          />
-                        </svg>
-                        <div className="absolute inset-0 flex items-center justify-center text-xs font-bold font-heading" style={{ color: lang.shadowColor }}>
-                          {progressByLang[lang.code]}%
+                  {(() => {
+                    const { getLessonProgress } = useProgress();
+                    const totalSum = LESSON_CATALOGUE.reduce((acc, lesson) => {
+                      return acc + getLessonProgress(lang.code, lesson.id);
+                    }, 0);
+                    const percentage = Math.round(totalSum / LESSON_CATALOGUE.length);
+                    
+                    if (percentage === 0) return null;
+
+                    return (
+                      <div className="flex items-center gap-3 mr-3">
+                        <div className="relative w-12 h-12 flex items-center justify-center">
+                          <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="40" className="text-gray-100" strokeWidth="8" stroke="currentColor" fill="transparent" />
+                            <circle
+                              cx="50" cy="50" r="40"
+                              strokeWidth="8"
+                              stroke={lang.shadowColor}
+                              strokeLinecap="round"
+                              fill="transparent"
+                              strokeDasharray="251.2 251.2"
+                              strokeDashoffset={251.2 - (251.2 * percentage) / 100}
+                              style={{ transition: 'stroke-dashoffset 0.8s ease' }}
+                            />
+                          </svg>
+                          <div className="absolute inset-0 flex items-center justify-center text-xs font-bold font-heading" style={{ color: lang.shadowColor }}>
+                            {percentage}%
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ) : null}
+                    );
+                  })()}
 
                   <motion.div
                     animate={{ x: isHovered ? 5 : 0 }}

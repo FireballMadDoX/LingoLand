@@ -1,0 +1,157 @@
+{
+  "id": "lesson-17",
+  "title": "Numbers 2",
+  "steps": [
+    {
+      "id": "step-1",
+      "type": "listen",
+      "title": "Listen",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-five", "text": "Five", "ttsText": "Five", "ttsLang": "en-US" },
+          { "id": "en-six", "text": "Six", "ttsText": "Six", "ttsLang": "en-US" },
+          { "id": "en-seven", "text": "Seven", "ttsText": "Seven", "ttsLang": "en-US" },
+          { "id": "en-eight", "text": "Eight", "ttsText": "Eight", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-cinco", "text": "Cinco", "ttsText": "Cinco", "ttsLang": "es-ES" },
+          { "id": "es-seis", "text": "Seis", "ttsText": "Seis", "ttsLang": "es-ES" },
+          { "id": "es-siete", "text": "Siete", "ttsText": "Siete", "ttsLang": "es-ES" },
+          { "id": "es-ocho", "text": "Ocho", "ttsText": "Ocho", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-wu", "text": "五", "ttsText": "五", "ttsLang": "zh-CN", "pinyin": "Wǔ" },
+          { "id": "zh-liu", "text": "六", "ttsText": "六", "ttsLang": "zh-CN", "pinyin": "Liù" },
+          { "id": "zh-qi", "text": "七", "ttsText": "七", "ttsLang": "zh-CN", "pinyin": "Qī" },
+          { "id": "zh-ba", "text": "八", "ttsText": "八", "ttsLang": "zh-CN", "pinyin": "Bā" }
+        ]
+      }
+    },
+    {
+      "id": "step-2",
+      "type": "vocab",
+      "title": "Learn the Words",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-v-five", "concept": "Number", "text": "Five", "ttsText": "Five", "ttsLang": "en-US" },
+          { "id": "en-v-six", "concept": "Number", "text": "Six", "ttsText": "Six", "ttsLang": "en-US" },
+          { "id": "en-v-seven", "concept": "Number", "text": "Seven", "ttsText": "Seven", "ttsLang": "en-US" },
+          { "id": "en-v-eight", "concept": "Number", "text": "Eight", "ttsText": "Eight", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-v-cinco", "concept": "Number", "text": "Cinco", "ttsText": "Cinco", "ttsLang": "es-ES" },
+          { "id": "es-v-seis", "concept": "Number", "text": "Seis", "ttsText": "Seis", "ttsLang": "es-ES" },
+          { "id": "es-v-siete", "concept": "Number", "text": "Siete", "ttsText": "Siete", "ttsLang": "es-ES" },
+          { "id": "es-v-ocho", "concept": "Number", "text": "Ocho", "ttsText": "Ocho", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-v-wu", "concept": "Number", "text": "五", "ttsText": "五", "ttsLang": "zh-CN", "pinyin": "Wǔ" },
+          { "id": "zh-v-liu", "concept": "Number", "text": "六", "ttsText": "六", "ttsLang": "zh-CN", "pinyin": "Liù" },
+          { "id": "zh-v-qi", "concept": "Number", "text": "七", "ttsText": "七", "ttsLang": "zh-CN", "pinyin": "Qī" },
+          { "id": "zh-v-ba", "concept": "Number", "text": "八", "ttsText": "八", "ttsLang": "zh-CN", "pinyin": "Bā" }
+        ]
+      }
+    },
+    {
+      "id": "step-3",
+      "type": "pronounce",
+      "title": "Say It",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-p-five", "text": "Five", "ttsText": "Five", "ttsLang": "en-US" },
+          { "id": "en-p-six", "text": "Six", "ttsText": "Six", "ttsLang": "en-US" },
+          { "id": "en-p-seven", "text": "Seven", "ttsText": "Seven", "ttsLang": "en-US" },
+          { "id": "en-p-eight", "text": "Eight", "ttsText": "Eight", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-p-cinco", "text": "Cinco", "ttsText": "Cinco", "ttsLang": "es-ES" },
+          { "id": "es-p-seis", "text": "Seis", "ttsText": "Seis", "ttsLang": "es-ES" },
+          { "id": "es-p-siete", "text": "Siete", "ttsText": "Siete", "ttsLang": "es-ES" },
+          { "id": "es-p-ocho", "text": "Ocho", "ttsText": "Ocho", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-p-wu", "text": "五", "ttsText": "五", "ttsLang": "zh-CN", "pinyin": "Wǔ" },
+          { "id": "zh-p-liu", "text": "六", "ttsText": "六", "ttsLang": "zh-CN", "pinyin": "Liù" },
+          { "id": "zh-p-qi", "text": "七", "ttsText": "七", "ttsLang": "zh-CN", "pinyin": "Qī" },
+          { "id": "zh-p-ba", "text": "八", "ttsText": "八", "ttsLang": "zh-CN", "pinyin": "Bā" }
+        ]
+      }
+    },
+    {
+      "id": "step-4",
+      "type": "build",
+      "title": "Build the Sentence",
+      "templateByLanguage": {
+        "en": { "template": "I see five.", "ttsLang": "en-US" },
+        "es": { "template": "Veo cinco.", "ttsLang": "es-ES" },
+        "zh": { "template": "我看见五。", "ttsLang": "zh-CN" }
+      },
+      "names": ["five", "six", "seven", "eight", "cinco"]
+    },
+    {
+      "id": "step-5",
+      "type": "conversation",
+      "title": "Mini Conversation",
+      "scriptByLanguage": {
+        "en": {
+          "app1": "How many do you see?",
+          "learner1": "I see five.",
+          "app2": "How many do you see?",
+          "learner2": "I see six.",
+          "app3": "Nice!"
+        },
+        "es": {
+          "app1": "¿Cuántos ves?",
+          "learner1": "Veo cinco.",
+          "app2": "¿Cuántos ves?",
+          "learner2": "Veo seis.",
+          "app3": "Muy bien."
+        },
+        "zh": {
+          "app1": "你看见几个？",
+          "learner1": "我看见五。",
+          "app2": "你看见几个？",
+          "learner2": "我看见六。",
+          "app3": "太好了！"
+        }
+      }
+    },
+    {
+      "id": "step-6",
+      "type": "game",
+      "title": "Connect the Word",
+      "pairsByLanguage": {
+        "en": [
+          { "left": "five", "right": "I see ____." },
+          { "left": "six", "right": "I see ____." },
+          { "left": "seven", "right": "I see ____." },
+          { "left": "eight", "right": "I see ____." },
+          { "left": "I", "right": "____ see five." },
+          { "left": "see", "right": "I ____ six." },
+          { "left": "I", "right": "____ see seven." },
+          { "left": "see", "right": "I ____ eight." }
+        ],
+        "es": [
+          { "left": "cinco", "right": "Veo ____." },
+          { "left": "seis", "right": "Veo ____." },
+          { "left": "siete", "right": "Veo ____." },
+          { "left": "ocho", "right": "Veo ____." },
+          { "left": "Veo", "right": "____ cinco." },
+          { "left": "Veo", "right": "____ seis." },
+          { "left": "Veo", "right": "____ siete." },
+          { "left": "Veo", "right": "____ ocho." }
+        ],
+        "zh": [
+          { "left": "五", "right": "我看见____。" },
+          { "left": "六", "right": "我看见____。" },
+          { "left": "七", "right": "我看见____。" },
+          { "left": "八", "right": "我看见____。" },
+          { "left": "我", "right": "____看见五。" },
+          { "left": "看见", "right": "我____六。" },
+          { "left": "我", "right": "____看见七。" },
+          { "left": "看见", "right": "我____八。" }
+        ]
+      }
+    }
+  ]
+}

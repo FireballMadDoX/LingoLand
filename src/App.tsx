@@ -137,7 +137,7 @@ function App() {
               <LanguagePicker
                 onSelect={(lang: "en" | "es" | "zh") => {
                   setSelectedLang(lang);
-                  setView("lessonPlayer");
+                  setView("lessonList");
                 }}
                 onBack={() => setView("dashboard")}
               />
@@ -159,7 +159,7 @@ function App() {
             ) : (
               <Dashboard
                 onMinigames={() => setView("minigames")}
-                onLessons={() => setView("languagePicker")}
+                onLessons={() => setView("adventures")}
               />
             )}
           </main>

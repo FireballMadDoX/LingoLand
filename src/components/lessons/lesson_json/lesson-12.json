@@ -1,0 +1,157 @@
+{
+  "id": "lesson-12",
+  "title": "Feelings 3",
+  "steps": [
+    {
+      "id": "step-1",
+      "type": "listen",
+      "title": "Listen",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-sad", "text": "I am sad.", "ttsText": "I am sad.", "ttsLang": "en-US" },
+          { "id": "en-excited", "text": "I am excited.", "ttsText": "I am excited.", "ttsLang": "en-US" },
+          { "id": "en-nervous", "text": "I am nervous.", "ttsText": "I am nervous.", "ttsLang": "en-US" },
+          { "id": "en-okay", "text": "I am okay.", "ttsText": "I am okay.", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-triste", "text": "Estoy triste.", "ttsText": "Estoy triste.", "ttsLang": "es-ES" },
+          { "id": "es-emocionado", "text": "Estoy emocionado.", "ttsText": "Estoy emocionado.", "ttsLang": "es-ES" },
+          { "id": "es-nervioso", "text": "Estoy nervioso.", "ttsText": "Estoy nervioso.", "ttsLang": "es-ES" },
+          { "id": "es-bien", "text": "Estoy bien.", "ttsText": "Estoy bien.", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-shangxin", "text": "我很伤心。", "ttsText": "我很伤心", "ttsLang": "zh-CN", "pinyin": "Wǒ hěn shāngxīn." },
+          { "id": "zh-xingfen", "text": "我很兴奋。", "ttsText": "我很兴奋", "ttsLang": "zh-CN", "pinyin": "Wǒ hěn xìngfèn." },
+          { "id": "zh-jinzhang", "text": "我很紧张。", "ttsText": "我很紧张", "ttsLang": "zh-CN", "pinyin": "Wǒ hěn jǐnzhāng." },
+          { "id": "zh-haoke", "text": "我还好。", "ttsText": "我还好", "ttsLang": "zh-CN", "pinyin": "Wǒ hái hǎo." }
+        ]
+      }
+    },
+    {
+      "id": "step-2",
+      "type": "vocab",
+      "title": "Learn the Words",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-v-sad", "concept": "Feeling", "text": "I am sad.", "ttsText": "I am sad.", "ttsLang": "en-US" },
+          { "id": "en-v-excited", "concept": "Feeling", "text": "I am excited.", "ttsText": "I am excited.", "ttsLang": "en-US" },
+          { "id": "en-v-nervous", "concept": "Feeling", "text": "I am nervous.", "ttsText": "I am nervous.", "ttsLang": "en-US" },
+          { "id": "en-v-okay", "concept": "Feeling", "text": "I am okay.", "ttsText": "I am okay.", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-v-triste", "concept": "Feeling", "text": "Estoy triste.", "ttsText": "Estoy triste.", "ttsLang": "es-ES" },
+          { "id": "es-v-emocionado", "concept": "Feeling", "text": "Estoy emocionado.", "ttsText": "Estoy emocionado.", "ttsLang": "es-ES" },
+          { "id": "es-v-nervioso", "concept": "Feeling", "text": "Estoy nervioso.", "ttsText": "Estoy nervioso.", "ttsLang": "es-ES" },
+          { "id": "es-v-bien", "concept": "Feeling", "text": "Estoy bien.", "ttsText": "Estoy bien.", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-v-shangxin", "concept": "Feeling", "text": "我很伤心。", "ttsText": "我很伤心", "ttsLang": "zh-CN", "pinyin": "Wǒ hěn shāngxīn." },
+          { "id": "zh-v-xingfen", "concept": "Feeling", "text": "我很兴奋。", "ttsText": "我很兴奋", "ttsLang": "zh-CN", "pinyin": "Wǒ hěn xìngfèn." },
+          { "id": "zh-v-jinzhang", "concept": "Feeling", "text": "我很紧张。", "ttsText": "我很紧张", "ttsLang": "zh-CN", "pinyin": "Wǒ hěn jǐnzhāng." },
+          { "id": "zh-v-haoke", "concept": "Feeling", "text": "我还好。", "ttsText": "我还好", "ttsLang": "zh-CN", "pinyin": "Wǒ hái hǎo." }
+        ]
+      }
+    },
+    {
+      "id": "step-3",
+      "type": "pronounce",
+      "title": "Say It",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-p-sad", "text": "I am sad.", "ttsText": "I am sad.", "ttsLang": "en-US" },
+          { "id": "en-p-excited", "text": "I am excited.", "ttsText": "I am excited.", "ttsLang": "en-US" },
+          { "id": "en-p-nervous", "text": "I am nervous.", "ttsText": "I am nervous.", "ttsLang": "en-US" },
+          { "id": "en-p-okay", "text": "I am okay.", "ttsText": "I am okay.", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-p-triste", "text": "Estoy triste.", "ttsText": "Estoy triste.", "ttsLang": "es-ES" },
+          { "id": "es-p-emocionado", "text": "Estoy emocionado.", "ttsText": "Estoy emocionado.", "ttsLang": "es-ES" },
+          { "id": "es-p-nervioso", "text": "Estoy nervioso.", "ttsText": "Estoy nervioso.", "ttsLang": "es-ES" },
+          { "id": "es-p-bien", "text": "Estoy bien.", "ttsText": "Estoy bien.", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-p-shangxin", "text": "我很伤心。", "ttsText": "我很伤心", "ttsLang": "zh-CN", "pinyin": "Wǒ hěn shāngxīn." },
+          { "id": "zh-p-xingfen", "text": "我很兴奋。", "ttsText": "我很兴奋", "ttsLang": "zh-CN", "pinyin": "Wǒ hěn xìngfèn." },
+          { "id": "zh-p-jinzhang", "text": "我很紧张。", "ttsText": "我很紧张", "ttsLang": "zh-CN", "pinyin": "Wǒ hěn jǐnzhāng." },
+          { "id": "zh-p-haoke", "text": "我还好。", "ttsText": "我还好", "ttsLang": "zh-CN", "pinyin": "Wǒ hái hǎo." }
+        ]
+      }
+    },
+    {
+      "id": "step-4",
+      "type": "build",
+      "title": "Build the Sentence",
+      "templateByLanguage": {
+        "en": { "template": "I am sad.", "ttsLang": "en-US" },
+        "es": { "template": "Estoy triste.", "ttsLang": "es-ES" },
+        "zh": { "template": "我很伤心。", "ttsLang": "zh-CN" }
+      },
+      "names": ["sad", "excited", "nervous", "okay", "triste"]
+    },
+    {
+      "id": "step-5",
+      "type": "conversation",
+      "title": "Mini Conversation",
+      "scriptByLanguage": {
+        "en": {
+          "app1": "How are you?",
+          "learner1": "I am okay.",
+          "app2": "How do you feel?",
+          "learner2": "I am excited.",
+          "app3": "That is great!"
+        },
+        "es": {
+          "app1": "¿Cómo estás?",
+          "learner1": "Estoy bien.",
+          "app2": "¿Cómo te sientes?",
+          "learner2": "Estoy emocionado.",
+          "app3": "¡Qué bien!"
+        },
+        "zh": {
+          "app1": "你好吗？",
+          "learner1": "我还好。",
+          "app2": "你觉得怎么样？",
+          "learner2": "我很兴奋。",
+          "app3": "太好了！"
+        }
+      }
+    },
+    {
+      "id": "step-6",
+      "type": "game",
+      "title": "Connect the Word",
+      "pairsByLanguage": {
+        "en": [
+          { "left": "sad", "right": "I am ____." },
+          { "left": "excited", "right": "I am ____." },
+          { "left": "nervous", "right": "I am ____." },
+          { "left": "okay", "right": "I am ____." },
+          { "left": "I", "right": "____ am sad." },
+          { "left": "am", "right": "I ____ excited." },
+          { "left": "I", "right": "____ am nervous." },
+          { "left": "am", "right": "I ____ okay." }
+        ],
+        "es": [
+          { "left": "triste", "right": "Estoy ____." },
+          { "left": "emocionado", "right": "Estoy ____." },
+          { "left": "nervioso", "right": "Estoy ____." },
+          { "left": "bien", "right": "Estoy ____." },
+          { "left": "Estoy", "right": "____ triste." },
+          { "left": "Estoy", "right": "____ emocionado." },
+          { "left": "Estoy", "right": "____ nervioso." },
+          { "left": "Estoy", "right": "____ bien." }
+        ],
+        "zh": [
+          { "left": "伤心", "right": "我很____。" },
+          { "left": "兴奋", "right": "我很____。" },
+          { "left": "紧张", "right": "我很____。" },
+          { "left": "还好", "right": "我____。" },
+          { "left": "我", "right": "____很伤心。" },
+          { "left": "很", "right": "我____兴奋。" },
+          { "left": "我", "right": "____很紧张。" },
+          { "left": "我", "right": "____还好。" }
+        ]
+      }
+    }
+  ]
+}

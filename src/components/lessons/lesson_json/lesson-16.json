@@ -1,0 +1,157 @@
+{
+  "id": "lesson-16",
+  "title": "Animals 2",
+  "steps": [
+    {
+      "id": "step-1",
+      "type": "listen",
+      "title": "Listen",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-horse", "text": "Horse", "ttsText": "Horse", "ttsLang": "en-US" },
+          { "id": "en-rabbit", "text": "Rabbit", "ttsText": "Rabbit", "ttsLang": "en-US" },
+          { "id": "en-tiger", "text": "Tiger", "ttsText": "Tiger", "ttsLang": "en-US" },
+          { "id": "en-elephant", "text": "Elephant", "ttsText": "Elephant", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-caballo", "text": "Caballo", "ttsText": "Caballo", "ttsLang": "es-ES" },
+          { "id": "es-conejo", "text": "Conejo", "ttsText": "Conejo", "ttsLang": "es-ES" },
+          { "id": "es-tigre", "text": "Tigre", "ttsText": "Tigre", "ttsLang": "es-ES" },
+          { "id": "es-elefante", "text": "Elefante", "ttsText": "Elefante", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-ma", "text": "马", "ttsText": "马", "ttsLang": "zh-CN", "pinyin": "Mǎ" },
+          { "id": "zh-tuzi", "text": "兔子", "ttsText": "兔子", "ttsLang": "zh-CN", "pinyin": "Tùzi" },
+          { "id": "zh-laohu", "text": "老虎", "ttsText": "老虎", "ttsLang": "zh-CN", "pinyin": "Lǎohǔ" },
+          { "id": "zh-daxiang", "text": "大象", "ttsText": "大象", "ttsLang": "zh-CN", "pinyin": "Dàxiàng" }
+        ]
+      }
+    },
+    {
+      "id": "step-2",
+      "type": "vocab",
+      "title": "Learn the Words",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-v-horse", "concept": "Animal", "text": "Horse", "ttsText": "Horse", "ttsLang": "en-US" },
+          { "id": "en-v-rabbit", "concept": "Animal", "text": "Rabbit", "ttsText": "Rabbit", "ttsLang": "en-US" },
+          { "id": "en-v-tiger", "concept": "Animal", "text": "Tiger", "ttsText": "Tiger", "ttsLang": "en-US" },
+          { "id": "en-v-elephant", "concept": "Animal", "text": "Elephant", "ttsText": "Elephant", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-v-caballo", "concept": "Animal", "text": "Caballo", "ttsText": "Caballo", "ttsLang": "es-ES" },
+          { "id": "es-v-conejo", "concept": "Animal", "text": "Conejo", "ttsText": "Conejo", "ttsLang": "es-ES" },
+          { "id": "es-v-tigre", "concept": "Animal", "text": "Tigre", "ttsText": "Tigre", "ttsLang": "es-ES" },
+          { "id": "es-v-elefante", "concept": "Animal", "text": "Elefante", "ttsText": "Elefante", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-v-ma", "concept": "Animal", "text": "马", "ttsText": "马", "ttsLang": "zh-CN", "pinyin": "Mǎ" },
+          { "id": "zh-v-tuzi", "concept": "Animal", "text": "兔子", "ttsText": "兔子", "ttsLang": "zh-CN", "pinyin": "Tùzi" },
+          { "id": "zh-v-laohu", "concept": "Animal", "text": "老虎", "ttsText": "老虎", "ttsLang": "zh-CN", "pinyin": "Lǎohǔ" },
+          { "id": "zh-v-daxiang", "concept": "Animal", "text": "大象", "ttsText": "大象", "ttsLang": "zh-CN", "pinyin": "Dàxiàng" }
+        ]
+      }
+    },
+    {
+      "id": "step-3",
+      "type": "pronounce",
+      "title": "Say It",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-p-horse", "text": "Horse", "ttsText": "Horse", "ttsLang": "en-US" },
+          { "id": "en-p-rabbit", "text": "Rabbit", "ttsText": "Rabbit", "ttsLang": "en-US" },
+          { "id": "en-p-tiger", "text": "Tiger", "ttsText": "Tiger", "ttsLang": "en-US" },
+          { "id": "en-p-elephant", "text": "Elephant", "ttsText": "Elephant", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-p-caballo", "text": "Caballo", "ttsText": "Caballo", "ttsLang": "es-ES" },
+          { "id": "es-p-conejo", "text": "Conejo", "ttsText": "Conejo", "ttsLang": "es-ES" },
+          { "id": "es-p-tigre", "text": "Tigre", "ttsText": "Tigre", "ttsLang": "es-ES" },
+          { "id": "es-p-elefante", "text": "Elefante", "ttsText": "Elefante", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-p-ma", "text": "马", "ttsText": "马", "ttsLang": "zh-CN", "pinyin": "Mǎ" },
+          { "id": "zh-p-tuzi", "text": "兔子", "ttsText": "兔子", "ttsLang": "zh-CN", "pinyin": "Tùzi" },
+          { "id": "zh-p-laohu", "text": "老虎", "ttsText": "老虎", "ttsLang": "zh-CN", "pinyin": "Lǎohǔ" },
+          { "id": "zh-p-daxiang", "text": "大象", "ttsText": "大象", "ttsLang": "zh-CN", "pinyin": "Dàxiàng" }
+        ]
+      }
+    },
+    {
+      "id": "step-4",
+      "type": "build",
+      "title": "Build the Sentence",
+      "templateByLanguage": {
+        "en": { "template": "It is a horse.", "ttsLang": "en-US" },
+        "es": { "template": "Es un caballo.", "ttsLang": "es-ES" },
+        "zh": { "template": "它是一匹马。", "ttsLang": "zh-CN" }
+      },
+      "names": ["horse", "rabbit", "tiger", "elephant", "caballo"]
+    },
+    {
+      "id": "step-5",
+      "type": "conversation",
+      "title": "Mini Conversation",
+      "scriptByLanguage": {
+        "en": {
+          "app1": "What is it?",
+          "learner1": "It is a horse.",
+          "app2": "What is it?",
+          "learner2": "It is an elephant.",
+          "app3": "Nice!"
+        },
+        "es": {
+          "app1": "¿Qué es?",
+          "learner1": "Es un caballo.",
+          "app2": "¿Qué es?",
+          "learner2": "Es un elefante.",
+          "app3": "Muy bien."
+        },
+        "zh": {
+          "app1": "它是什么？",
+          "learner1": "它是一匹马。",
+          "app2": "它是什么？",
+          "learner2": "它是一头大象。",
+          "app3": "太好了！"
+        }
+      }
+    },
+    {
+      "id": "step-6",
+      "type": "game",
+      "title": "Connect the Word",
+      "pairsByLanguage": {
+        "en": [
+          { "left": "horse", "right": "It is a ____." },
+          { "left": "rabbit", "right": "It is a ____." },
+          { "left": "tiger", "right": "It is a ____." },
+          { "left": "elephant", "right": "It is an ____." },
+          { "left": "It", "right": "____ is a horse." },
+          { "left": "is", "right": "It ____ a rabbit." },
+          { "left": "It", "right": "____ is a tiger." },
+          { "left": "is", "right": "It ____ an elephant." }
+        ],
+        "es": [
+          { "left": "caballo", "right": "Es un ____." },
+          { "left": "conejo", "right": "Es un ____." },
+          { "left": "tigre", "right": "Es un ____." },
+          { "left": "elefante", "right": "Es un ____." },
+          { "left": "Es", "right": "____ un caballo." },
+          { "left": "un", "right": "Es ____ conejo." },
+          { "left": "Es", "right": "____ un tigre." },
+          { "left": "un", "right": "Es ____ elefante." }
+        ],
+        "zh": [
+          { "left": "马", "right": "它是一匹____。" },
+          { "left": "兔子", "right": "它是一只____。" },
+          { "left": "老虎", "right": "它是一只____。" },
+          { "left": "大象", "right": "它是一头____。" },
+          { "left": "它", "right": "____是一匹马。" },
+          { "left": "是", "right": "它____一只兔子。" },
+          { "left": "它", "right": "____是一只老虎。" },
+          { "left": "是", "right": "它____一头大象。" }
+        ]
+      }
+    }
+  ]
+}

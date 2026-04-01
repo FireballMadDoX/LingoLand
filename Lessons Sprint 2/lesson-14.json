@@ -1,0 +1,157 @@
+{
+  "id": "lesson-14",
+  "title": "Family 2",
+  "steps": [
+    {
+      "id": "step-1",
+      "type": "listen",
+      "title": "Listen",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-grandma", "text": "Grandmother", "ttsText": "Grandmother", "ttsLang": "en-US" },
+          { "id": "en-grandpa", "text": "Grandfather", "ttsText": "Grandfather", "ttsLang": "en-US" },
+          { "id": "en-aunt", "text": "Aunt", "ttsText": "Aunt", "ttsLang": "en-US" },
+          { "id": "en-uncle", "text": "Uncle", "ttsText": "Uncle", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-abuela", "text": "Abuela", "ttsText": "Abuela", "ttsLang": "es-ES" },
+          { "id": "es-abuelo", "text": "Abuelo", "ttsText": "Abuelo", "ttsLang": "es-ES" },
+          { "id": "es-tia", "text": "Tía", "ttsText": "Tía", "ttsLang": "es-ES" },
+          { "id": "es-tio", "text": "Tío", "ttsText": "Tío", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-nainai", "text": "奶奶", "ttsText": "奶奶", "ttsLang": "zh-CN", "pinyin": "Nǎinai" },
+          { "id": "zh-yeye", "text": "爷爷", "ttsText": "爷爷", "ttsLang": "zh-CN", "pinyin": "Yéye" },
+          { "id": "zh-ayi", "text": "阿姨", "ttsText": "阿姨", "ttsLang": "zh-CN", "pinyin": "Āyí" },
+          { "id": "zh-shushu", "text": "叔叔", "ttsText": "叔叔", "ttsLang": "zh-CN", "pinyin": "Shūshu" }
+        ]
+      }
+    },
+    {
+      "id": "step-2",
+      "type": "vocab",
+      "title": "Learn the Words",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-v-grandma", "concept": "Family", "text": "Grandmother", "ttsText": "Grandmother", "ttsLang": "en-US" },
+          { "id": "en-v-grandpa", "concept": "Family", "text": "Grandfather", "ttsText": "Grandfather", "ttsLang": "en-US" },
+          { "id": "en-v-aunt", "concept": "Family", "text": "Aunt", "ttsText": "Aunt", "ttsLang": "en-US" },
+          { "id": "en-v-uncle", "concept": "Family", "text": "Uncle", "ttsText": "Uncle", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-v-abuela", "concept": "Family", "text": "Abuela", "ttsText": "Abuela", "ttsLang": "es-ES" },
+          { "id": "es-v-abuelo", "concept": "Family", "text": "Abuelo", "ttsText": "Abuelo", "ttsLang": "es-ES" },
+          { "id": "es-v-tia", "concept": "Family", "text": "Tía", "ttsText": "Tía", "ttsLang": "es-ES" },
+          { "id": "es-v-tio", "concept": "Family", "text": "Tío", "ttsText": "Tío", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-v-nainai", "concept": "Family", "text": "奶奶", "ttsText": "奶奶", "ttsLang": "zh-CN", "pinyin": "Nǎinai" },
+          { "id": "zh-v-yeye", "concept": "Family", "text": "爷爷", "ttsText": "爷爷", "ttsLang": "zh-CN", "pinyin": "Yéye" },
+          { "id": "zh-v-ayi", "concept": "Family", "text": "阿姨", "ttsText": "阿姨", "ttsLang": "zh-CN", "pinyin": "Āyí" },
+          { "id": "zh-v-shushu", "concept": "Family", "text": "叔叔", "ttsText": "叔叔", "ttsLang": "zh-CN", "pinyin": "Shūshu" }
+        ]
+      }
+    },
+    {
+      "id": "step-3",
+      "type": "pronounce",
+      "title": "Say It",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-p-grandma", "text": "Grandmother", "ttsText": "Grandmother", "ttsLang": "en-US" },
+          { "id": "en-p-grandpa", "text": "Grandfather", "ttsText": "Grandfather", "ttsLang": "en-US" },
+          { "id": "en-p-aunt", "text": "Aunt", "ttsText": "Aunt", "ttsLang": "en-US" },
+          { "id": "en-p-uncle", "text": "Uncle", "ttsText": "Uncle", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-p-abuela", "text": "Abuela", "ttsText": "Abuela", "ttsLang": "es-ES" },
+          { "id": "es-p-abuelo", "text": "Abuelo", "ttsText": "Abuelo", "ttsLang": "es-ES" },
+          { "id": "es-p-tia", "text": "Tía", "ttsText": "Tía", "ttsLang": "es-ES" },
+          { "id": "es-p-tio", "text": "Tío", "ttsText": "Tío", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-p-nainai", "text": "奶奶", "ttsText": "奶奶", "ttsLang": "zh-CN", "pinyin": "Nǎinai" },
+          { "id": "zh-p-yeye", "text": "爷爷", "ttsText": "爷爷", "ttsLang": "zh-CN", "pinyin": "Yéye" },
+          { "id": "zh-p-ayi", "text": "阿姨", "ttsText": "阿姨", "ttsLang": "zh-CN", "pinyin": "Āyí" },
+          { "id": "zh-p-shushu", "text": "叔叔", "ttsText": "叔叔", "ttsLang": "zh-CN", "pinyin": "Shūshu" }
+        ]
+      }
+    },
+    {
+      "id": "step-4",
+      "type": "build",
+      "title": "Build the Sentence",
+      "templateByLanguage": {
+        "en": { "template": "This is my grandmother.", "ttsLang": "en-US" },
+        "es": { "template": "Esta es mi abuela.", "ttsLang": "es-ES" },
+        "zh": { "template": "这是我奶奶。", "ttsLang": "zh-CN" }
+      },
+      "names": ["grandmother", "grandfather", "aunt", "uncle", "abuela"]
+    },
+    {
+      "id": "step-5",
+      "type": "conversation",
+      "title": "Mini Conversation",
+      "scriptByLanguage": {
+        "en": {
+          "app1": "Who is she?",
+          "learner1": "This is my grandmother.",
+          "app2": "Who is he?",
+          "learner2": "This is my grandfather.",
+          "app3": "Nice!"
+        },
+        "es": {
+          "app1": "¿Quién es ella?",
+          "learner1": "Esta es mi abuela.",
+          "app2": "¿Quién es él?",
+          "learner2": "Este es mi abuelo.",
+          "app3": "¡Muy bien!"
+        },
+        "zh": {
+          "app1": "她是谁？",
+          "learner1": "这是我奶奶。",
+          "app2": "他是谁？",
+          "learner2": "这是我爷爷。",
+          "app3": "太好了！"
+        }
+      }
+    },
+    {
+      "id": "step-6",
+      "type": "game",
+      "title": "Connect the Word",
+      "pairsByLanguage": {
+        "en": [
+          { "left": "grandmother", "right": "This is my ____." },
+          { "left": "grandfather", "right": "This is my ____." },
+          { "left": "aunt", "right": "This is my ____." },
+          { "left": "uncle", "right": "This is my ____." },
+          { "left": "This", "right": "____ is my grandmother." },
+          { "left": "my", "right": "This is ____ grandfather." },
+          { "left": "This", "right": "____ is my aunt." },
+          { "left": "my", "right": "This is ____ uncle." }
+        ],
+        "es": [
+          { "left": "abuela", "right": "Esta es mi ____." },
+          { "left": "abuelo", "right": "Este es mi ____." },
+          { "left": "tía", "right": "Esta es mi ____." },
+          { "left": "tío", "right": "Este es mi ____." },
+          { "left": "Esta", "right": "____ es mi abuela." },
+          { "left": "Este", "right": "____ es mi abuelo." },
+          { "left": "mi", "right": "Esta es ____ tía." },
+          { "left": "mi", "right": "Este es ____ tío." }
+        ],
+        "zh": [
+          { "left": "奶奶", "right": "这是我____。" },
+          { "left": "爷爷", "right": "这是我____。" },
+          { "left": "阿姨", "right": "这是我____。" },
+          { "left": "叔叔", "right": "这是我____。" },
+          { "left": "这", "right": "____是我奶奶。" },
+          { "left": "是", "right": "这____我爷爷。" },
+          { "left": "我", "right": "这是____阿姨。" },
+          { "left": "我", "right": "这是____叔叔。" }
+        ]
+      }
+    }
+  ]
+}

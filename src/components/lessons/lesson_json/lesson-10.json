@@ -1,0 +1,157 @@
+{
+  "id": "lesson-10",
+  "title": "Feelings 2",
+  "steps": [
+    {
+      "id": "step-1",
+      "type": "listen",
+      "title": "Listen",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-sad", "text": "Sad", "ttsText": "Sad", "ttsLang": "en-US" },
+          { "id": "en-excited", "text": "Excited", "ttsText": "Excited", "ttsLang": "en-US" },
+          { "id": "en-angry", "text": "Angry", "ttsText": "Angry", "ttsLang": "en-US" },
+          { "id": "en-calm", "text": "Calm", "ttsText": "Calm", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-triste", "text": "Triste", "ttsText": "Triste", "ttsLang": "es-ES" },
+          { "id": "es-emocionado", "text": "Emocionado", "ttsText": "Emocionado", "ttsLang": "es-ES" },
+          { "id": "es-enojado", "text": "Enojado", "ttsText": "Enojado", "ttsLang": "es-ES" },
+          { "id": "es-tranquilo", "text": "Tranquilo", "ttsText": "Tranquilo", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-shangxin", "text": "伤心", "ttsText": "伤心", "ttsLang": "zh-CN", "pinyin": "Shāngxīn" },
+          { "id": "zh-xingfen", "text": "兴奋", "ttsText": "兴奋", "ttsLang": "zh-CN", "pinyin": "Xìngfèn" },
+          { "id": "zh-shengqi", "text": "生气", "ttsText": "生气", "ttsLang": "zh-CN", "pinyin": "Shēngqì" },
+          { "id": "zh-pingjing", "text": "平静", "ttsText": "平静", "ttsLang": "zh-CN", "pinyin": "Píngjìng" }
+        ]
+      }
+    },
+    {
+      "id": "step-2",
+      "type": "vocab",
+      "title": "Learn the Words",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-v-sad", "concept": "Feeling", "text": "Sad", "ttsText": "Sad", "ttsLang": "en-US" },
+          { "id": "en-v-excited", "concept": "Feeling", "text": "Excited", "ttsText": "Excited", "ttsLang": "en-US" },
+          { "id": "en-v-angry", "concept": "Feeling", "text": "Angry", "ttsText": "Angry", "ttsLang": "en-US" },
+          { "id": "en-v-calm", "concept": "Feeling", "text": "Calm", "ttsText": "Calm", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-v-triste", "concept": "Feeling", "text": "Triste", "ttsText": "Triste", "ttsLang": "es-ES" },
+          { "id": "es-v-emocionado", "concept": "Feeling", "text": "Emocionado", "ttsText": "Emocionado", "ttsLang": "es-ES" },
+          { "id": "es-v-enojado", "concept": "Feeling", "text": "Enojado", "ttsText": "Enojado", "ttsLang": "es-ES" },
+          { "id": "es-v-tranquilo", "concept": "Feeling", "text": "Tranquilo", "ttsText": "Tranquilo", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-v-shangxin", "concept": "Feeling", "text": "伤心", "ttsText": "伤心", "ttsLang": "zh-CN", "pinyin": "Shāngxīn" },
+          { "id": "zh-v-xingfen", "concept": "Feeling", "text": "兴奋", "ttsText": "兴奋", "ttsLang": "zh-CN", "pinyin": "Xìngfèn" },
+          { "id": "zh-v-shengqi", "concept": "Feeling", "text": "生气", "ttsText": "生气", "ttsLang": "zh-CN", "pinyin": "Shēngqì" },
+          { "id": "zh-v-pingjing", "concept": "Feeling", "text": "平静", "ttsText": "平静", "ttsLang": "zh-CN", "pinyin": "Píngjìng" }
+        ]
+      }
+    },
+    {
+      "id": "step-3",
+      "type": "pronounce",
+      "title": "Say It",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-p-sad", "text": "Sad", "ttsText": "Sad", "ttsLang": "en-US" },
+          { "id": "en-p-excited", "text": "Excited", "ttsText": "Excited", "ttsLang": "en-US" },
+          { "id": "en-p-angry", "text": "Angry", "ttsText": "Angry", "ttsLang": "en-US" },
+          { "id": "en-p-calm", "text": "Calm", "ttsText": "Calm", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-p-triste", "text": "Triste", "ttsText": "Triste", "ttsLang": "es-ES" },
+          { "id": "es-p-emocionado", "text": "Emocionado", "ttsText": "Emocionado", "ttsLang": "es-ES" },
+          { "id": "es-p-enojado", "text": "Enojado", "ttsText": "Enojado", "ttsLang": "es-ES" },
+          { "id": "es-p-tranquilo", "text": "Tranquilo", "ttsText": "Tranquilo", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-p-shangxin", "text": "伤心", "ttsText": "伤心", "ttsLang": "zh-CN", "pinyin": "Shāngxīn" },
+          { "id": "zh-p-xingfen", "text": "兴奋", "ttsText": "兴奋", "ttsLang": "zh-CN", "pinyin": "Xìngfèn" },
+          { "id": "zh-p-shengqi", "text": "生气", "ttsText": "生气", "ttsLang": "zh-CN", "pinyin": "Shēngqì" },
+          { "id": "zh-p-pingjing", "text": "平静", "ttsText": "平静", "ttsLang": "zh-CN", "pinyin": "Píngjìng" }
+        ]
+      }
+    },
+    {
+      "id": "step-4",
+      "type": "build",
+      "title": "Build the Sentence",
+      "templateByLanguage": {
+        "en": { "template": "I feel sad.", "ttsLang": "en-US" },
+        "es": { "template": "Me siento triste.", "ttsLang": "es-ES" },
+        "zh": { "template": "我觉得伤心。", "ttsLang": "zh-CN" }
+      },
+      "names": ["sad", "excited", "angry", "calm", "triste"]
+    },
+    {
+      "id": "step-5",
+      "type": "conversation",
+      "title": "Mini Conversation",
+      "scriptByLanguage": {
+        "en": {
+          "app1": "How do you feel?",
+          "learner1": "I feel sad.",
+          "app2": "How do you feel now?",
+          "learner2": "I feel excited.",
+          "app3": "Nice!"
+        },
+        "es": {
+          "app1": "¿Cómo te sientes?",
+          "learner1": "Me siento triste.",
+          "app2": "¿Cómo te sientes ahora?",
+          "learner2": "Me siento emocionado.",
+          "app3": "¡Muy bien!"
+        },
+        "zh": {
+          "app1": "你觉得怎么样？",
+          "learner1": "我觉得伤心。",
+          "app2": "你现在觉得怎么样？",
+          "learner2": "我觉得兴奋。",
+          "app3": "太好了！"
+        }
+      }
+    },
+    {
+      "id": "step-6",
+      "type": "game",
+      "title": "Connect the Word",
+      "pairsByLanguage": {
+        "en": [
+          { "left": "sad", "right": "I feel ____." },
+          { "left": "excited", "right": "I feel ____." },
+          { "left": "angry", "right": "I feel ____." },
+          { "left": "calm", "right": "I feel ____." },
+          { "left": "I", "right": "____ feel sad." },
+          { "left": "feel", "right": "I ____ excited." },
+          { "left": "I", "right": "____ feel angry." },
+          { "left": "feel", "right": "I ____ calm." }
+        ],
+        "es": [
+          { "left": "triste", "right": "Me siento ____." },
+          { "left": "emocionado", "right": "Me siento ____." },
+          { "left": "enojado", "right": "Me siento ____." },
+          { "left": "tranquilo", "right": "Me siento ____." },
+          { "left": "Me", "right": "____ siento triste." },
+          { "left": "siento", "right": "Me ____ emocionado." },
+          { "left": "Me", "right": "____ siento enojado." },
+          { "left": "siento", "right": "Me ____ tranquilo." }
+        ],
+        "zh": [
+          { "left": "伤心", "right": "我觉得____。" },
+          { "left": "兴奋", "right": "我觉得____。" },
+          { "left": "生气", "right": "我觉得____。" },
+          { "left": "平静", "right": "我觉得____。" },
+          { "left": "我", "right": "____觉得伤心。" },
+          { "left": "觉得", "right": "我____兴奋。" },
+          { "left": "我", "right": "____觉得生气。" },
+          { "left": "觉得", "right": "我____平静。" }
+        ]
+      }
+    }
+  ]
+}

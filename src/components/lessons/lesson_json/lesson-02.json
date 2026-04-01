@@ -1,0 +1,160 @@
+{
+  "id": "lesson-02",
+  "title": "How Are You?",
+  "steps": [
+    {
+      "id": "step-1",
+      "type": "listen",
+      "title": "Listen",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-howareyou", "text": "How are you?", "ttsText": "How are you?", "ttsLang": "en-US" },
+          { "id": "en-good", "text": "I am good.", "ttsText": "I am good.", "ttsLang": "en-US" },
+          { "id": "en-happy", "text": "I am happy.", "ttsText": "I am happy.", "ttsLang": "en-US" },
+          { "id": "en-tired", "text": "I am tired.", "ttsText": "I am tired.", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-comoestas", "text": "¿Cómo estás?", "ttsText": "¿Cómo estás?", "ttsLang": "es-ES" },
+          { "id": "es-bien", "text": "Estoy bien.", "ttsText": "Estoy bien.", "ttsLang": "es-ES" },
+          { "id": "es-feliz", "text": "Estoy feliz.", "ttsText": "Estoy feliz.", "ttsLang": "es-ES" },
+          { "id": "es-cansado", "text": "Estoy cansado.", "ttsText": "Estoy cansado.", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-nihaoma", "text": "你好吗？", "ttsText": "你好吗", "ttsLang": "zh-CN", "pinyin": "Nǐ hǎo ma?" },
+          { "id": "zh-wohenhao", "text": "我很好。", "ttsText": "我很好", "ttsLang": "zh-CN", "pinyin": "Wǒ hěn hǎo." },
+          { "id": "zh-wohenkaixin", "text": "我很开心。", "ttsText": "我很开心", "ttsLang": "zh-CN", "pinyin": "Wǒ hěn kāixīn." },
+          { "id": "zh-wohenlei", "text": "我很累。", "ttsText": "我很累", "ttsLang": "zh-CN", "pinyin": "Wǒ hěn lèi." }
+        ]
+      }
+    },
+    {
+      "id": "step-2",
+      "type": "vocab",
+      "title": "Learn the Words",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-v-howareyou", "concept": "Ask how someone feels", "text": "How are you?", "ttsText": "How are you?", "ttsLang": "en-US" },
+          { "id": "en-v-good", "concept": "Feeling good", "text": "I am good.", "ttsText": "I am good.", "ttsLang": "en-US" },
+          { "id": "en-v-happy", "concept": "Feeling happy", "text": "I am happy.", "ttsText": "I am happy.", "ttsLang": "en-US" },
+          { "id": "en-v-tired", "concept": "Feeling tired", "text": "I am tired.", "ttsText": "I am tired.", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-v-comoestas", "concept": "Ask how someone feels", "text": "¿Cómo estás?", "ttsText": "¿Cómo estás?", "ttsLang": "es-ES" },
+          { "id": "es-v-bien", "concept": "Feeling good", "text": "Estoy bien.", "ttsText": "Estoy bien.", "ttsLang": "es-ES" },
+          { "id": "es-v-feliz", "concept": "Feeling happy", "text": "Estoy feliz.", "ttsText": "Estoy feliz.", "ttsLang": "es-ES" },
+          { "id": "es-v-cansado", "concept": "Feeling tired", "text": "Estoy cansado.", "ttsText": "Estoy cansado.", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-v-nihaoma", "concept": "Ask how someone feels", "text": "你好吗？", "ttsText": "你好吗", "ttsLang": "zh-CN", "pinyin": "Nǐ hǎo ma?" },
+          { "id": "zh-v-wohenhao", "concept": "Feeling good", "text": "我很好。", "ttsText": "我很好", "ttsLang": "zh-CN", "pinyin": "Wǒ hěn hǎo." },
+          { "id": "zh-v-wohenkaixin", "concept": "Feeling happy", "text": "我很开心。", "ttsText": "我很开心", "ttsLang": "zh-CN", "pinyin": "Wǒ hěn kāixīn." },
+          { "id": "zh-v-wohenlei", "concept": "Feeling tired", "text": "我很累。", "ttsText": "我很累", "ttsLang": "zh-CN", "pinyin": "Wǒ hěn lèi." }
+        ]
+      }
+    },
+    {
+      "id": "step-3",
+      "type": "pronounce",
+      "title": "Say It",
+      "itemsByLanguage": {
+        "en": [
+          { "id": "en-p-howareyou", "text": "How are you?", "ttsText": "How are you?", "ttsLang": "en-US" },
+          { "id": "en-p-good", "text": "I am good.", "ttsText": "I am good.", "ttsLang": "en-US" },
+          { "id": "en-p-happy", "text": "I am happy.", "ttsText": "I am happy.", "ttsLang": "en-US" },
+          { "id": "en-p-tired", "text": "I am tired.", "ttsText": "I am tired.", "ttsLang": "en-US" }
+        ],
+        "es": [
+          { "id": "es-p-comoestas", "text": "¿Cómo estás?", "ttsText": "¿Cómo estás?", "ttsLang": "es-ES" },
+          { "id": "es-p-bien", "text": "Estoy bien.", "ttsText": "Estoy bien.", "ttsLang": "es-ES" },
+          { "id": "es-p-feliz", "text": "Estoy feliz.", "ttsText": "Estoy feliz.", "ttsLang": "es-ES" },
+          { "id": "es-p-cansado", "text": "Estoy cansado.", "ttsText": "Estoy cansado.", "ttsLang": "es-ES" }
+        ],
+        "zh": [
+          { "id": "zh-p-nihaoma", "text": "你好吗？", "ttsText": "你好吗", "ttsLang": "zh-CN", "pinyin": "Nǐ hǎo ma?" },
+          { "id": "zh-p-wohenhao", "text": "我很好。", "ttsText": "我很好", "ttsLang": "zh-CN", "pinyin": "Wǒ hěn hǎo." },
+          { "id": "zh-p-wohenkaixin", "text": "我很开心。", "ttsText": "我很开心", "ttsLang": "zh-CN", "pinyin": "Wǒ hěn kāixīn." },
+          { "id": "zh-p-wohenlei", "text": "我很累。", "ttsText": "我很累", "ttsLang": "zh-CN", "pinyin": "Wǒ hěn lèi." }
+        ]
+      }
+    },
+    {
+      "id": "step-4",
+      "type": "build",
+      "title": "Build the Sentence",
+      "templateByLanguage": {
+        "en": { "template": "I am {name}.", "ttsLang": "en-US" },
+        "es": { "template": "Estoy {name}.", "ttsLang": "es-ES" },
+        "zh": { "template": "我很{name}。", "ttsLang": "zh-CN" }
+      },
+      "names": ["good", "happy", "tired", "bien", "feliz"]
+    },
+    {
+      "id": "step-5",
+      "type": "conversation",
+      "title": "Mini Conversation",
+      "scriptByLanguage": {
+        "en": {
+          "app1": "Hello!",
+          "learner1": "Hi!",
+          "app2": "How are you?",
+          "learner2": "I am good.",
+          "learner3": "I am happy.",
+          "app3": "Great!"
+        },
+        "es": {
+          "app1": "¡Hola!",
+          "learner1": "¡Hola!",
+          "app2": "¿Cómo estás?",
+          "learner2": "Estoy bien.",
+          "learner3": "Estoy feliz.",
+          "app3": "¡Genial!"
+        },
+        "zh": {
+          "app1": "你好！",
+          "learner1": "嗨！",
+          "app2": "你好吗？",
+          "learner2": "我很好。",
+          "learner3": "我很开心。",
+          "app3": "太好了！"
+        }
+      }
+    },
+    {
+      "id": "step-6",
+      "type": "game",
+      "title": "Connect the Word",
+      "pairsByLanguage": {
+        "en": [
+          { "left": "How", "right": "____ are you?" },
+          { "left": "are", "right": "How ____ you?" },
+          { "left": "you", "right": "How are ____?" },
+          { "left": "good", "right": "I am ____." },
+          { "left": "happy", "right": "I am ____." },
+          { "left": "tired", "right": "I am ____." },
+          { "left": "I", "right": "____ am happy." },
+          { "left": "am", "right": "I ____ tired." }
+        ],
+        "es": [
+          { "left": "¿Cómo", "right": "____ estás?" },
+          { "left": "estás", "right": "¿Cómo ____?" },
+          { "left": "Estoy", "right": "____ bien." },
+          { "left": "bien", "right": "Estoy ____." },
+          { "left": "feliz", "right": "Estoy ____." },
+          { "left": "cansado", "right": "Estoy ____." },
+          { "left": "Estoy", "right": "____ feliz." },
+          { "left": "Estoy", "right": "____ cansado." }
+        ],
+        "zh": [
+          { "left": "你", "right": "____ 好吗？" },
+          { "left": "好吗", "right": "你 ____？" },
+          { "left": "我", "right": "____ 很好。" },
+          { "left": "很好", "right": "我 ____。" },
+          { "left": "很开心", "right": "我 ____。" },
+          { "left": "很累", "right": "我 ____。" },
+          { "left": "我", "right": "____ 很开心。" },
+          { "left": "我", "right": "____ 很累。" }
+        ]
+      }
+    }
+  ]
+}
