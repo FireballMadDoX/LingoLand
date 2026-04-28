@@ -245,6 +245,246 @@ export function getBuildSentences(lessonId: string, language: LangCode, name: st
       { key: "zh-4", tts: "我觉得平静。", ttsLang, tilesCorrect: ["我", "觉得", "平静。"], distractors: ["伤心。", "兴奋。", "生气。"] }
     ];
   }
+  if (lessonId === "lesson-11") {
+  if (language === "en") {
+    return [
+      { key: "en-1", tts: "Good morning.", ttsLang, tilesCorrect: ["Good","morning."], distractors: ["Good","night.","Hello."] },
+      { key: "en-2", tts: "Nice to meet you.", ttsLang, tilesCorrect: ["Nice","to","meet","you."], distractors: ["Good","morning.","Hello."] },
+      { key: "en-3", tts: "Please.", ttsLang, tilesCorrect: ["Please."], distractors: ["Thank","you.","Hello."] },
+      { key: "en-4", tts: "Thank you.", ttsLang, tilesCorrect: ["Thank","you."], distractors: ["Please.","Hello."] }
+    ];
+  }
+  if (language === "es") {
+    return [
+      { key: "es-1", tts: "Buenos días.", ttsLang, tilesCorrect: ["Buenos","días."], distractors: ["Buenas","noches.","Hola."] },
+      { key: "es-2", tts: "Mucho gusto.", ttsLang, tilesCorrect: ["Mucho","gusto."], distractors: ["Buenos","días.","Hola."] },
+      { key: "es-3", tts: "Por favor.", ttsLang, tilesCorrect: ["Por","favor."], distractors: ["Gracias.","Hola."] },
+      { key: "es-4", tts: "Gracias.", ttsLang, tilesCorrect: ["Gracias."], distractors: ["Por","favor.","Hola."] }
+    ];
+  }
+  return [
+    { key: "zh-1", tts: "早上好。", ttsLang, tilesCorrect: ["早上好。"], distractors: ["晚上好。","你好。"] },
+    { key: "zh-2", tts: "很高兴认识你。", ttsLang, tilesCorrect: ["很高兴","认识你。"], distractors: ["你好。","谢谢。"] },
+    { key: "zh-3", tts: "请。", ttsLang, tilesCorrect: ["请。"], distractors: ["谢谢。","你好。"] },
+    { key: "zh-4", tts: "谢谢。", ttsLang, tilesCorrect: ["谢谢。"], distractors: ["请。","你好。"] }
+  ];
+}
+if (lessonId === "lesson-12") {
+  if (language === "en") {
+    return [
+      { key: "en-1", tts: "I feel sad.", ttsLang, tilesCorrect: ["I","feel","sad."], distractors: ["excited.","nervous.","okay."] },
+      { key: "en-2", tts: "I feel excited.", ttsLang, tilesCorrect: ["I","feel","excited."], distractors: ["sad.","nervous.","okay."] },
+      { key: "en-3", tts: "I feel nervous.", ttsLang, tilesCorrect: ["I","feel","nervous."], distractors: ["sad.","excited.","okay."] },
+      { key: "en-4", tts: "I feel okay.", ttsLang, tilesCorrect: ["I","feel","okay."], distractors: ["sad.","excited.","nervous."] }
+    ];
+  }
+  if (language === "es") {
+    return [
+      { key: "es-1", tts: "Me siento triste.", ttsLang, tilesCorrect: ["Me","siento","triste."], distractors: ["emocionado.","nervioso.","bien."] },
+      { key: "es-2", tts: "Me siento emocionado.", ttsLang, tilesCorrect: ["Me","siento","emocionado."], distractors: ["triste.","nervioso.","bien."] },
+      { key: "es-3", tts: "Me siento nervioso.", ttsLang, tilesCorrect: ["Me","siento","nervioso."], distractors: ["triste.","emocionado.","bien."] },
+      { key: "es-4", tts: "Estoy bien.", ttsLang, tilesCorrect: ["Estoy","bien."], distractors: ["triste.","emocionado.","nervioso."] }
+    ];
+  }
+  return [
+    { key: "zh-1", tts: "我觉得难过。", ttsLang, tilesCorrect: ["我","觉得","难过。"], distractors: ["兴奋。","紧张。","还好。"] },
+    { key: "zh-2", tts: "我觉得兴奋。", ttsLang, tilesCorrect: ["我","觉得","兴奋。"], distractors: ["难过。","紧张。","还好。"] },
+    { key: "zh-3", tts: "我觉得紧张。", ttsLang, tilesCorrect: ["我","觉得","紧张。"], distractors: ["难过。","兴奋。","还好。"] },
+    { key: "zh-4", tts: "我觉得还好。", ttsLang, tilesCorrect: ["我","觉得","还好。"], distractors: ["难过。","兴奋。","紧张。"] }
+  ];
+}
+if (lessonId === "lesson-13") {
+  if (language === "en") {
+    return [
+      { key: "en-1", tts: "It is black.", ttsLang, tilesCorrect: ["It","is","black."], distractors: ["white.","orange.","purple."] },
+      { key: "en-2", tts: "It is white.", ttsLang, tilesCorrect: ["It","is","white."], distractors: ["black.","orange.","purple."] },
+      { key: "en-3", tts: "It is orange.", ttsLang, tilesCorrect: ["It","is","orange."], distractors: ["black.","white.","purple."] },
+      { key: "en-4", tts: "It is purple.", ttsLang, tilesCorrect: ["It","is","purple."], distractors: ["black.","white.","orange."] }
+    ];
+  }
+  if (language === "es") {
+    return [
+      { key: "es-1", tts: "Es negro.", ttsLang, tilesCorrect: ["Es","negro."], distractors: ["blanco.","naranja.","morado."] },
+      { key: "es-2", tts: "Es blanco.", ttsLang, tilesCorrect: ["Es","blanco."], distractors: ["negro.","naranja.","morado."] },
+      { key: "es-3", tts: "Es naranja.", ttsLang, tilesCorrect: ["Es","naranja."], distractors: ["negro.","blanco.","morado."] },
+      { key: "es-4", tts: "Es morado.", ttsLang, tilesCorrect: ["Es","morado."], distractors: ["negro.","blanco.","naranja."] }
+    ];
+  }
+  return [
+    { key: "zh-1", tts: "它是黑色。", ttsLang, tilesCorrect: ["它","是","黑色。"], distractors: ["白色。","橙色。","紫色。"] },
+    { key: "zh-2", tts: "它是白色。", ttsLang, tilesCorrect: ["它","是","白色。"], distractors: ["黑色。","橙色。","紫色。"] },
+    { key: "zh-3", tts: "它是橙色。", ttsLang, tilesCorrect: ["它","是","橙色。"], distractors: ["黑色。","白色。","紫色。"] },
+    { key: "zh-4", tts: "它是紫色。", ttsLang, tilesCorrect: ["它","是","紫色。"], distractors: ["黑色。","白色。","橙色。"] }
+  ];
+}
+if (lessonId === "lesson-14") {
+  if (language === "en") {
+    return [
+      { key: "en-1", tts: "This is my grandmother.", ttsLang, tilesCorrect: ["This","is","my","grandmother."], distractors: ["grandfather.","aunt.","uncle."] },
+      { key: "en-2", tts: "This is my grandfather.", ttsLang, tilesCorrect: ["This","is","my","grandfather."], distractors: ["grandmother.","aunt.","uncle."] },
+      { key: "en-3", tts: "This is my aunt.", ttsLang, tilesCorrect: ["This","is","my","aunt."], distractors: ["grandmother.","grandfather.","uncle."] },
+      { key: "en-4", tts: "This is my uncle.", ttsLang, tilesCorrect: ["This","is","my","uncle."], distractors: ["grandmother.","grandfather.","aunt."] }
+    ];
+  }
+  if (language === "es") {
+    return [
+      { key: "es-1", tts: "Esta es mi abuela.", ttsLang, tilesCorrect: ["Esta","es","mi","abuela."], distractors: ["abuelo.","tía.","tío."] },
+      { key: "es-2", tts: "Este es mi abuelo.", ttsLang, tilesCorrect: ["Este","es","mi","abuelo."], distractors: ["abuela.","tía.","tío."] },
+      { key: "es-3", tts: "Esta es mi tía.", ttsLang, tilesCorrect: ["Esta","es","mi","tía."], distractors: ["abuela.","abuelo.","tío."] },
+      { key: "es-4", tts: "Este es mi tío.", ttsLang, tilesCorrect: ["Este","es","mi","tío."], distractors: ["abuela.","abuelo.","tía."] }
+    ];
+  }
+  return [
+    { key: "zh-1", tts: "这是我奶奶。", ttsLang, tilesCorrect: ["这","是","我","奶奶。"], distractors: ["爷爷。","阿姨。","叔叔。"] },
+    { key: "zh-2", tts: "这是我爷爷。", ttsLang, tilesCorrect: ["这","是","我","爷爷。"], distractors: ["奶奶。","阿姨。","叔叔。"] },
+    { key: "zh-3", tts: "这是我阿姨。", ttsLang, tilesCorrect: ["这","是","我","阿姨。"], distractors: ["奶奶。","爷爷。","叔叔。"] },
+    { key: "zh-4", tts: "这是我叔叔。", ttsLang, tilesCorrect: ["这","是","我","叔叔。"], distractors: ["奶奶。","爷爷。","阿姨。"] }
+  ];
+}
+if (lessonId === "lesson-15") {
+  if (language === "en") {
+    return [
+      { key: "en-1", tts: "I drink milk.", ttsLang, tilesCorrect: ["I","drink","milk."], distractors: ["juice.","banana.","noodles."] },
+      { key: "en-2", tts: "I drink juice.", ttsLang, tilesCorrect: ["I","drink","juice."], distractors: ["milk.","banana.","noodles."] },
+      { key: "en-3", tts: "I eat a banana.", ttsLang, tilesCorrect: ["I","eat","a","banana."], distractors: ["milk.","juice.","noodles."] },
+      { key: "en-4", tts: "I eat noodles.", ttsLang, tilesCorrect: ["I","eat","noodles."], distractors: ["milk.","juice.","banana."] }
+    ];
+  }
+  if (language === "es") {
+    return [
+      { key: "es-1", tts: "Yo bebo leche.", ttsLang, tilesCorrect: ["Yo","bebo","leche."], distractors: ["jugo.","banana.","fideos."] },
+      { key: "es-2", tts: "Yo bebo jugo.", ttsLang, tilesCorrect: ["Yo","bebo","jugo."], distractors: ["leche.","banana.","fideos."] },
+      { key: "es-3", tts: "Yo como una banana.", ttsLang, tilesCorrect: ["Yo","como","una","banana."], distractors: ["leche.","jugo.","fideos."] },
+      { key: "es-4", tts: "Yo como fideos.", ttsLang, tilesCorrect: ["Yo","como","fideos."], distractors: ["leche.","jugo.","banana."] }
+    ];
+  }
+  return [
+    { key: "zh-1", tts: "我喝牛奶。", ttsLang, tilesCorrect: ["我","喝","牛奶。"], distractors: ["果汁。","香蕉。","面条。"] },
+    { key: "zh-2", tts: "我喝果汁。", ttsLang, tilesCorrect: ["我","喝","果汁。"], distractors: ["牛奶。","香蕉。","面条。"] },
+    { key: "zh-3", tts: "我吃香蕉。", ttsLang, tilesCorrect: ["我","吃","香蕉。"], distractors: ["牛奶。","果汁。","面条。"] },
+    { key: "zh-4", tts: "我吃面条。", ttsLang, tilesCorrect: ["我","吃","面条。"], distractors: ["牛奶。","果汁。","香蕉。"] }
+  ];
+}
+if (lessonId === "lesson-16") {
+  if (language === "en") {
+    return [
+      { key: "en-1", tts: "It is a horse.", ttsLang, tilesCorrect: ["It","is","a","horse."], distractors: ["rabbit.","tiger.","elephant."] },
+      { key: "en-2", tts: "It is a rabbit.", ttsLang, tilesCorrect: ["It","is","a","rabbit."], distractors: ["horse.","tiger.","elephant."] },
+      { key: "en-3", tts: "It is a tiger.", ttsLang, tilesCorrect: ["It","is","a","tiger."], distractors: ["horse.","rabbit.","elephant."] },
+      { key: "en-4", tts: "It is an elephant.", ttsLang, tilesCorrect: ["It","is","an","elephant."], distractors: ["horse.","rabbit.","tiger."] }
+    ];
+  }
+  if (language === "es") {
+    return [
+      { key: "es-1", tts: "Es un caballo.", ttsLang, tilesCorrect: ["Es","un","caballo."], distractors: ["conejo.","tigre.","elefante."] },
+      { key: "es-2", tts: "Es un conejo.", ttsLang, tilesCorrect: ["Es","un","conejo."], distractors: ["caballo.","tigre.","elefante."] },
+      { key: "es-3", tts: "Es un tigre.", ttsLang, tilesCorrect: ["Es","un","tigre."], distractors: ["caballo.","conejo.","elefante."] },
+      { key: "es-4", tts: "Es un elefante.", ttsLang, tilesCorrect: ["Es","un","elefante."], distractors: ["caballo.","conejo.","tigre."] }
+    ];
+  }
+  return [
+    { key: "zh-1", tts: "它是一匹马。", ttsLang, tilesCorrect: ["它","是","一匹","马。"], distractors: ["兔子。","老虎。","大象。"] },
+    { key: "zh-2", tts: "它是一只兔子。", ttsLang, tilesCorrect: ["它","是","一只","兔子。"], distractors: ["马。","老虎。","大象。"] },
+    { key: "zh-3", tts: "它是一只老虎。", ttsLang, tilesCorrect: ["它","是","一只","老虎。"], distractors: ["马。","兔子。","大象。"] },
+    { key: "zh-4", tts: "它是一头大象。", ttsLang, tilesCorrect: ["它","是","一头","大象。"], distractors: ["马。","兔子。","老虎。"] }
+  ];
+}
+if (lessonId === "lesson-17") {
+  if (language === "en") {
+    return [
+      { key: "en-1", tts: "I see five.", ttsLang, tilesCorrect: ["I","see","five."], distractors: ["six.","seven.","eight."] },
+      { key: "en-2", tts: "I see six.", ttsLang, tilesCorrect: ["I","see","six."], distractors: ["five.","seven.","eight."] },
+      { key: "en-3", tts: "I see seven.", ttsLang, tilesCorrect: ["I","see","seven."], distractors: ["five.","six.","eight."] },
+      { key: "en-4", tts: "I see eight.", ttsLang, tilesCorrect: ["I","see","eight."], distractors: ["five.","six.","seven."] }
+    ];
+  }
+  if (language === "es") {
+    return [
+      { key: "es-1", tts: "Veo cinco.", ttsLang, tilesCorrect: ["Veo","cinco."], distractors: ["seis.","siete.","ocho."] },
+      { key: "es-2", tts: "Veo seis.", ttsLang, tilesCorrect: ["Veo","seis."], distractors: ["cinco.","siete.","ocho."] },
+      { key: "es-3", tts: "Veo siete.", ttsLang, tilesCorrect: ["Veo","siete."], distractors: ["cinco.","seis.","ocho."] },
+      { key: "es-4", tts: "Veo ocho.", ttsLang, tilesCorrect: ["Veo","ocho."], distractors: ["cinco.","seis.","siete."] }
+    ];
+  }
+  return [
+    { key: "zh-1", tts: "我看见五。", ttsLang, tilesCorrect: ["我","看见","五。"], distractors: ["六。","七。","八。"] },
+    { key: "zh-2", tts: "我看见六。", ttsLang, tilesCorrect: ["我","看见","六。"], distractors: ["五。","七。","八。"] },
+    { key: "zh-3", tts: "我看见七。", ttsLang, tilesCorrect: ["我","看见","七。"], distractors: ["五。","六。","八。"] },
+    { key: "zh-4", tts: "我看见八。", ttsLang, tilesCorrect: ["我","看见","八。"], distractors: ["五。","六。","七。"] }
+  ];
+}
+if (lessonId === "lesson-18") {
+  if (language === "en") {
+    return [
+      { key: "en-1", tts: "This is a chair.", ttsLang, tilesCorrect: ["This","is","a","chair."], distractors: ["pencil.","teacher.","notebook."] },
+      { key: "en-2", tts: "This is a pencil.", ttsLang, tilesCorrect: ["This","is","a","pencil."], distractors: ["chair.","teacher.","notebook."] },
+      { key: "en-3", tts: "This is a teacher.", ttsLang, tilesCorrect: ["This","is","a","teacher."], distractors: ["chair.","pencil.","notebook."] },
+      { key: "en-4", tts: "This is a notebook.", ttsLang, tilesCorrect: ["This","is","a","notebook."], distractors: ["chair.","pencil.","teacher."] }
+    ];
+  }
+  if (language === "es") {
+    return [
+      { key: "es-1", tts: "Esto es una silla.", ttsLang, tilesCorrect: ["Esto","es","una","silla."], distractors: ["lápiz.","profesor.","cuaderno."] },
+      { key: "es-2", tts: "Esto es un lápiz.", ttsLang, tilesCorrect: ["Esto","es","un","lápiz."], distractors: ["silla.","profesor.","cuaderno."] },
+      { key: "es-3", tts: "Esto es un profesor.", ttsLang, tilesCorrect: ["Esto","es","un","profesor."], distractors: ["silla.","lápiz.","cuaderno."] },
+      { key: "es-4", tts: "Esto es un cuaderno.", ttsLang, tilesCorrect: ["Esto","es","un","cuaderno."], distractors: ["silla.","lápiz.","profesor."] }
+    ];
+  }
+  return [
+    { key: "zh-1", tts: "这是一把椅子。", ttsLang, tilesCorrect: ["这","是","一把","椅子。"], distractors: ["铅笔。","老师。","笔记本。"] },
+    { key: "zh-2", tts: "这是一支铅笔。", ttsLang, tilesCorrect: ["这","是","一支","铅笔。"], distractors: ["椅子。","老师。","笔记本。"] },
+    { key: "zh-3", tts: "这是一位老师。", ttsLang, tilesCorrect: ["这","是","一位","老师。"], distractors: ["椅子。","铅笔。","笔记本。"] },
+    { key: "zh-4", tts: "这是一本笔记本。", ttsLang, tilesCorrect: ["这","是","一本","笔记本。"], distractors: ["椅子。","铅笔。","老师。"] }
+  ];
+}
+  if (lessonId === "lesson-19") {
+  if (language === "en") {
+    return [
+      { key: "en-1", tts: "It is snowy.", ttsLang, tilesCorrect: ["It","is","snowy."], distractors: ["hot.","cold.","stormy."] },
+      { key: "en-2", tts: "It is hot.", ttsLang, tilesCorrect: ["It","is","hot."], distractors: ["snowy.","cold.","stormy."] },
+      { key: "en-3", tts: "It is cold.", ttsLang, tilesCorrect: ["It","is","cold."], distractors: ["snowy.","hot.","stormy."] },
+      { key: "en-4", tts: "It is stormy.", ttsLang, tilesCorrect: ["It","is","stormy."], distractors: ["snowy.","hot.","cold."] }
+    ];
+  }
+  if (language === "es") {
+    return [
+      { key: "es-1", tts: "Está nevando.", ttsLang, tilesCorrect: ["Está","nevando."], distractors: ["hace","calor.","frío.","tormenta."] },
+      { key: "es-2", tts: "Hace calor.", ttsLang, tilesCorrect: ["Hace","calor."], distractors: ["frío.","nevando.","tormenta."] },
+      { key: "es-3", tts: "Hace frío.", ttsLang, tilesCorrect: ["Hace","frío."], distractors: ["calor.","nevando.","tormenta."] },
+      { key: "es-4", tts: "Hay tormenta.", ttsLang, tilesCorrect: ["Hay","tormenta."], distractors: ["calor.","frío.","nevando."] }
+    ];
+  }
+  return [
+    { key: "zh-1", tts: "今天下雪。", ttsLang, tilesCorrect: ["今天","下雪。"], distractors: ["热。","冷。","暴风雨。"] },
+    { key: "zh-2", tts: "今天很热。", ttsLang, tilesCorrect: ["今天","很热。"], distractors: ["下雪。","冷。","暴风雨。"] },
+    { key: "zh-3", tts: "今天很冷。", ttsLang, tilesCorrect: ["今天","很冷。"], distractors: ["下雪。","热。","暴风雨。"] },
+    { key: "zh-4", tts: "今天有暴风雨。", ttsLang, tilesCorrect: ["今天","有暴风雨。"], distractors: ["下雪。","热。","冷。"] }
+  ];
+}
+if (lessonId === "lesson-20") {
+  if (language === "en") {
+    return [
+      { key: "en-1", tts: "I feel scared.", ttsLang, tilesCorrect: ["I","feel","scared."], distractors: ["proud.","sleepy.","surprised."] },
+      { key: "en-2", tts: "I feel proud.", ttsLang, tilesCorrect: ["I","feel","proud."], distractors: ["scared.","sleepy.","surprised."] },
+      { key: "en-3", tts: "I feel sleepy.", ttsLang, tilesCorrect: ["I","feel","sleepy."], distractors: ["scared.","proud.","surprised."] },
+      { key: "en-4", tts: "I feel surprised.", ttsLang, tilesCorrect: ["I","feel","surprised."], distractors: ["scared.","proud.","sleepy."] }
+    ];
+  }
+  if (language === "es") {
+    return [
+      { key: "es-1", tts: "Me siento asustado.", ttsLang, tilesCorrect: ["Me","siento","asustado."], distractors: ["orgulloso.","cansado.","sorprendido."] },
+      { key: "es-2", tts: "Me siento orgulloso.", ttsLang, tilesCorrect: ["Me","siento","orgulloso."], distractors: ["asustado.","cansado.","sorprendido."] },
+      { key: "es-3", tts: "Me siento cansado.", ttsLang, tilesCorrect: ["Me","siento","cansado."], distractors: ["asustado.","orgulloso.","sorprendido."] },
+      { key: "es-4", tts: "Me siento sorprendido.", ttsLang, tilesCorrect: ["Me","siento","sorprendido."], distractors: ["asustado.","orgulloso.","cansado."] }
+    ];
+  }
+  return [
+    { key: "zh-1", tts: "我觉得害怕。", ttsLang, tilesCorrect: ["我","觉得","害怕。"], distractors: ["骄傲。","困。","惊讶。"] },
+    { key: "zh-2", tts: "我觉得骄傲。", ttsLang, tilesCorrect: ["我","觉得","骄傲。"], distractors: ["害怕。","困。","惊讶。"] },
+    { key: "zh-3", tts: "我觉得困。", ttsLang, tilesCorrect: ["我","觉得","困。"], distractors: ["害怕。","骄傲。","惊讶。"] },
+    { key: "zh-4", tts: "我觉得惊讶。", ttsLang, tilesCorrect: ["我","觉得","惊讶。"], distractors: ["害怕。","骄傲。","困。"] }
+  ];
+}
 
   // Final fallback (Lesson 1 logic or similar generic)
   if (language === "en") {

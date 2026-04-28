@@ -29,3 +29,27 @@
   @apply bg-white border-4 border-black rounded-2xl transition-transform active:translate-y-2 active:shadow-none;
   box-shadow: 6px 6px 0px 0px #000000;
 }
+
+.wrong-shake {
+  animation: wrongShake 2s ease-in-out;
+  transform-origin: center;
+  position: relative;
+  z-index: 5;
+}
+
+@keyframes wrongShake {
+  0%   { transform: translateX(0) scale(1); }
+
+  10%  { transform: translateX(-6px) scale(1.04); }
+  20%  { transform: translateX(6px) scale(1.06); }
+  30%  { transform: translateX(-5px) scale(1.04); }
+  40%  { transform: translateX(5px) scale(1.03); }
+
+  50%  { transform: translateX(-4px) scale(1.03); }
+  60%  { transform: translateX(4px) scale(1.02); }
+  70%  { transform: translateX(-3px) scale(1.02); }
+  80%  { transform: translateX(3px) scale(1.01); }
+
+  90%  { transform: translateX(-2px) scale(1.01); }
+  100% { transform: translateX(0) scale(1); }
+}
