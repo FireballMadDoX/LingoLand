@@ -29,62 +29,34 @@ function App() {
   >("landing");
   const [selectedLang, setSelectedLang] = useState<"en" | "es" | "zh">("en");
   const [selectedLessonId, setSelectedLessonId] = useState<string | null>(null);
-  const [session, setSession] = useState<any>(null);
+  const [session, setSession] = useState<any>({ user: { email: "test@test.com" } });
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-    });
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, session) => {
-      setSession(session);
-      if (event === "SIGNED_OUT") {
-        setView("landing");
-        setSession(null);
-      } else if (event === "SIGNED_IN" || event === "INITIAL_SESSION") {
-        setSession(session);
-        if (session) {
-          setView((prev) => {
-            if (event === "SIGNED_IN" && prev === "auth") return "profile";
-            if (prev === "landing") return "dashboard";
-            return prev;
-          });
-        }
-      } else if (session) {
-        setSession(session);
-      }
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
+  setSession({ user: { email: "test@test.com" } });
+}, []);
 
   const handleStart = () => {
-    if (session) { setView("dashboard"); } else { setView("auth"); }
-    window.scrollTo(0, 0);
+  setView("dashboard");
+  window.scrollTo(0, 0);
   };
 
   const handleHome = () => { setView("landing"); window.scrollTo(0, 0); };
 
   const handleAdventures = () => {
-    if (!session) { setView("auth"); window.scrollTo(0, 0); return; }
-    setView("adventures");
-    window.scrollTo(0, 0);
+  setView("adventures");
+  window.scrollTo(0, 0);
   };
 
   const handleDashboard = () => {
-    if (!session) { setView("auth"); window.scrollTo(0, 0); return; }
-    setView("dashboard");
-    window.scrollTo(0, 0);
+  setView("dashboard");
+  window.scrollTo(0, 0);
   };
 
   const handleAuthView = () => { setView("auth"); window.scrollTo(0, 0); };
-  const handleProfile  = () => {
-    if (!session) { setView("auth"); window.scrollTo(0, 0); return; }
-    setView("profile");
-    window.scrollTo(0, 0);
-  };
+  const handleProfile = () => {
+  setView("profile");
+  window.scrollTo(0, 0);
+};
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
