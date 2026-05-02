@@ -25,7 +25,7 @@ const itemVariants: any = {
 export const Dashboard: React.FC<DashboardProps> = ({ onLessons, onMinigames }) => {
   const { stars, coins, level, streak, weeklyGoalPercent } = useProgress();
   const stats = { coins }; // Quick shim for the stats logic below
-  const { mood, message, celebrate, feed, encourage, greet, sleep, wake } = usePet();
+  const { mood, message, feed, encourage, greet, sleep, wake } = usePet();
   const [pose, setPose] = useState<'front' | 'meditate'>('front');
 
   const quickStats = [

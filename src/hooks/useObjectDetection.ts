@@ -72,8 +72,8 @@ export function useObjectDetection(
           try {
             const raw = await model.detect(video);
             const filtered: DetectedObject[] = raw
-              .filter((p) => p.score >= minScore)
-              .map((p) => ({
+              .filter((p: any) => p.score >= minScore)
+              .map((p: any) => ({
                 label: p.class,
                 score: p.score,
                 bbox: [p.bbox[0], p.bbox[1], p.bbox[2], p.bbox[3]],

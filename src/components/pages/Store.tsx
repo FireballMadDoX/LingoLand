@@ -22,6 +22,17 @@ const Store: React.FC<StoreProps> = ({ onBack }) => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
             >
+                <div className="flex justify-start mb-8">
+                    <motion.button 
+                        initial={{ opacity: 0, x: -10 }} 
+                        animate={{ opacity: 1, x: 0 }} 
+                        onClick={onBack}
+                        className="flex items-center gap-2 text-purple-600 hover:text-purple-800 font-bold transition-colors"
+                    >
+                        <span className="text-xl">←</span> Back
+                    </motion.button>
+                </div>
+
                 <div className="inline-flex items-center justify-center p-4 bg-white rounded-[2rem] shadow-sm border-2 border-purple-100 mb-8">
                     <ShoppingBag size={48} className="text-purple-500" />
                 </div>

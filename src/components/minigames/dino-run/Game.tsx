@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { RotateCcw, ArrowLeft, Trophy } from 'lucide-react';
+import { RotateCcw, Trophy } from 'lucide-react';
 import Lottie from 'lottie-react';
 
 // Import Assets

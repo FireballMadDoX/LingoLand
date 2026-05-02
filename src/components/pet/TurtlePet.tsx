@@ -89,12 +89,13 @@ const TurtlePet: React.FC<TurtlePetProps> = ({
                 <Lottie
                     animationData={getAnimationData()}
                     loop={true}
+                    // @ts-ignore
                     renderer="canvas"
                     className="w-full h-full relative z-10"
                     rendererSettings={{ 
                         preserveAspectRatio: 'xMidYMid slice',
                         clearCanvas: true 
-                    }}
+                    } as any}
                 />
                 {mood === 'celebrating' && (
                     <div className="absolute inset-0 pointer-events-none">
