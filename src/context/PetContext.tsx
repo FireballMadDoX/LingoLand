@@ -6,10 +6,34 @@ export type PetMood = 'idle' | 'happy' | 'excited' | 'thinking' | 'sleeping' | '
 export type SupportedLanguage = 'en' | 'es' | 'fr' | 'de' | 'it' | 'pt' | 'ja' | 'ko' | 'zh' | 'ar' | 'ru' | 'hi' | 'nl' | 'sv' | 'pl' | 'tr' | 'vi' | 'th';
 
 export const PET_MESSAGES = {
-    greeting: ["Ready to learn?", "Hey there, friend!", "Let's have fun today!", "Hello! I missed you!"],
-    encouragement: ["You're doing great!", "Keep it up!", "Wow, you're so smart!", "I believe in you!", "You're a star!"],
+    greeting: [ // Used for general greetings (not specifically wake)
+        "Hello! I missed you!", "Welcome back!", "There you are!", "Ready to learn?"
+    ],
+    wake: [ // High energy
+        "I'm wide awake!", "Let's go!!", "I'm so excited!", "Good morning! I have so much energy!", 
+        "Woohoo! Time to move!", "I'm ready for anything!", "What an amazing nap! Let's do this!"
+    ],
+    play: [ // Having fun
+        "This is so fun!", "Catch!", "I love playing with you!", "Yay, playtime!", 
+        "Haha, you're the best!", "Wheee!", "Tag, you're it!", "This is my favorite part of the day!"
+    ],
+    encouragement: [
+        "You're doing great!", "Keep it up!", "Wow, you're so smart!", "I believe in you!", 
+        "You're a star!", "That's brilliant!", "You're getting so fast!", "Nothing can stop you!"
+    ],
     hint: ["Hmm, try again!", "You've got this!", "Think about it...", "Almost there!", "Take your time!"],
-    celebration: ["Amazing job!", "You did it!", "Woohoo!", "Fantastic!", "You're incredible!"],
+    celebration: [
+        "Amazing job!", "You did it!", "Woohoo!", "Fantastic!", "You're incredible!",
+        "Spectacular!", "Outstanding work!", "You're on fire today!"
+    ],
+    food: [ // Feeding
+        "Yummy! Thanks!", "Mmmm, delicious!", "That hit the spot!", "Nom nom nom...",
+        "I love this food!", "Crunch crunch... so good!", "So tasty!", "Burp... excuse me!"
+    ],
+    sleep: [ // Peaceful and calm
+        "Ah, so relaxing...", "Time to recharge...", "Peace and quiet...", "Zzz...", 
+        "Snore...", "So sleepy...", "Closing my eyes now...", "Such a peaceful rest..."
+    ],
     idle: ["Click me!", "What should we learn?", "I'm here to help!", "Let's play!"],
     goodbye: ["See you soon!", "Bye bye!", "Come back soon!"],
 };
@@ -26,6 +50,7 @@ interface PetContextType {
     showMessage: (message: string, duration?: number) => void;
     showRandomMessage: (category: keyof typeof PET_MESSAGES) => void;
     celebrate: () => void;
+    feed: () => void;
     think: () => void;
     encourage: () => void;
     giveHint: () => void;
@@ -66,11 +91,18 @@ export const PetProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         setTimeout(() => setMood('happy'), 3500);
     }, [showRandomMessage]);
 
+    const feed = useCallback(() => {
+        setMood('happy');
+        showRandomMessage('food');
+        setTimeout(() => setMood('idle'), 3500);
+    }, [showRandomMessage]);
+
     const think = useCallback(() => setMood('thinking'), []);
 
     const encourage = useCallback(() => {
-        setMood('happy');
-        showRandomMessage('encouragement');
+        setMood('excited');
+        showRandomMessage('play');
+        setTimeout(() => setMood('idle'), 3500);
     }, [showRandomMessage]);
 
     const giveHint = useCallback(() => {
@@ -79,8 +111,8 @@ export const PetProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         setTimeout(() => setMood('idle'), 2500);
     }, [showRandomMessage]);
 
-    const sleep = useCallback(() => { setMood('sleeping'); setMessage(null); }, []);
-    const wake = useCallback(() => { setMood('idle'); showRandomMessage('greeting'); }, [showRandomMessage]);
+    const sleep = useCallback(() => { setMood('sleeping'); showRandomMessage('sleep'); }, [showRandomMessage]);
+    const wake = useCallback(() => { setMood('excited'); showRandomMessage('wake'); setTimeout(() => setMood('idle'), 3500); }, [showRandomMessage]);
     const greet = useCallback(() => { setMood('happy'); showRandomMessage('greeting'); }, [showRandomMessage]);
     const sayGoodbye = useCallback(() => { setMood('idle'); showRandomMessage('goodbye'); }, [showRandomMessage]);
     const hide = useCallback(() => setIsVisible(false), []);
@@ -90,7 +122,7 @@ export const PetProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         <PetContext.Provider value={{
             mood, message, isVisible, learningLanguage, nativeLanguage,
             setLearningLanguage, setNativeLanguage, setMood, showMessage,
-            showRandomMessage, celebrate, think, encourage, giveHint, sleep, wake, hide, show, greet, sayGoodbye,
+            showRandomMessage, celebrate, feed, think, encourage, giveHint, sleep, wake, hide, show, greet, sayGoodbye,
         }}>
             {children}
         </PetContext.Provider>

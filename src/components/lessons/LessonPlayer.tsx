@@ -346,7 +346,7 @@ const getMascotMessage = (type: string) => {
 
 const LessonPlayer: React.FC<LessonPlayerProps> = ({ lessonId, language, onExit }) => {
   const lesson = getLessonData(lessonId) as { id: string; number: number; title: string; steps: LessonStep[] } | null;
-  const { updateProgress, markLessonComplete, addStars } = useProgress();
+  const { updateProgress, markLessonComplete, addStars, addCoins } = useProgress();
 
   const [stepIndex, setStepIndex] = useState(0);
   const [name, setName] = useState("Alex");
@@ -481,8 +481,6 @@ const LessonPlayer: React.FC<LessonPlayerProps> = ({ lessonId, language, onExit 
   const next = () => {
     if (!canNext) return;
     stopSpeech();
-    addStars(2);
-    setSessionStars((s) => s + 2);
     setStepIndex((i) => Math.min(i + 1, lesson.steps.length - 1));
     window.scrollTo(0, 0);
   };
@@ -819,18 +817,21 @@ const LessonPlayer: React.FC<LessonPlayerProps> = ({ lessonId, language, onExit 
                       <KidButton
                         variant="coral"
                         size="lg"
-                     onClick={() => {
-  if (!canComplete) return;
-  stopSpeech();
-  setShowComplete(true);
-  window.scrollTo(0, 0);
-
-  try {
-    markLessonComplete(language, lessonId);
-  } catch (error) {
-    console.error("Could not mark lesson complete:", error);
-  }
-}}
+                        onClick={() => {
+                          if (!canComplete) return;
+                          stopSpeech();
+                          addStars(20);
+                          addCoins(10);
+                          setSessionStars(20);
+                          setShowComplete(true);
+                          window.scrollTo(0, 0);
+                          
+                          try {
+                            markLessonComplete(language, lessonId);
+                          } catch (error) {
+                            console.error("Could not mark lesson complete:", error);
+                          }
+                        }}
                         disabled={!canComplete}
                         icon={<span>🏆</span>}
                       >

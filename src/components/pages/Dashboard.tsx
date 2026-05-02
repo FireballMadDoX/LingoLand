@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import TurtlePet from '../pet/TurtlePet';
 import { usePet } from '../../context/PetContext';
 import { useProgress } from '../../context/ProgressContext';
+import BadgeGraphic, { BADGE_TIERS } from '../common/BadgeGraphic';
 
 interface DashboardProps {
   onLessons?:   () => void;
@@ -19,28 +20,23 @@ const itemVariants: any = {
   visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 200, damping: 20 } },
 };
 
-const badges = [
-  { emoji: '🌟', name: 'First Word', color: '#FCD34D' },
-  { emoji: '🎤', name: 'Speaker',    color: '#A78BFA' },
-  { emoji: '🔥', name: '7-Day Run',  color: '#FB923C' },
-  { emoji: '🌍', name: 'Explorer',   color: '#34D399' },
-  { emoji: '🧩', name: 'Puzzle Pro', color: '#60A5FA' },
-  { emoji: '❓', name: 'Soon...',    color: '#E5E7EB', locked: true },
-];
+
 
 export const Dashboard: React.FC<DashboardProps> = ({ onLessons, onMinigames }) => {
-  const { stars, level, streak, weeklyGoalPercent } = useProgress();
-  const { mood, message, celebrate, encourage, greet, sleep, wake } = usePet();
+  const { stars, coins, level, streak, weeklyGoalPercent } = useProgress();
+  const stats = { coins }; // Quick shim for the stats logic below
+  const { mood, message, celebrate, feed, encourage, greet, sleep, wake } = usePet();
   const [pose, setPose] = useState<'front' | 'meditate'>('front');
 
   const quickStats = [
     { icon: '⭐', value: stars.toLocaleString(), label: 'Stars',       color: '#F59E0B' },
+    { icon: '🪙', value: (stats?.coins || 0).toLocaleString(), label: 'Coins', color: '#FCD34D' },
     { icon: '🔥', value: streak.toString(),    label: 'Day Streak',  color: '#F97316' },
     { icon: '🏆', value: `Lv ${level}`,  label: 'Level',       color: '#7C3AED' },
     { icon: '🎯', value: `${weeklyGoalPercent}%`,   label: 'Weekly Goal', color: '#10B981' },
   ];
 
-  const handleFeed = () => celebrate();
+  const handleFeed = () => feed();
   const handlePlay = () => encourage();
   const handlePetClick = () => greet();
 
@@ -86,7 +82,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onLessons, onMinigames }) 
         </motion.div>
 
         {/* Stats bar */}
-        <motion.div variants={itemVariants} className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+        <motion.div variants={itemVariants} className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-10">
           {quickStats.map((stat, i) => (
             <motion.div
               key={i}
@@ -265,25 +261,27 @@ export const Dashboard: React.FC<DashboardProps> = ({ onLessons, onMinigames }) 
                 <span>🏅</span> Recent Badges
               </h3>
               <div className="grid grid-cols-3 gap-3">
-                {badges.map((badge, i) => (
-                  <motion.div
-                    key={i}
-                    whileHover={!('locked' in badge) ? { scale: 1.12 } : {}}
-                    className="flex flex-col items-center gap-1"
-                  >
-                    <div
-                      className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl"
-                      style={{
-                        background: `${badge.color}25`,
-                        border: `2px solid ${badge.color}50`,
-                        opacity: 'locked' in badge ? 0.4 : 1,
-                      }}
-                    >
-                      {badge.emoji}
-                    </div>
-                    <span className="font-body text-[10px] text-gray-500 text-center leading-tight">{badge.name}</span>
-                  </motion.div>
-                ))}
+                {[...Array(3)].map((_, i) => {
+                  const badgeLvl = level - i;
+                  if (badgeLvl <= 0) {
+                     return (
+                       <motion.div key={i} className="flex flex-col items-center gap-1 opacity-40">
+                         <div className="w-12 h-12 rounded-[25%] bg-gray-100 flex items-center justify-center border-2 border-gray-200">
+                           <span className="text-gray-300 font-bold">?</span>
+                         </div>
+                         <span className="font-body text-[10px] text-gray-400 text-center leading-tight">Locked</span>
+                       </motion.div>
+                     );
+                  }
+                  
+                  const name = BADGE_TIERS[Math.min(badgeLvl - 1, BADGE_TIERS.length - 1)].name;
+                  return (
+                    <motion.div key={i} whileHover={{ scale: 1.1 }} className="flex flex-col items-center gap-2">
+                      <BadgeGraphic level={badgeLvl} size={48} />
+                      <span className="font-body text-[10px] text-gray-600 font-bold text-center leading-tight px-1">{name}</span>
+                    </motion.div>
+                  );
+                })}
               </div>
             </div>
 

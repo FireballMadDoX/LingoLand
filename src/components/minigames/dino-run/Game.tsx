@@ -113,10 +113,10 @@ const DinoRun: React.FC<DinoRunProps> = ({ onExit, onGameOver }) => {
                 <div className="relative w-full max-w-5xl mb-10 px-4 flex items-center justify-center">
                     <button
                         onClick={onExit}
-                        className="absolute left-6 top-1/2 -translate-y-1/2 p-3 rounded-full text-white transition-all hover:scale-105 active:scale-95 z-50"
+                        className="absolute left-6 top-1/2 -translate-y-1/2 px-4 py-2 rounded-xl font-bold text-sm text-white transition-all hover:scale-105 active:scale-95 z-50"
                         style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)' }}
                     >
-                        <ArrowLeft size={24} />
+                        Go Back
                     </button>
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center">
                         <div className="text-4xl mb-2">🦖</div>
@@ -184,10 +184,10 @@ const DinoRun: React.FC<DinoRunProps> = ({ onExit, onGameOver }) => {
             <div className="w-full max-w-[95%] flex justify-between items-center mb-4 z-10">
                 <button
                     onClick={() => setGameState('select')}
-                    className="p-2.5 rounded-full text-white transition-all hover:scale-105"
+                    className="px-4 py-2 rounded-xl text-white font-bold text-sm transition-all hover:scale-105"
                     style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)' }}
                 >
-                    <ArrowLeft size={22} />
+                    Go Back
                 </button>
                 <div className="flex items-center gap-4">
                     {highScore > 0 && (
@@ -284,6 +284,12 @@ const DinoRun: React.FC<DinoRunProps> = ({ onExit, onGameOver }) => {
                                     className="text-purple-400 font-bold hover:text-purple-200 transition-colors py-2 text-sm"
                                 >
                                     ← Pick New Character
+                                </button>
+                                <button
+                                    onClick={onExit}
+                                    className="text-purple-400 font-bold hover:text-white transition-colors py-2 text-sm"
+                                >
+                                    Go Back
                                 </button>
                             </div>
                         </motion.div>

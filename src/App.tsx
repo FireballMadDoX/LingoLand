@@ -11,9 +11,11 @@ import Dashboard from "./components/pages/Dashboard";
 import Profile from "./components/pages/Profile";
 import Adventures from "./components/pages/Adventures";
 import MiniGamesHub from "./components/minigames/MiniGamesHub";
+import Store from "./components/pages/Store";
 import LanguagePicker from "./components/lessons/LanguagePicker";
 import LessonPlayer from "./components/lessons/LessonPlayer";
 import LessonListPage from "./components/lessons/LessonListPage";
+import BadgeGraphic, { BADGE_TIERS } from "./components/common/BadgeGraphic";
 
 function App() {
   const [view, setView] = useState<
@@ -22,6 +24,7 @@ function App() {
     | "auth"
     | "profile"
     | "adventures"
+    | "store"
     | "minigames"
     | "languagePicker"
     | "lessonList"
@@ -58,6 +61,12 @@ function App() {
   window.scrollTo(0, 0);
 };
 
+  const handleStore = () => {
+    if (!session) { setView("auth"); window.scrollTo(0, 0); return; }
+    setView("store");
+    window.scrollTo(0, 0);
+  };
+
   const handleLogout = async () => {
     await supabase.auth.signOut();
     setSession(null);
@@ -72,19 +81,34 @@ function App() {
     window.scrollTo(0, 0);
   };
 
+  // Secret route for the user to view all 20 badges
+  if (window.location.hash === '#badges') {
+    return (
+      <div className="min-h-screen bg-gray-900 p-8 grid grid-cols-5 gap-8 place-items-center">
+        {BADGE_TIERS.map((b, i) => (
+          <div key={i} className="flex flex-col items-center gap-2">
+            <BadgeGraphic level={i + 1} size={100} />
+            <span className="text-white font-bold">{b.name}</span>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
   return (
     <ProgressProvider>
       <PetProvider>
         <div className="appContainer">
           <Navbar
-            view={view}
-            session={session}
-            onAuth={handleAuthView}
-            onHome={handleHome}
-            onDashboard={handleDashboard}
-            onAdventures={handleAdventures}
-            onProfile={handleProfile}
-          />
+          view={view}
+          session={session}
+          onHome={handleHome}
+          onDashboard={handleDashboard}
+          onAuth={handleAuthView}
+          onAdventures={handleAdventures}
+          onStore={handleStore}
+          onProfile={handleProfile}
+        />
           <main>
             {view === "landing" ? (
               <>
@@ -103,6 +127,8 @@ function App() {
                 onSelectLanguage={goToLessonList}
                 onBack={handleDashboard}
               />
+            ) : view === "store" ? (
+              <Store onBack={handleDashboard} />
             ) : view === "minigames" ? (
               <MiniGamesHub onBack={() => setView("dashboard")} />
             ) : view === "languagePicker" ? (

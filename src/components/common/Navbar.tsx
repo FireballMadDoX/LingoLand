@@ -8,10 +8,11 @@ interface NavbarProps {
     onAuth: () => void;
     onDashboard: () => void;
     onAdventures: () => void;
+    onStore: () => void;
     onProfile: () => void;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ view, session, onHome, onAuth, onDashboard, onAdventures, onProfile }) => {
+const Navbar: React.FC<NavbarProps> = ({ view, session, onHome, onAuth, onDashboard, onAdventures, onStore, onProfile }) => {
     
     const isActive = (targets: string[]) => targets.includes(view);
 
@@ -20,7 +21,10 @@ const Navbar: React.FC<NavbarProps> = ({ view, session, onHome, onAuth, onDashbo
         { label: 'Dashboard',  icon: "🗺️", action: onDashboard,    active: isActive(['dashboard', 'minigames', 'languagePicker', 'lessonPlayer']) },
         { label: 'Adventures', icon: "🚀", action: onAdventures,   active: isActive(['adventures']) },
         ...(session
-            ? [{ label: 'Profile', icon: "👤", action: onProfile, active: isActive(['profile']) }]
+            ? [
+                { label: 'Store',   icon: "🏪", action: onStore,   active: isActive(['store']) },
+                { label: 'Profile', icon: "👤", action: onProfile, active: isActive(['profile']) }
+              ]
             : [{ label: 'Login',   icon: "🔑", action: onAuth,    active: isActive(['auth']) }]
         )
     ];

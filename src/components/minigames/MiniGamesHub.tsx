@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { Lock, ArrowLeft } from 'lucide-react';
 import DinoRun from './dino-run/Game';
 import FlappyBee from './flappy-bee/Game';
+import MemoryMatch from './memory-match/Game';
+import WordPuzzle from './word-puzzle/Game';
 import { useProgress } from '../../context/ProgressContext';
 
 const Scanner = lazy(() => import('../pages/Scanner'));
@@ -17,22 +19,26 @@ const games = [
     { id: 'dino',    name: 'Dino Run',     description: 'Run and jump over obstacles!',          gradient: 'linear-gradient(135deg, #34D399, #059669)', glow: 'rgba(52,211,153,0.35)', icon: '🦖', locked: false },
     { id: 'bee',     name: 'Flappy Bee',   description: 'Buzz through the honey pipes!',         gradient: 'linear-gradient(135deg, #FBBF24, #D97706)', glow: 'rgba(251,191,36,0.35)', icon: '🐝', locked: false },
     { id: 'scanner', name: 'Word Scanner', description: 'Point your camera and learn the words!',gradient: 'linear-gradient(135deg, #10B981, #14B8A6)', glow: 'rgba(16,185,129,0.35)', icon: '📷', locked: false },
-    { id: 'memory',  name: 'Memory Match', description: 'Find matching pairs of cards.',         gradient: 'linear-gradient(135deg, #60A5FA, #2563EB)', glow: 'rgba(96,165,250,0.25)', icon: '🎴', locked: true  },
-    { id: 'puzzle',  name: 'Word Puzzle',  description: 'Find the hidden words.',                gradient: 'linear-gradient(135deg, #A78BFA, #7C3AED)', glow: 'rgba(167,139,250,0.25)', icon: '🧩', locked: true  },
+    { id: 'memory',  name: 'Memory Match', description: 'Find matching pairs of cards.',         gradient: 'linear-gradient(135deg, #60A5FA, #2563EB)', glow: 'rgba(96,165,250,0.25)', icon: '🎴', locked: false },
+    { id: 'puzzle',  name: 'Word Puzzle',  description: 'Find the hidden words.',                gradient: 'linear-gradient(135deg, #A78BFA, #7C3AED)', glow: 'rgba(167,139,250,0.25)', icon: '🧩', locked: false },
     { id: 'drawing', name: 'Magic Paint',  description: 'Draw your own masterpiece.',            gradient: 'linear-gradient(135deg, #F472B6, #DB2777)', glow: 'rgba(244,114,182,0.25)', icon: '🎨', locked: true  },
 ];
 
 const MiniGamesHub: React.FC<MiniGamesHubProps> = ({ onBack }) => {
     const [activeGame, setActiveGame] = useState<GameType>(null);
-    const { addStars, incrementActivity } = useProgress();
+    const { addStars, addCoins, incrementActivity } = useProgress();
 
-    const handleGameOver = () => {
-        addStars(10);
+    const handleGameOver = (stars: number = 10) => {
+        addStars(stars);
+        addCoins(5);
+
         incrementActivity();
     };
 
     if (activeGame === 'dino') return <DinoRun onExit={() => setActiveGame(null)} onGameOver={handleGameOver} />;
     if (activeGame === 'bee')  return <FlappyBee onExit={() => setActiveGame(null)} onGameOver={handleGameOver} />;
+    if (activeGame === 'memory') return <MemoryMatch onExit={() => setActiveGame(null)} onGameOver={handleGameOver} />;
+    if (activeGame === 'puzzle') return <WordPuzzle onExit={() => setActiveGame(null)} onGameOver={handleGameOver} />;
     if (activeGame === 'scanner') {
         return (
             <Suspense fallback={
