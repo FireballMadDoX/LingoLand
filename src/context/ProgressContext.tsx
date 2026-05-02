@@ -1,12 +1,14 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { supabase } from '../lib/supabase';
 
 type LangCode = 'en' | 'es' | 'zh';
 
 interface UserStats {
   stars: number;
+  coins: number;
   streak: number;
   lastActiveDate: string | null;
-  weeklyActivityCount: number; // number of lessons/games done this week
+  weeklyActivityCount: number;
 }
 
 interface ProgressContextType {
@@ -19,10 +21,12 @@ interface ProgressContextType {
 
   // Scoring system
   stars: number;
+  coins: number;
   level: number;
   streak: number;
   weeklyGoalPercent: number;
   addStars: (amount: number) => void;
+  addCoins: (amount: number) => void;
   incrementActivity: () => void;
   resetAllProgress: () => void;
 }
@@ -33,42 +37,97 @@ const DEFAULT_PROGRESS: Record<LangCode, Record<string, number>> = { en: {}, es:
 const DEFAULT_COMPLETED: Record<LangCode, string[]> = { en: [], es: [], zh: [] };
 const WEEKLY_GOAL_TARGET = 5; // 5 activities per week
 
+// Level 1 -> 20 Star Requirements
+const LEVEL_THRESHOLDS = [
+  0, 100, 250, 400, 550, 700, 850, 1000, 1150, 1300, 
+  1450, 1600, 1750, 1900, 2050, 2200, 2400, 2600, 2800, 3000
+];
+
+function calculateLevel(stars: number): number {
+  for (let i = LEVEL_THRESHOLDS.length - 1; i >= 0; i--) {
+    if (stars >= LEVEL_THRESHOLDS[i]) {
+      return i + 1; // 1-indexed levels
+    }
+  }
+  return 1;
+}
+
 export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [progressByLang, setProgressByLang] = useState<Record<LangCode, Record<string, number>>>(DEFAULT_PROGRESS);
   const [completedLessons, setCompletedLessons] = useState<Record<LangCode, string[]>>(DEFAULT_COMPLETED);
   const [stats, setStats] = useState<UserStats>({
     stars: 0,
+    coins: 0,
     streak: 0,
     lastActiveDate: null,
     weeklyActivityCount: 0,
   });
 
-  // Load data on mount
+  const [userId, setUserId] = useState<string | null>(null);
+
+  // Sync auth state
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUserId(session?.user?.id || null);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUserId(session?.user?.id || null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  // Helpers for user-tied local storage
+  const getStorageKey = (base: string) => userId ? `${base}_${userId}` : base;
+
+  // Cloud Sync Helper (Best Effort)
+  const syncToCloud = async (newData: any) => {
+    if (!userId) return;
+    try {
+      // Attempt to save to cloud if user_progress table allows it
+      await supabase.from('user_progress').upsert({
+        user_id: userId,
+        stars: newData.stats?.stars,
+        streak: newData.stats?.streak,
+        level: calculateLevel(newData.stats?.stars || 0),
+        progress_data: newData
+      }, { onConflict: 'user_id' });
+    } catch (e) {
+      // Silently fail if table structure isn't ready, local storage still works
+    }
+  };
+
+  // Load data when user changes
   useEffect(() => {
     try {
-      const savedProgress = localStorage.getItem('lingoProgress');
+      const savedProgress = localStorage.getItem(getStorageKey('lingoProgress'));
       if (savedProgress) setProgressByLang(JSON.parse(savedProgress));
+      else setProgressByLang(DEFAULT_PROGRESS);
 
-      const savedLessons = localStorage.getItem('lingoCompletedLessons');
+      const savedLessons = localStorage.getItem(getStorageKey('lingoCompletedLessons'));
       if (savedLessons) setCompletedLessons(JSON.parse(savedLessons));
+      else setCompletedLessons(DEFAULT_COMPLETED);
 
-      const savedStats = localStorage.getItem('lingoUserStats');
+      const savedStats = localStorage.getItem(getStorageKey('lingoUserStats'));
       if (savedStats) setStats(JSON.parse(savedStats));
+      else setStats({ stars: 0, coins: 0, streak: 0, lastActiveDate: null, weeklyActivityCount: 0 });
     } catch (e) {
       console.error('Failed to load user data', e);
     }
-  }, []);
+  }, [userId]);
 
   // Full data reset triggered by specific env var or manual call
   // For the "Fresh Start" requested: 
   const resetAllProgress = () => {
-    localStorage.removeItem('lingoProgress');
-    localStorage.removeItem('lingoCompletedLessons');
-    localStorage.removeItem('lingoUserStats');
+    localStorage.removeItem(getStorageKey('lingoProgress'));
+    localStorage.removeItem(getStorageKey('lingoCompletedLessons'));
+    localStorage.removeItem(getStorageKey('lingoUserStats'));
     setProgressByLang(DEFAULT_PROGRESS);
     setCompletedLessons(DEFAULT_COMPLETED);
     setStats({
       stars: 0,
+      coins: 0,
       streak: 0,
       lastActiveDate: null,
       weeklyActivityCount: 0,
@@ -88,7 +147,8 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       if (stats.streak > 0) {
         setStats(prev => {
           const next = { ...prev, streak: 0 };
-          localStorage.setItem('lingoUserStats', JSON.stringify(next));
+          localStorage.setItem(getStorageKey('lingoUserStats'), JSON.stringify(next));
+          syncToCloud({ stats: next, progressByLang, completedLessons });
           return next;
         });
       }
@@ -100,7 +160,10 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       const currentLang = prev[lang] || {};
       const nextLang = { ...currentLang, [lessonId]: Math.max(currentLang[lessonId] || 0, percent) };
       const next = { ...prev, [lang]: nextLang };
-      try { localStorage.setItem('lingoProgress', JSON.stringify(next)); } catch {}
+      try { 
+        localStorage.setItem(getStorageKey('lingoProgress'), JSON.stringify(next));
+        syncToCloud({ stats, progressByLang: next, completedLessons });
+      } catch {}
       return next;
     });
   };
@@ -112,7 +175,10 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       const existing = prev[lang] || [];
       if (existing.includes(lessonId)) return prev;
       const next = { ...prev, [lang]: [...existing, lessonId] };
-      try { localStorage.setItem('lingoCompletedLessons', JSON.stringify(next)); } catch {}
+      try { 
+        localStorage.setItem(getStorageKey('lingoCompletedLessons'), JSON.stringify(next));
+        syncToCloud({ stats, progressByLang, completedLessons: next });
+      } catch {}
       return next;
     });
 
@@ -133,7 +199,21 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const addStars = (amount: number) => {
     setStats(prev => {
       const next = { ...prev, stars: prev.stars + amount };
-      try { localStorage.setItem('lingoUserStats', JSON.stringify(next)); } catch {}
+      try { 
+        localStorage.setItem(getStorageKey('lingoUserStats'), JSON.stringify(next));
+        syncToCloud({ stats: next, progressByLang, completedLessons });
+      } catch {}
+      return next;
+    });
+  };
+
+  const addCoins = (amount: number) => {
+    setStats(prev => {
+      const next = { ...prev, coins: (prev.coins || 0) + amount };
+      try { 
+        localStorage.setItem(getStorageKey('lingoUserStats'), JSON.stringify(next));
+        syncToCloud({ stats: next, progressByLang, completedLessons });
+      } catch {}
       return next;
     });
   };
@@ -147,7 +227,10 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setStats(prev => {
       if (prev.lastActiveDate === todayStr) {
         const next = { ...prev, weeklyActivityCount: prev.weeklyActivityCount + 1 };
-        try { localStorage.setItem('lingoUserStats', JSON.stringify(next)); } catch {}
+        try { 
+          localStorage.setItem(getStorageKey('lingoUserStats'), JSON.stringify(next));
+          syncToCloud({ stats: next, progressByLang, completedLessons });
+        } catch {}
         return next;
       }
 
@@ -164,12 +247,15 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         lastActiveDate: todayStr,
         weeklyActivityCount: prev.weeklyActivityCount + 1,
       };
-      try { localStorage.setItem('lingoUserStats', JSON.stringify(next)); } catch {}
+      try { 
+        localStorage.setItem(getStorageKey('lingoUserStats'), JSON.stringify(next));
+        syncToCloud({ stats: next, progressByLang, completedLessons });
+      } catch {}
       return next;
     });
   };
 
-  const level = Math.floor(stats.stars / 100) + 1;
+  const level = calculateLevel(stats.stars);
   const weeklyGoalPercent = Math.min(100, Math.round((stats.weeklyActivityCount / WEEKLY_GOAL_TARGET) * 100));
 
   return (
@@ -180,10 +266,12 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       markLessonComplete,
       getLessonProgress,
       stars: stats.stars,
+      coins: stats.coins || 0,
       level,
       streak: stats.streak,
       weeklyGoalPercent,
       addStars,
+      addCoins,
       incrementActivity,
       resetAllProgress,
     }}>

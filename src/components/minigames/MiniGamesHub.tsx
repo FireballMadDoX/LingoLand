@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { Lock, ArrowLeft } from 'lucide-react';
 import DinoRun from './dino-run/Game';
 import FlappyBee from './flappy-bee/Game';
+import MemoryMatch from './memory-match/Game';
+import WordPuzzle from './word-puzzle/Game';
 import { useProgress } from '../../context/ProgressContext';
 
 interface MiniGamesHubProps {
@@ -37,7 +39,7 @@ const games = [
         gradient: 'linear-gradient(135deg, #60A5FA, #2563EB)',
         glow: 'rgba(96,165,250,0.25)',
         icon: '🎴',
-        locked: true,
+        locked: false,
     },
     {
         id: 'puzzle',
@@ -46,30 +48,24 @@ const games = [
         gradient: 'linear-gradient(135deg, #A78BFA, #7C3AED)',
         glow: 'rgba(167,139,250,0.25)',
         icon: '🧩',
-        locked: true,
-    },
-    {
-        id: 'drawing',
-        name: 'Magic Paint',
-        description: 'Draw your own masterpiece.',
-        gradient: 'linear-gradient(135deg, #F472B6, #DB2777)',
-        glow: 'rgba(244,114,182,0.25)',
-        icon: '🎨',
-        locked: true,
+        locked: false,
     },
 ];
 
 const MiniGamesHub: React.FC<MiniGamesHubProps> = ({ onBack }) => {
     const [activeGame, setActiveGame] = useState<GameType>(null);
-    const { addStars, incrementActivity } = useProgress();
+    const { addStars, addCoins, incrementActivity } = useProgress();
 
-    const handleGameOver = () => {
-        addStars(10); // Games award 10 stars (half of a lesson)
+    const handleGameOver = (stars: number = 10) => {
+        addStars(stars); // Dynamic star reward based on game/difficulty
+        addCoins(5);     // Always 5 coins for playing a game
         incrementActivity();
     };
 
     if (activeGame === 'dino') return <DinoRun onExit={() => setActiveGame(null)} onGameOver={handleGameOver} />;
     if (activeGame === 'bee')  return <FlappyBee onExit={() => setActiveGame(null)} onGameOver={handleGameOver} />;
+    if (activeGame === 'memory') return <MemoryMatch onExit={() => setActiveGame(null)} onGameOver={handleGameOver} />;
+    if (activeGame === 'puzzle') return <WordPuzzle onExit={() => setActiveGame(null)} onGameOver={handleGameOver} />;
 
     return (
         <div
@@ -87,9 +83,10 @@ const MiniGamesHub: React.FC<MiniGamesHubProps> = ({ onBack }) => {
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     onClick={onBack}
-                    className="flex items-center gap-2 text-purple-300 hover:text-white font-bold text-sm mb-6 transition-colors"
+                    className="inline-flex items-center px-4 py-2 rounded-xl text-white font-bold text-sm mb-6 transition-all hover:scale-105"
+                    style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)' }}
                 >
-                    <ArrowLeft size={18} /> Back to Dashboard
+                    Go Back
                 </motion.button>
 
                 {/* Header */}
@@ -104,7 +101,7 @@ const MiniGamesHub: React.FC<MiniGamesHubProps> = ({ onBack }) => {
                 </motion.div>
 
                 {/* Cards Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {games.map((game, index) => (
                         <motion.div
                             key={game.id}

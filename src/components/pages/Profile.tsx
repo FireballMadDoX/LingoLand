@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import { motion } from 'framer-motion';
-import { Star, Flame, Languages, Crown, Trash2 } from 'lucide-react';
+import { Star, Flame, Languages, Crown, Trash2, Award } from 'lucide-react';
 import { useProgress } from '../../context/ProgressContext';
 import { LESSON_CATALOGUE } from '../lessons/lessonRegistry';
+import BadgeGraphic, { BADGE_TIERS } from '../common/BadgeGraphic';
 
 interface ProfileProps {
     session: any;
@@ -20,7 +21,8 @@ interface ProfileData {
 }
 
 const Profile: React.FC<ProfileProps> = ({ session, onLogout }) => {
-    const { stars, level, streak, resetAllProgress, completedLessons } = useProgress();
+    const { stars, coins, level, streak, resetAllProgress, completedLessons } = useProgress();
+    const [showAllBadges, setShowAllBadges] = useState(false);
     
     if (!session) {
         return (
@@ -132,20 +134,41 @@ const Profile: React.FC<ProfileProps> = ({ session, onLogout }) => {
 
                             <div className="text-left w-full mt-2">
                                 <h3 className="font-heading font-bold text-gray-700 mb-3 flex items-center gap-2">
-                                    <span className="bg-orange-100 p-1.5 rounded-lg text-orange-500"><Crown size={16} /></span>
-                                    Pet Collection
+                                    <span className="bg-orange-100 p-1.5 rounded-lg text-orange-500"><Award size={16} /></span>
+                                    Badge Collection
                                 </h3>
                                 <div className="grid grid-cols-3 gap-3">
-                                    {[1, 2, 3, 4, 5, 6].map((i) => (
-                                        <div key={i} className="aspect-square bg-gray-50 rounded-xl border-2 border-dashed border-gray-200 flex items-center justify-center hover:border-purple-300 hover:bg-purple-50 transition-colors cursor-pointer group">
-                                            {i === 1 ? (
-                                                <img src={`https://api.dicebear.com/9.x/adventurer/svg?seed=${session?.user?.id}`} className="w-8 h-8 opacity-80 group-hover:scale-110 transition-transform" alt="Pet" />
-                                            ) : (
-                                                <div className="w-8 h-8 rounded-full bg-gray-200 opacity-20"></div>
-                                            )}
+                                    {[...Array(showAllBadges ? level : Math.min(6, level))].map((_, i) => {
+                                        const badgeLvl = level - i;
+                                        if (badgeLvl <= 0) return null;
+                                        const name = BADGE_TIERS[Math.min(badgeLvl - 1, BADGE_TIERS.length - 1)].name;
+                                        
+                                        return (
+                                            <div key={i} className="aspect-square bg-gray-50 rounded-xl border-2 border-dashed border-gray-200 flex flex-col items-center justify-center hover:border-purple-300 hover:bg-purple-50 transition-colors cursor-pointer group p-2">
+                                                <div className="group-hover:scale-110 transition-transform">
+                                                    <BadgeGraphic level={badgeLvl} size={50} />
+                                                </div>
+                                                <span className="font-body text-[9px] text-gray-500 font-bold mt-1 text-center leading-none">{name}</span>
+                                            </div>
+                                        );
+                                    })}
+                                    
+                                    {/* Placeholders if user has fewer than 6 badges and not showing all */}
+                                    {!showAllBadges && level < 6 && [...Array(6 - level)].map((_, i) => (
+                                        <div key={`empty-${i}`} className="aspect-square bg-gray-50 rounded-xl border-2 border-dashed border-gray-200 flex items-center justify-center opacity-40">
+                                            <div className="w-8 h-8 rounded-full bg-gray-200"></div>
                                         </div>
                                     ))}
                                 </div>
+                                
+                                {level > 6 && (
+                                    <button 
+                                        onClick={() => setShowAllBadges(!showAllBadges)}
+                                        className="mt-3 w-full py-2 bg-purple-50 text-purple-600 rounded-xl font-bold text-sm hover:bg-purple-100 transition-colors"
+                                    >
+                                        {showAllBadges ? "Show Recent Only" : `View All ${level} Badges`}
+                                    </button>
+                                )}
                             </div>
                         </motion.div>
                     </div>
@@ -227,31 +250,44 @@ const Profile: React.FC<ProfileProps> = ({ session, onLogout }) => {
                         </motion.div>
 
                         {/* Stats Grid */}
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-3 gap-4">
                             <motion.div
                                 initial={{ y: 20, opacity: 0 }}
                                 animate={{ y: 0, opacity: 1 }}
                                 transition={{ delay: 0.2 }}
-                                className="bg-white p-6 rounded-[2rem] border-b-4 border-orange-100 shadow-sm"
+                                className="bg-white p-6 rounded-[2rem] border-b-4 border-orange-100 shadow-sm text-center"
                             >
-                                <div className="bg-orange-100 w-12 h-12 rounded-2xl flex items-center justify-center text-orange-500 mb-4">
+                                <div className="bg-orange-100 w-12 h-12 rounded-2xl flex items-center justify-center text-orange-500 mb-4 mx-auto">
                                     <Flame size={24} className="fill-orange-500" />
                                 </div>
-                                <p className="font-heading font-black text-4xl text-gray-800">{streak}</p>
-                                <p className="text-gray-400 font-bold text-sm">Day Streak</p>
+                                <p className="font-heading font-black text-3xl text-gray-800">{streak}</p>
+                                <p className="text-gray-400 font-bold text-sm">Streak</p>
                             </motion.div>
 
                             <motion.div
                                 initial={{ y: 20, opacity: 0 }}
                                 animate={{ y: 0, opacity: 1 }}
                                 transition={{ delay: 0.3 }}
-                                className="bg-white p-6 rounded-[2rem] border-b-4 border-yellow-100 shadow-sm"
+                                className="bg-white p-6 rounded-[2rem] border-b-4 border-yellow-100 shadow-sm text-center"
                             >
-                                <div className="bg-yellow-100 w-12 h-12 rounded-2xl flex items-center justify-center text-yellow-500 mb-4">
+                                <div className="bg-yellow-100 w-12 h-12 rounded-2xl flex items-center justify-center text-yellow-500 mb-4 mx-auto">
                                     <Star size={24} className="fill-yellow-500" />
                                 </div>
-                                <p className="font-heading font-black text-4xl text-gray-800">{stars}</p>
-                                <p className="text-gray-400 font-bold text-sm">Total Stars</p>
+                                <p className="font-heading font-black text-3xl text-gray-800">{stars}</p>
+                                <p className="text-gray-400 font-bold text-sm">Stars</p>
+                            </motion.div>
+
+                            <motion.div
+                                initial={{ y: 20, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                transition={{ delay: 0.4 }}
+                                className="bg-white p-6 rounded-[2rem] border-b-4 border-amber-100 shadow-sm text-center"
+                            >
+                                <div className="bg-amber-100 w-12 h-12 rounded-2xl flex items-center justify-center text-amber-500 mb-4 mx-auto">
+                                    <span className="text-2xl">🪙</span>
+                                </div>
+                                <p className="font-heading font-black text-3xl text-gray-800">{coins}</p>
+                                <p className="text-gray-400 font-bold text-sm">Coins</p>
                             </motion.div>
                         </div>
                     </div>

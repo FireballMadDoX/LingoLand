@@ -126,10 +126,10 @@ const FlappyBee: React.FC<FlappyBeeProps> = ({ onExit, onGameOver }) => {
             <div className="relative z-10 w-full max-w-[95%] flex justify-between items-center mb-4">
                 <button
                     onClick={onExit}
-                    className="p-2.5 rounded-full text-white transition-all hover:scale-105"
+                    className="px-4 py-2 rounded-xl text-white font-bold text-sm transition-all hover:scale-105"
                     style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)' }}
                 >
-                    <ArrowLeft size={22} />
+                    Go Back
                 </button>
                 <div className="flex items-center gap-4">
                     {highScore > 0 && (
@@ -244,6 +244,12 @@ const FlappyBee: React.FC<FlappyBeeProps> = ({ onExit, onGameOver }) => {
                                 style={{ background: 'linear-gradient(135deg, #FBBF24, #D97706)', boxShadow: '0 6px 20px rgba(251,191,36,0.4)' }}
                             >
                                 <RotateCcw size={22} /> Try Again
+                            </button>
+                            <button
+                                onClick={onExit}
+                                className="w-full text-yellow-300 font-bold hover:text-white transition-colors py-3 mt-2 text-lg"
+                            >
+                                Go Back
                             </button>
                         </motion.div>
                     </div>

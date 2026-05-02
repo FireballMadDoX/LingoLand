@@ -81,11 +81,20 @@ const TurtlePet: React.FC<TurtlePetProps> = ({
                 whileTap={{ scale: 0.95 }}
                 style={{ width: '300px', height: '400px' }}
             >
+                {/* Ground Shadow */}
+                <div 
+                    className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[60%] h-[20px] rounded-[100%] opacity-20 bg-black blur-md"
+                />
+                
                 <Lottie
                     animationData={getAnimationData()}
                     loop={true}
-                    className="w-full h-full"
-                    style={{ filter: 'drop-shadow(0 20px 30px rgba(0,0,0,0.15))' }}
+                    renderer="canvas"
+                    className="w-full h-full relative z-10"
+                    rendererSettings={{ 
+                        preserveAspectRatio: 'xMidYMid slice',
+                        clearCanvas: true 
+                    }}
                 />
                 {mood === 'celebrating' && (
                     <div className="absolute inset-0 pointer-events-none">
