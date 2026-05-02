@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Trophy, RotateCcw } from 'lucide-react';
+import { Trophy, RotateCcw } from 'lucide-react';
 
 interface MemoryMatchProps {
     onExit: () => void;
