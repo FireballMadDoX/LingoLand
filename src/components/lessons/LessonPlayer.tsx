@@ -70,6 +70,128 @@ interface LessonPlayerProps {
 type SayStatus = "idle" | "listening" | "correct" | "wrong" | "skipped";
 
 /* ---------------- helper functions ---------------- */
+function getTryAgainText(language: LangCode) {
+  if (language === "es") return "¡Inténtalo de nuevo!";
+  if (language === "zh") return "再试一次！";
+  return "Try again!";
+}
+
+function getItemVisual(item: ListenItem) {
+  const key = `${item.id} ${item.text} ${item.ttsText}`.toLowerCase();
+
+  const visuals: { match: string[]; visual: string; bg?: string }[] = [
+    // Greetings / introductions
+  { match: ["hello", "hola", "你好"], visual: "👋" },
+  { match: ["hi", "嗨"], visual: "👋" },
+  { match: ["name", "llamo", "nombre", "名字", "我叫"], visual: "🏷️" },
+  { match: ["nice", "meet", "gusto", "encantado", "认识", "很高兴"], visual: "🤝" },
+    
+   // Polite phrases
+  { match: ["good morning", "buenos días", "早上好"], visual: "🌅" },
+  { match: ["please", "por favor", "请"], visual: "🙏" },
+  { match: ["thank you", "gracias", "谢谢"], visual: "💛" },
+  { match: ["sorry", "lo siento", "对不起"], visual: "🙇" },
+  { match: ["goodbye", "adiós", "再见"], visual: "👋" },
+
+    // Colors
+    { match: ["red", "rojo", "红色"], visual: "", bg: "bg-red-500" },
+    { match: ["blue", "azul", "蓝色"], visual: "", bg: "bg-blue-500" },
+    { match: ["yellow", "amarillo", "黄色"], visual: "", bg: "bg-yellow-400" },
+    { match: ["green", "verde", "绿色"], visual: "", bg: "bg-green-500" },
+    { match: ["black", "negro", "黑色"], visual: "", bg: "bg-black" },
+    { match: ["white", "blanco", "白色"], visual: "", bg: "bg-white border border-gray-300" },
+    { match: ["orange", "naranja", "橙色"], visual: "", bg: "bg-orange-500" },
+    { match: ["purple", "morado", "紫色"], visual: "", bg: "bg-purple-500" },
+
+    // Numbers
+    { match: ["one", "uno", "一"], visual: "1" },
+    { match: ["two", "dos", "二"], visual: "2" },
+    { match: ["three", "tres", "三"], visual: "3" },
+    { match: ["four", "cuatro", "四"], visual: "4" },
+    { match: ["five", "cinco", "五"], visual: "5" },
+    { match: ["six", "seis", "六"], visual: "6" },
+    { match: ["seven", "siete", "七"], visual: "7" },
+    { match: ["eight", "ocho", "八"], visual: "8" },
+
+    // Weather
+    { match: ["sunny", "soleado", "晴天"], visual: "☀️" },
+    { match: ["rainy", "lluvioso", "下雨"], visual: "🌧️" },
+    { match: ["cloudy", "nublado", "多云"], visual: "☁️" },
+    { match: ["windy", "ventoso", "刮风"], visual: "💨" },
+    { match: ["snowy", "nevado", "下雪"], visual: "❄️" },
+    { match: ["hot", "caliente", "热"], visual: "🥵" },
+    { match: ["cold", "frío", "冷"], visual: "🥶" },
+    { match: ["stormy", "tormentoso", "暴风雨"], visual: "⛈️" },
+
+    // Food
+    { match: ["apple", "manzana", "苹果"], visual: "🍎" },
+    { match: ["bread", "pan", "面包"], visual: "🍞" },
+    { match: ["water", "agua", "水"], visual: "💧" },
+    { match: ["rice", "arroz", "米饭"], visual: "🍚" },
+    { match: ["milk", "leche", "牛奶"], visual: "🥛" },
+    { match: ["juice", "jugo", "果汁"], visual: "🧃" },
+    { match: ["banana", "香蕉"], visual: "🍌" },
+    { match: ["noodles", "fideos", "面条"], visual: "🍜" },
+
+    // Animals
+    { match: ["dog", "perro", "狗"], visual: "🐶" },
+    { match: ["cat", "gato", "猫"], visual: "🐱" },
+    { match: ["bird", "pájaro", "鸟"], visual: "🐦" },
+    { match: ["fish", "pez", "鱼"], visual: "🐟" },
+    { match: ["horse", "caballo", "马"], visual: "🐴" },
+    { match: ["rabbit", "conejo", "兔子"], visual: "🐰" },
+    { match: ["tiger", "tigre", "老虎"], visual: "🐯" },
+    { match: ["elephant", "elefante", "大象"], visual: "🐘" },
+
+    // Family
+    { match: ["mom", "mamá", "妈妈"], visual: "👩" },
+    { match: ["dad", "papá", "爸爸"], visual: "👨" },
+    { match: ["brother", "hermano", "哥哥"], visual: "👦" },
+    { match: ["sister", "hermana", "姐姐"], visual: "👧" },
+    { match: ["grandmother", "abuela", "奶奶"], visual: "👵" },
+    { match: ["grandfather", "abuelo", "爷爷"], visual: "👴" },
+    { match: ["aunt", "tía", "阿姨"], visual: "👩" },
+    { match: ["uncle", "tío", "叔叔"], visual: "👨" },
+
+    // School
+    { match: ["book", "libro", "书"], visual: "📚" },
+    { match: ["pen", "bolígrafo", "笔"], visual: "🖊️" },
+    { match: ["desk", "escritorio", "桌子"], visual: "🪑" },
+    { match: ["bag", "bolsa", "包"], visual: "🎒" },
+    { match: ["chair", "silla", "椅子"], visual: "🪑" },
+    { match: ["pencil", "lápiz", "铅笔"], visual: "✏️" },
+    { match: ["teacher", "profesor", "老师"], visual: "🧑‍🏫" },
+    { match: ["notebook", "cuaderno", "笔记本"], visual: "📓" },
+
+    // Feelings
+    { match: ["happy", "feliz", "开心"], visual: "😊" },
+    { match: ["good", "bien", "很好"], visual: "😄" },
+    { match: ["tired", "cansado", "累"], visual: "😴" },
+    { match: ["sad", "triste", "伤心"], visual: "😢" },
+    { match: ["excited", "emocionado", "兴奋"], visual: "🤩" },
+    { match: ["angry", "enojado", "生气"], visual: "😠" },
+    { match: ["calm", "tranquilo", "平静"], visual: "😌" },
+    { match: ["nervous", "nervioso", "紧张"], visual: "😬" },
+    { match: ["okay", "还好"], visual: "🙂" },
+    { match: ["scared", "asustado", "害怕"], visual: "😨" },
+    { match: ["proud", "orgulloso", "自豪"], visual: "😎" },
+    { match: ["sleepy", "sueño", "困"], visual: "😪" },
+    { match: ["surprised", "sorprendido", "惊讶"], visual: "😲" },
+  ];
+
+  const found = visuals.find((v) => v.match.some((m) => key.includes(m.toLowerCase())));
+  if (!found) return null;
+
+  if (found.bg) {
+    return <div className={`w-12 h-12 rounded-full ${found.bg}`} />;
+  }
+
+  return (
+    <div className="w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center text-2xl font-black shadow-sm">
+      {found.visual}
+    </div>
+  );
+}
 
 function languageToTTS(language: LangCode) {
   if (language === "en") return "en-US";
@@ -386,111 +508,7 @@ const LessonPlayer: React.FC<LessonPlayerProps> = ({ lessonId, language, onExit 
     );
   }
 
-  // Auto-navigate back after 4 seconds
-  useEffect(() => {
-    if (showComplete) {
-      const timer = setTimeout(() => {
-        onExit();
-      }, 4000); // 4 seconds
-      return () => clearTimeout(timer);
-    }
-  }, [showComplete, onExit]);
-
-  if (showComplete) {
-    return (
-      <div
-        className="fixed inset-0 z-50 flex items-center justify-center p-8 overflow-hidden"
-        style={{ background: 'linear-gradient(135deg, #F5F3FF 0%, #FFFFFF 100%)' }}
-      >
-        {/* Bursting Confetti */}
-        {Array.from({ length: 60 }).map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute rounded-full"
-            style={{
-              width:  10 + Math.random() * 10,
-              height: 10 + Math.random() * 10,
-              left:  '50%',
-              top:   '50%',
-              background: ['#FCD34D', '#F43F5E', '#34D399', '#60A5FA', '#A78BFA'][Math.floor(Math.random() * 5)],
-            }}
-            initial={{ scale: 0, x: 0, y: 0 }}
-            animate={{ 
-              scale: [0, 1, 0.7, 0],
-              x: (Math.random() - 0.5) * 1500, 
-              y: (Math.random() - 0.5) * 1500,
-              rotate: [0, 1080]
-            }}
-            transition={{ 
-              duration: 3 + Math.random() * 2, 
-              delay: Math.random() * 0.3,
-              ease: [0.16, 1, 0.3, 1] 
-            }}
-          />
-        ))}
-
-        <motion.div
-          initial={{ scale: 0.8, opacity: 0, y: 20 }}
-          animate={{ scale: 1, opacity: 1, y: 0 }}
-          transition={{ type: 'spring', stiffness: 260, damping: 20 }}
-          className="bg-white rounded-[4rem] p-12 text-center max-w-lg w-full relative z-10 border-4 border-violet-100"
-          style={{ boxShadow: '0 50px 100px rgba(124,58,237,0.2)' }}
-        >
-          <motion.div
-            animate={{ 
-              y: [0, -20, 0],
-              rotate: [0, -10, 10, 0],
-              scale: [1, 1.1, 1] 
-            }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-            className="text-9xl mb-8 relative"
-          >
-            🏆
-            <motion.span 
-              animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
-              transition={{ duration: 1, repeat: Infinity }}
-              className="absolute -top-4 -right-4 text-4xl"
-            >
-              ✨
-            </motion.span>
-          </motion.div>
-
-          <h1 className="font-heading font-bold text-5xl text-violet-900 mb-4 bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-indigo-600">
-            Fantastic Job!
-          </h1>
-          <p className="font-body text-xl text-gray-500 mb-8">
-            You just crushed <span className="text-violet-600 font-bold">Lesson {lesson.number}</span>!<br/>
-            Next stop: Mastering the world! 🌍
-          </p>
-
-          <div className="bg-violet-50 rounded-3xl p-6 mb-10 grid grid-cols-3 gap-4">
-            {[
-              { v: lesson.steps.length.toString(), l: 'Steps Done', e: '📜' },
-              { v: `+${sessionStars}`, l: 'Stars Won', e: '⭐' },
-              { v: '100',  l: 'Accuracy',       e: '💯' },
-            ].map((s, i) => (
-              <div key={i} className="text-center p-3 rounded-2xl bg-white shadow-sm border border-violet-100">
-                <div className="text-2xl mb-1">{s.e}</div>
-                <div className="font-heading font-bold text-violet-900 text-2xl">{s.v}</div>
-                <div className="font-body text-gray-400 text-[10px] uppercase tracking-tighter">{s.l}</div>
-              </div>
-            ))}
-          </div>
-
-          <div className="flex flex-col gap-4">
-            <KidButton variant="grape" size="xl" onClick={onExit} icon={<span>🗺️</span>} fullWidth>
-              Return to Map
-            </KidButton>
-            <p className="font-body text-gray-400 text-sm animate-pulse">
-              Navigating back automatically in 4s...
-            </p>
-          </div>
-        </motion.div>
-      </div>
-    );
-  }
-
-  const langData = {
+   const langData = {
     name: language === 'en' ? 'English' : language === 'es' ? 'Spanish' : 'Mandarin',
     flag: language === 'en' ? '🇺🇸' : language === 'es' ? '🇪🇸' : '🇨🇳',
     gradient: language === 'en' ? 'linear-gradient(135deg, #1D4ED8, #0EA5E9)' : language === 'es' ? 'linear-gradient(135deg, #DC2626, #F59E0B)' : 'linear-gradient(135deg, #991B1B, #F97316)',
@@ -504,6 +522,81 @@ const LessonPlayer: React.FC<LessonPlayerProps> = ({ lessonId, language, onExit 
   useEffect(() => {
     updateProgress(language, lessonId, Math.round(progress));
   }, [progress, language, lessonId, updateProgress]);
+
+  if (showComplete) {
+  return (
+    <div className="min-h-screen flex items-center justify-center p-8 bg-gradient-to-br from-violet-900 via-purple-900 to-indigo-950">
+      {/* Confetti */}
+      {Array.from({ length: 40 }).map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute text-2xl"
+          initial={{
+            opacity: 0,
+            y: -100,
+            x: (i % 10) * 120 - 500,
+          }}
+          animate={{
+            opacity: [0, 1, 1, 0],
+            y: [0, 300, 600],
+            rotate: [0, 180, 360],
+          }}
+          transition={{
+            duration: 3,
+            delay: i * 0.04,
+            repeat: Infinity,
+            repeatDelay: 1,
+          }}
+        >
+          {["🎉", "⭐", "✨", "🎊"][i % 4]}
+        </motion.div>
+      ))}
+
+      <motion.div
+        initial={{ scale: 0.8, opacity: 0, y: 30 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        transition={{ type: "spring", stiffness: 220, damping: 18 }}
+        className="relative z-10 bg-white rounded-[3rem] p-10 text-center max-w-lg w-full shadow-2xl border-4 border-violet-200"
+      >
+        <motion.div
+          animate={{ rotate: [0, -8, 8, 0], scale: [1, 1.1, 1] }}
+          transition={{ duration: 1.5, repeat: Infinity }}
+          className="text-8xl mb-6"
+        >
+          🏆
+        </motion.div>
+
+        <h1 className="font-heading font-bold text-5xl text-violet-900 mb-4">
+          Congratulations!
+        </h1>
+
+        <p className="font-body text-xl text-gray-600 mb-8">
+          You completed Lesson {lesson.number}! Great job!
+        </p>
+
+        <div className="bg-violet-50 rounded-3xl p-5 mb-8">
+          <div className="text-3xl mb-2">⭐</div>
+          <div className="font-heading font-bold text-3xl text-violet-900">
+            +{sessionStars} Stars
+          </div>
+          <div className="font-body text-gray-500 text-sm">
+            earned this lesson
+          </div>
+        </div>
+
+        <KidButton
+          variant="grape"
+          size="xl"
+          onClick={onExit}
+          icon={<span>🗺️</span>}
+          fullWidth
+        >
+          Choose Next Lesson
+        </KidButton>
+      </motion.div>
+    </div>
+  );
+}
 
   return (
     <div className="min-h-screen">
@@ -731,8 +824,13 @@ const LessonPlayer: React.FC<LessonPlayerProps> = ({ lessonId, language, onExit 
                           addCoins(10);
                           setSessionStars(20);
                           setShowComplete(true);
-                          markLessonComplete(language, lessonId);
                           window.scrollTo(0, 0);
+                          
+                          try {
+                            markLessonComplete(language, lessonId);
+                          } catch (error) {
+                            console.error("Could not mark lesson complete:", error);
+                          }
                         }}
                         disabled={!canComplete}
                         icon={<span>🏆</span>}
@@ -780,7 +878,7 @@ function StepListenCards({
   const heardSet = useMemo(() => new Set(heardIds), [heardIds]);
 
   const handleClick = (item: ListenItem) => {
-    speak((item.ttsText ?? item.text).trim(), (item.ttsLang ?? languageToTTS(language)).trim());
+    speak((item.ttsText ?? item.text).trim(), languageToTTS(language));
     onHeard(item.id);
   };
 
@@ -797,12 +895,19 @@ function StepListenCards({
               isHeard ? "bg-green-50 border-green-200 hover:bg-green-100" : "bg-[#F7FAFF] border-blue-100 hover:bg-[#EEF4FF]"
             ].join(" ")}
           >
-            <div className="flex items-center justify-between">
-              <div className="font-heading font-extrabold text-2xl text-gray-800">{item.text}</div>
-              <div className={`p-2 rounded-xl bg-white border ${isHeard ? "border-green-100" : "border-gray-100"}`}>
-                <Volume2 size={18} className="text-gray-700" />
-              </div>
-            </div>
+            <div className="flex items-start justify-between gap-3">
+  <div className="font-heading font-extrabold text-2xl text-gray-800">
+    {item.text}
+  </div>
+
+  <div className="flex items-center gap-3">
+    {getItemVisual(item)}
+
+    <div className={`p-2 rounded-xl bg-white border ${isHeard ? "border-green-100" : "border-gray-100"}`}>
+      <Volume2 size={18} className="text-gray-700" />
+    </div>
+  </div>
+</div>
 
             {item.pinyin ? <div className="mt-2 text-sm font-bold text-gray-600">Pinyin: {item.pinyin}</div> : null}
 
@@ -872,11 +977,11 @@ function Step2AudioMatch({
   const clickLeft = (card: Step2LeftCard) => {
     if (isMatchedLeft(card.id)) return;
     setSelectedLeftId(card.id);
-    speak(card.ttsText, card.ttsLang);
+    speak(card.ttsText, languageToTTS(language));
   };
 
   const clickRight = (card: Step2RightCard) => {
-    speak(card.ttsText, card.ttsLang);
+    speak(card.ttsText, languageToTTS(language));
     if (!selectedLeftId) return;
     if (isMatchedRight(card.id)) return;
 
@@ -891,7 +996,8 @@ function Step2AudioMatch({
     }
 
     const lp = { leftId: selectedLeftId, rightId: card.id };
-    setWrongPair(lp);
+setWrongPair(lp);
+speak(getTryAgainText(language), languageToTTS(language));
     window.setTimeout(() => {
       setWrongPair((curr) => (curr && curr.leftId === lp.leftId && curr.rightId === lp.rightId ? null : curr));
     }, 900);
@@ -902,7 +1008,7 @@ function Step2AudioMatch({
     const selected = selectedLeftId === leftId;
     const wrong = wrongPair?.leftId === leftId;
     if (matched) return "bg-green-50 border-green-200 hover:bg-green-100";
-    if (wrong) return "bg-red-50 border-red-200";
+    if (wrong) return "wrong-shake bg-red-50 border-red-200";
     if (selected) return "bg-purple-50 border-purple-200";
     return "bg-[#F7FAFF] border-blue-100 hover:bg-[#EEF4FF]";
   };
@@ -911,7 +1017,7 @@ function Step2AudioMatch({
     const matched = isMatchedRight(rightId);
     const wrong = wrongPair?.rightId === rightId;
     if (matched) return "bg-green-50 border-green-200 hover:bg-green-100";
-    if (wrong) return "bg-red-50 border-red-200";
+    if (wrong) return "wrong-shake bg-red-50 border-red-200";
     return "bg-white border-gray-200 hover:bg-gray-50";
   };
 
@@ -953,6 +1059,7 @@ function Step2AudioMatch({
             >
               <div className="flex items-center justify-between">
                 <div className="font-heading font-extrabold text-xl text-gray-800">{c.text}</div>
+<div className="ml-auto">{getItemVisual(c as any)}</div>
                 <div className="p-2 rounded-xl bg-white border border-gray-100">
                   <Volume2 size={18} className="text-gray-700" />
                 </div>
@@ -1029,7 +1136,7 @@ function Step3SayIt({
     }
     recognitionRef.current = rec;
 
-    rec.lang = (item.ttsLang ?? languageToTTS(language)).trim();
+    rec.lang = languageToTTS(language);
     rec.continuous = false;
     rec.interimResults = false;
     rec.maxAlternatives = 3;
@@ -1045,14 +1152,19 @@ function Step3SayIt({
       const ok = isGoodMatch(transcript, expected, language);
 
       if (ok) {
-        setStatusById((p) => ({ ...p, [item.id]: "correct" }));
-        onCorrect(item.id);
-      } else {
-        setStatusById((p) => ({ ...p, [item.id]: "wrong" }));
-        window.setTimeout(() => {
-          setStatusById((p) => (p[item.id] !== "wrong" ? p : { ...p, [item.id]: "idle" }));
-        }, 1200);
-      }
+  setStatusById((p) => ({ ...p, [item.id]: "correct" }));
+  onCorrect(item.id);
+} else {
+  setStatusById((p) => ({ ...p, [item.id]: "wrong" }));
+
+  speak(getTryAgainText(language), languageToTTS(language));
+
+  window.setTimeout(() => {
+    setStatusById((p) =>
+      p[item.id] !== "wrong" ? p : { ...p, [item.id]: "idle" }
+    );
+  }, 2500);
+}
 
       setActiveId(null);
       try {
@@ -1105,7 +1217,7 @@ function Step3SayIt({
   };
 
   const playExample = (item: ListenItem) => {
-    speak((item.ttsText ?? item.text).trim(), (item.ttsLang ?? languageToTTS(language)).trim());
+    speak((item.ttsText ?? item.text).trim(), languageToTTS(language));
   };
 
   const cardClass = (id: string) => {
@@ -1114,7 +1226,7 @@ function Step3SayIt({
     const isSkipped = skippedSet.has(id) || st === "skipped";
     
     if (isCorrect) return "bg-green-50 border-green-200 hover:bg-green-100";
-    if (st === "wrong") return "bg-red-50 border-red-200";
+    if (st === "wrong") return "wrong-shake bg-red-50 border-red-200";
     if (st === "listening") return "bg-purple-50 border-purple-200";
     if (isSkipped && !isCorrect) return "bg-yellow-50 border-yellow-200";
     return "bg-[#F7FAFF] border-blue-100 hover:bg-[#EEF4FF]";
@@ -1144,16 +1256,34 @@ function Step3SayIt({
               : syllableHint(item.ttsText ?? item.text);
 
           return (
-            <div key={item.id} className={["rounded-2xl p-5 border shadow-sm transition-colors", cardClass(item.id)].join(" ")}>
-              <div className="flex items-start justify-between gap-3">
+              <motion.div
+  key={`${item.id}-${st}`}
+  animate={
+    st === "wrong"
+      ? {
+          x: [0, -12, 12, -10, 10, -6, 6, 0],
+          scale: [1, 1.12, 1.05, 1],
+          rotate: [0, -2, 2, -1, 1, 0],
+        }
+      : { x: 0, scale: 1, rotate: 0 }
+  }
+  transition={{
+    duration: 0.45,
+    ease: "easeInOut",
+  }}
+  className={["rounded-2xl p-5 border shadow-sm transition-colors", cardClass(item.id)].join(" ")}
+>
+  <div className="flex items-start justify-between gap-3">
                 <div>
                   <div className="font-heading font-extrabold text-2xl text-gray-800">{item.text}</div>
                   {item.pinyin ? <div className="mt-1 text-sm font-bold text-gray-600">Pinyin: {item.pinyin}</div> : null}
                 </div>
 
-                <button onClick={() => playExample(item)} className="p-3 rounded-xl bg-white border border-gray-100 hover:bg-gray-50" title="Hear it">
-                  <Volume2 size={18} className="text-gray-700" />
-                </button>
+                {getItemVisual(item)}
+
+<button onClick={() => playExample(item)} className="p-3 rounded-xl bg-white border border-gray-100 hover:bg-gray-50" title="Hear it">
+  <Volume2 size={18} className="text-gray-700" />
+</button>
               </div>
 
               <div className="mt-4 flex flex-wrap items-center gap-2">
@@ -1208,8 +1338,10 @@ function Step3SayIt({
               ) : null}
 
               {st === "wrong" ? (
-                <div className="mt-3 p-3 rounded-xl bg-white border border-red-100">
-                  <div className="text-sm font-extrabold text-red-700">Try again 👇</div>
+  <div className="mt-3 p-3 rounded-xl bg-white border border-red-100">
+    <div className="text-sm font-extrabold text-red-700">
+      {getTryAgainText(language)} 👇
+    </div>
                   <div className="mt-1 text-sm font-bold text-gray-700">{hint}</div>
                 </div>
               ) : null}
@@ -1222,7 +1354,7 @@ function Step3SayIt({
               ) : null}
 
               <div className="mt-3 text-xs font-extrabold uppercase tracking-wide text-gray-500">{isCorrect ? "Completed ✓" : "Listen → then say it"}</div>
-            </div>
+            </motion.div>
           );
         })}
       </div>
@@ -1394,12 +1526,15 @@ function Step4BuildMulti({
                   return (
                     <button
                       key={`${s.key}-${t}-${i}`}
-                      onClick={() => clickTile(s.key, t)}
-                      disabled={done}
-                      className={`px-4 py-2 rounded-xl font-bold ${
-                        done ? "bg-gray-50 text-gray-300 cursor-not-allowed" : "bg-gray-100 hover:bg-gray-200 text-gray-800"
-                      }`}
-                    >
+                        onClick={() => {
+                          speak(t, languageToTTS(language));
+                          clickTile(s.key, t);
+                        }}
+                        disabled={done}
+                        className={`px-4 py-2 rounded-xl font-bold ${
+                          done ? "bg-gray-50 text-gray-300 cursor-not-allowed" : "bg-gray-100 hover:bg-gray-200 text-gray-800"
+                        }`}
+                      >
                       <span>{t}</span>
                       {py ? <span className="ml-2 text-xs font-extrabold text-gray-500">({py})</span> : null}
                     </button>
@@ -1568,10 +1703,11 @@ function Step5ConversationPronounce({
         setStatusByKey((p) => ({ ...p, [key]: "correct" }));
         onCorrect(key);
       } else {
-        setStatusByKey((p) => ({ ...p, [key]: "wrong" }));
+  setStatusByKey((p) => ({ ...p, [key]: "wrong" }));
+  speak(getTryAgainText(language), languageToTTS(language));
         window.setTimeout(() => {
           setStatusByKey((p) => (p[key] !== "wrong" ? p : { ...p, [key]: "idle" }));
-        }, 1200);
+        }, 1800);
       }
 
       setActiveKey(null);
@@ -2003,8 +2139,8 @@ function Step6FillBlank({
     }
 
     const flash = { leftId: left.id, rightId: right.id };
-    setWrongFlash(flash);
-    setSelectedLeftId(null);
+setWrongFlash(flash);
+speak(getTryAgainText(language), languageToTTS(language));
 
     window.setTimeout(() => {
       setWrongFlash((curr) => (curr && curr.leftId === flash.leftId && curr.rightId === flash.rightId ? null : curr));
